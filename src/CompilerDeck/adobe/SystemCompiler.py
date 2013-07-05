@@ -10,8 +10,6 @@ from pyaid.file.FileUtils import FileUtils
 from pyaid.file.FileList import FileList
 from pyaid.system.SystemUtils import SystemUtils
 
-from CompilerDeck.local.ToolsEnvironment import ToolsEnvironment
-
 #___________________________________________________________________________________________________ SystemCompiler
 class SystemCompiler(object):
 
@@ -19,9 +17,10 @@ class SystemCompiler(object):
 #                                                                                       C L A S S
 
 #___________________________________________________________________________________________________ __init__
-    def __init__(self, settings, **kwargs):
+    def __init__(self, owner, settings, **kwargs):
         """Creates a new instance of SystemCompiler."""
         self._settings = settings
+        self._owner    = owner
 
         self._log = ArgsUtils.get('logger', None, kwargs)
         if self._log is None:
@@ -61,7 +60,7 @@ class SystemCompiler(object):
 
 #___________________________________________________________________________________________________ getAirPath
     def getAirPath(self, *args, **kwargs):
-        return ToolsEnvironment.getRootAIRPath(self._settings.airVersion, *args, **kwargs)
+        return self._owner.mainWindow.getRootAIRPath(self._settings.airVersion, *args, **kwargs)
 
 #___________________________________________________________________________________________________ getAirLibraryPath
     def getAirLibraryPath(self, *args, **kwargs):
@@ -69,7 +68,7 @@ class SystemCompiler(object):
 
 #___________________________________________________________________________________________________ getFlashLibraryPath
     def getFlashLibraryPath(self, *args, **kwargs):
-        return ToolsEnvironment.getFlexSDKPath('frameworks', 'libs', *args, **kwargs)
+        return self._owner.mainWindow.getFlexSDKPath('frameworks', 'libs', *args, **kwargs)
 
 #___________________________________________________________________________________________________ getTargetPath
     def getTargetPath(self, *args, **kwargs):

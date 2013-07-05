@@ -31,30 +31,33 @@ class AirUtils(object):
             bin folder for use in packaging or debugging. Returns a list of FileLists for each
             copy operation that occurred so that the deploy operation can be undone later."""
 
-        out = {'dirs':[], 'files':[], 'merges':[]}
+        out = {'dirs':[], 'files':[], 'merges':[], 'itemNames':[]}
         sets = flexProjectData
 
         # Copy everything in the includes directory
         includesPath = sets.externalIncludesPath
-        for item in os.listdir(includesPath):
-            source = FileUtils.createPath(includesPath, item)
-            out['merges'].append(FileUtils.mergeCopy(
-                source, FileUtils.createPath(sets.projectBinPath, item)))
-            if os.path.isdir(source):
-                out['dirs'].append(source)
-            else:
-                out['files'].append(source)
+        if os.path.exists(includesPath):
+            for item in os.listdir(includesPath):
+                source = FileUtils.createPath(includesPath, item)
+                out['merges'].append(FileUtils.mergeCopy(
+                    source, FileUtils.createPath(sets.platformBinPath, item)))
+                if os.path.isdir(source):
+                    out['dirs'].append(source)
+                else:
+                    out['files'].append(source)
+                out['itemNames'].append(item)
 
         includesPath = sets.platformExternalIncludesPath
-        if not includesPath:
+        if not includesPath or not os.path.exists(includesPath):
             return out
 
         for item in os.listdir(includesPath):
             source = FileUtils.createPath(includesPath, item)
             out['merges'].append(FileUtils.mergeCopy(
-                source, FileUtils.createPath(sets.projectBinPath, item)))
+                source, FileUtils.createPath(sets.platformBinPath, item)))
             if os.path.isdir(source):
                 out['dirs'].append(source)
             else:
                 out['files'].append(source)
+            out['itemNames'].append(item)
         return out

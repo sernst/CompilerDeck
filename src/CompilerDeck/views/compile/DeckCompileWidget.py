@@ -11,11 +11,11 @@ from CompilerDeck.CompilerDeckEnvironment import CompilerDeckEnvironment
 from CompilerDeck.SettingsEditor import SettingsEditor
 from CompilerDeck.adobe.air.AirDebugThread import AirDebugThread
 from CompilerDeck.adobe.air.InstallApkThread import InstallApkThread
+from CompilerDeck.adobe.air.InstallIpaThread import InstallIpaThread
 from CompilerDeck.adobe.ane.ANECompileThread import ANECompileThread
 from CompilerDeck.adobe.flex.FlexDebugThread import FlexDebugThread
 from CompilerDeck.adobe.flex.FlexProjectData import FlexProjectData
 from CompilerDeck.android.AndroidLogcatThread import AndroidLogcatThread
-from CompilerDeck.local.ToolsEnvironment import ToolsEnvironment
 
 #___________________________________________________________________________________________________ DeckCompileWidget
 class DeckCompileWidget(PyGlassWidget):
@@ -44,7 +44,7 @@ class DeckCompileWidget(PyGlassWidget):
         self._results    = ''
         self._compThread = None
 
-        versions = ToolsEnvironment.listInstalledAirSDKs()
+        versions = self.mainWindow.listInstalledAirSDKs()
         if versions:
             version  = self.parent().appConfig.get(self._AIR_SDK_VERSION_CFG)
             if version is None:
@@ -55,7 +55,7 @@ class DeckCompileWidget(PyGlassWidget):
             self.airSDKComboBox.setCurrentIndex(self.airSDKComboBox.findText(version))
         self.airSDKComboBox.currentIndexChanged.connect(self._handleAirVersionChanged)
 
-        versions = ToolsEnvironment.listInstalledFlashPlayers()
+        versions = self.mainWindow.listInstalledFlashPlayers()
         if versions:
             version  = self.parent().appConfig.get(self._FLASH_PLAYER_VERSION_CFG)
             if version is None:
@@ -73,6 +73,7 @@ class DeckCompileWidget(PyGlassWidget):
         self.compileBtn.clicked.connect(self._handleCompileClick)
         self.runDebugBtn.clicked.connect(self._handleRunDebug)
         self.installApkBtn.clicked.connect(self._handleInstallApk)
+        self.installIpaBtn.clicked.connect(self._handleInstallIpa)
         self.logcatDumpBtn.clicked.connect(self._handleGetLogcatDump)
         self.clearLogcatBtn.clicked.connect(self._handleClearLogcat)
         self.flexDebugBtn.clicked.connect(self._handleFlexDebugSession)
@@ -133,7 +134,7 @@ class DeckCompileWidget(PyGlassWidget):
         self.resultsTextBrowser.clear()
         self.log.addPrintCallback(self._handleUpdateResults)
         self.resultsTextBrowser.setFocus()
-        self.mainTab.setCurrentIndex(1)
+        self.mainTab.setCurrentWidget(self.resultsTabPage)
         self._toggleInteractivity(False)
         self.refreshGui()
 
@@ -165,11 +166,18 @@ class DeckCompileWidget(PyGlassWidget):
 
 #___________________________________________________________________________________________________ _handleCompileClick
     def _handleCompileClick(self, *args, **kwargs):
-        if self.packageAirCheck.isChecked():
-            self._settingsEditor.write()
+        self._settingsEditor.setTo(
+            prefix=self.prefixLine.text(),
+            suffix=self.suffixSpin.value(),
+            major=self.majorSpin.value(),
+            minor=self.minorSpin.value(),
+            revision=self.revisionSpin.value()
+        )
+        self._settingsEditor.write()
 
         self._executeRemoteThread(ANECompileThread(
             parent=self,
+            versionInfo=self._settingsEditor.toDict(),
             projectPath=CompilerDeckEnvironment.getProjectPath(),
             debug=self.debugCheck.isChecked(),
             live=self.liveCheck.isChecked(),
@@ -189,7 +197,7 @@ class DeckCompileWidget(PyGlassWidget):
 
 #___________________________________________________________________________________________________ _handleCompilationComplete
     def _handleCompilationComplete(self, result):
-        if self.packageAirCheck.isChecked() and result.response == 0:
+        if self.packageAirCheck.isChecked() and result['response'] == 0:
             self._settingsEditor.logBuild(
                 self.desktopPlatformCheck.isChecked(),
                 self.androidPlatformCheck.isChecked(),
@@ -261,6 +269,14 @@ class DeckCompileWidget(PyGlassWidget):
             projectPath=CompilerDeckEnvironment.getProjectPath(),
         ))
 
+#___________________________________________________________________________________________________ _handleInstallIpa
+    def _handleInstallIpa(self):
+        self._executeRemoteThread(InstallIpaThread(
+            parent=self,
+            airVersion=str(self.airSDKComboBox.currentText()),
+            projectPath=CompilerDeckEnvironment.getProjectPath()
+        ))
+
 #___________________________________________________________________________________________________ _handleGetLogcatDump
     def _handleGetLogcatDump(self):
         self._executeRemoteThread(AndroidLogcatThread(
@@ -299,4 +315,5 @@ class DeckCompileWidget(PyGlassWidget):
 #___________________________________________________________________________________________________ _handleReloadSettings
     def _handleReloadSettings(self):
         self._settingsEditor.reset()
+        self._settingsEditor.populate()
         self._updateSettings()

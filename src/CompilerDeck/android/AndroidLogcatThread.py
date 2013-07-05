@@ -10,8 +10,6 @@ from pyaid.system.SystemUtils import SystemUtils
 
 from pyglass.threading.RemoteExecutionThread import RemoteExecutionThread
 
-from CompilerDeck.local.ToolsEnvironment import ToolsEnvironment
-
 #___________________________________________________________________________________________________ AndroidLogcatThread
 class AndroidLogcatThread(RemoteExecutionThread):
     """A class for..."""
@@ -88,7 +86,7 @@ class AndroidLogcatThread(RemoteExecutionThread):
         )
 
         cmd = [
-            '"%s"' % ToolsEnvironment.getAndroidSDKPath('platform-tools', 'adb.exe'),
+            '"%s"' % self._owner.mainWindow.getAndroidSDKPath('platform-tools', 'adb.exe'),
             'logcat',
             '-d',
             '-v', 'long'
@@ -142,7 +140,7 @@ class AndroidLogcatThread(RemoteExecutionThread):
         )
 
         cmd = [
-            '"%s"' % ToolsEnvironment.getAndroidSDKPath('platform-tools', 'adb.exe'),
+            '"%s"' % self._owner.mainWindow.getAndroidSDKPath('platform-tools', 'adb.exe'),
             'logcat',
             '-c'
         ]

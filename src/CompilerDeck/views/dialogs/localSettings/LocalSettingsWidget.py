@@ -5,7 +5,6 @@
 from PySide.QtGui import *
 
 from pyglass.widgets.PyGlassWidget import PyGlassWidget
-from CompilerDeck.local.ToolsEnvironment import ToolsEnvironment
 
 #___________________________________________________________________________________________________ LocalSettingsWidget
 class LocalSettingsWidget(PyGlassWidget):
@@ -22,16 +21,16 @@ class LocalSettingsWidget(PyGlassWidget):
         self.saveBtn.clicked.connect(self._handleSaveClick)
         self.cancelBtn.clicked.connect(self._handleCancelClick)
 
-        self.airLineEdit.setText(ToolsEnvironment.getRootAIRPath(allowEmpty=True))
+        self.airLineEdit.setText(self.mainWindow.getRootAIRPath(allowEmpty=True))
         self.airToolBtn.clicked.connect(self._handleBrowseAirRootPath)
 
-        self.flexLineEdit.setText(ToolsEnvironment.getFlexSDKPath(allowEmpty=True))
+        self.flexLineEdit.setText(self.mainWindow.getFlexSDKPath(allowEmpty=True))
         self.flexToolBtn.clicked.connect(self._handleBrowseFlexPath)
 
-        self.androidLineEdit.setText(ToolsEnvironment.getAndroidSDKPath(allowEmpty=True))
+        self.androidLineEdit.setText(self.mainWindow.getAndroidSDKPath(allowEmpty=True))
         self.androidToolBtn.clicked.connect(self._handleBrowseAndroidPath)
 
-        self.antLineEdit.setText(ToolsEnvironment.getJavaAntPath(allowEmpty=True))
+        self.antLineEdit.setText(self.mainWindow.getJavaAntPath(allowEmpty=True))
         self.antToolBtn.clicked.connect(self._handleBrowseAntPath)
 
 #===================================================================================================
@@ -62,10 +61,10 @@ class LocalSettingsWidget(PyGlassWidget):
 
 #___________________________________________________________________________________________________ _handleCompileClick
     def _handleSaveClick(self, *args, **kwargs):
-        ToolsEnvironment.setRootAIRPath(self.airLineEdit.text())
-        ToolsEnvironment.setFlexSDKPath(self.flexLineEdit.text())
-        ToolsEnvironment.setAndroidSDKPath(self.androidLineEdit.text())
-        ToolsEnvironment.setJavaAntPath(self.antLineEdit.text())
+        self.mainWindow.setRootAIRPath(self.airLineEdit.text())
+        self.mainWindow.setFlexSDKPath(self.flexLineEdit.text())
+        self.mainWindow.setAndroidSDKPath(self.androidLineEdit.text())
+        self.mainWindow.setJavaAntPath(self.antLineEdit.text())
         self.parent().close()
 
 #___________________________________________________________________________________________________ _handleCancelClick

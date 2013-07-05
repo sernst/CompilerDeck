@@ -13,7 +13,6 @@ from pyglass.threading.RemoteExecutionThread import RemoteExecutionThread
 
 from CompilerDeck.adobe.air.AirUtils import AirUtils
 from CompilerDeck.adobe.flex.FlexProjectData import FlexProjectData
-from CompilerDeck.local.ToolsEnvironment import ToolsEnvironment
 
 #___________________________________________________________________________________________________ AirDebugThread
 class AirDebugThread(RemoteExecutionThread):
@@ -54,7 +53,7 @@ class AirDebugThread(RemoteExecutionThread):
     def _runAirDebug(self):
         sets = self._settings
         cmd = [
-            ToolsEnvironment.getRootAIRPath(sets.airVersion, 'bin', 'adl.exe'),
+            self.parent().mainWindow.getRootAIRPath(sets.airVersion, 'bin', 'adl.exe'),
             FileUtils.createPath(sets.projectPath, 'application.xml', isFile=True),
             FileUtils.createPath(sets.projectPath, 'bin', isDir=True)
         ]

@@ -8,7 +8,6 @@ from pyaid.file.FileUtils import FileUtils
 
 from CompilerDeck.adobe.AdobeSystemCompiler import AdobeSystemCompiler
 from CompilerDeck.adobe.flex.FlexProjectData import FlexProjectData
-from CompilerDeck.local.ToolsEnvironment import ToolsEnvironment
 
 #___________________________________________________________________________________________________ FlexCompiler
 class FlexCompiler(AdobeSystemCompiler):
@@ -18,9 +17,9 @@ class FlexCompiler(AdobeSystemCompiler):
 #                                                                                       C L A S S
 
 #___________________________________________________________________________________________________ __init__
-    def __init__(self, settings, **kwargs):
+    def __init__(self, owner, settings, **kwargs):
         """Creates a new instance of FlexCompiler."""
-        AdobeSystemCompiler.__init__(self, settings, **kwargs)
+        AdobeSystemCompiler.__init__(self, owner, settings, **kwargs)
 
 #===================================================================================================
 #                                                                               P R O T E C T E D
@@ -31,7 +30,7 @@ class FlexCompiler(AdobeSystemCompiler):
 
         cmd       = []
         sets      = self._settings
-        airPath   = ToolsEnvironment.getRootAIRPath()
+        airPath   = self._owner.mainWindow.getRootAIRPath()
         isAir     = sets.currentPlatformID != FlexProjectData.FLASH_PLATFORM
         isAndroid = sets.currentPlatformID == FlexProjectData.ANDROID_PLATFORM
         isIOS     = sets.currentPlatformID == FlexProjectData.IOS_PLATFORM
@@ -87,7 +86,12 @@ class FlexCompiler(AdobeSystemCompiler):
             self._getBooleanDefinition('DESKTOP', isAir and not isAndroid and isIOS),
             self._getBooleanDefinition('IOS', isIOS),
             self._getBooleanDefinition('ANDROID', isAndroid),
-            self._getBooleanDefinition('Mobile', isAndroid or isIOS),
+            self._getStringVarDefinition('VERSION_LABEL_PREFIX', sets.versionInfo.get('prefix', '')),
+            self._getStringVarDefinition('VERSION_LABEL_DATE', sets.versionInfo.get('date', '')),
+            self._getStringVarDefinition('VERSION_LABEL_SUFFIX', sets.versionInfo.get('suffix', '1')),
+            self._getStringVarDefinition('VERSION_LABEL_MAJOR', sets.versionInfo.get('major', '0')),
+            self._getStringVarDefinition('VERSION_LABEL_MINOR', sets.versionInfo.get('minor', '0')),
+            self._getStringVarDefinition('VERSION_LABEL_REVISION', sets.versionInfo.get('revision', '0'))
         ])
 
         if sets.swcIncludes:
@@ -97,7 +101,7 @@ class FlexCompiler(AdobeSystemCompiler):
                 )
 
         cmd.extend([
-            '-output=' + FileUtils.createPath(sets.projectPath, 'bin', sets.targetFilename + '.swf'),
+            '-output=' + FileUtils.createPath(sets.platformBinPath, sets.targetFilename + '.swf'),
             '-omit-trace-statements=' + self._getAsBooleanString(not sets.debug),
             '-verbose-stacktraces=' + self._getAsBooleanString(sets.debug),
             '-debug=' + self._getAsBooleanString(sets.debug),

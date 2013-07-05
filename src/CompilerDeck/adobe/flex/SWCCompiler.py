@@ -7,7 +7,6 @@ import shutil
 import zipfile
 
 from CompilerDeck.adobe.AdobeSystemCompiler import AdobeSystemCompiler
-from CompilerDeck.local.ToolsEnvironment import ToolsEnvironment
 
 #___________________________________________________________________________________________________ SWCCompiler
 class SWCCompiler(AdobeSystemCompiler):
@@ -23,12 +22,11 @@ class SWCCompiler(AdobeSystemCompiler):
 #___________________________________________________________________________________________________ _compileImpl
     def _compileImpl(self):
         sourceCommand = [
-            ToolsEnvironment.getFlexSDKPath('bin', 'acompc.bat', isFile=True),
+            self._owner.mainWindow.getFlexSDKPath('bin', 'acompc.bat', isFile=True),
             '-external-library-path+="%s"' % self.getAirLibraryPath('airglobal.swc'),
             '-external-library-path+="%s"' % self.getFlashLibraryPath(
                 'player', self._settings.flashVersion, 'playerglobal.swc'
-            ),
-            '-library-path+=' + ToolsEnvironment.getToolsSharedResourcesPath('flash_libraries')
+            )
         ]
         sourcePaths = [self.getProjectPath('internal').replace('\\', '\\\\')]
 

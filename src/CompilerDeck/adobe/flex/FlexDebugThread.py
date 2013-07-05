@@ -7,7 +7,6 @@ from pyaid.system.SystemUtils import SystemUtils
 from pyglass.threading.RemoteExecutionThread import RemoteExecutionThread
 
 from CompilerDeck.adobe.flex.FlexProjectData import FlexProjectData
-from CompilerDeck.local.ToolsEnvironment import ToolsEnvironment
 
 #___________________________________________________________________________________________________ FlexDebugThread
 class FlexDebugThread(RemoteExecutionThread):
@@ -30,7 +29,7 @@ class FlexDebugThread(RemoteExecutionThread):
 
         self._log.write('Refreshing ADB port management...')
         cmd = [
-            '"%s"' % ToolsEnvironment.getAndroidSDKPath('platform-tools', 'adb', isFile=True),
+            '"%s"' % self._owner.mainWindow.getAndroidSDKPath('platform-tools', 'adb', isFile=True),
             'forward',
             'tcp:%s' % str(FlexProjectData.USB_DEBUG_PORT),
             'tcp:%s' % str(FlexProjectData.USB_DEBUG_PORT)
@@ -48,7 +47,7 @@ class FlexDebugThread(RemoteExecutionThread):
         cmd = [
             'start',
             'cmd', '/c',
-            ToolsEnvironment.getFlexSDKPath('bin', 'fdb.exe', isFile=True),
+            self._owner.mainWindow.getFlexSDKPath('bin', 'fdb.exe', isFile=True),
             '-p',
             str(FlexProjectData.USB_DEBUG_PORT)
         ]

@@ -8,8 +8,9 @@ import zipfile
 
 from pyaid.file.FileUtils import FileUtils
 
+from pyglass.app.PyGlassEnvironment import PyGlassEnvironment
+
 from CompilerDeck.adobe.SystemCompiler import SystemCompiler
-from CompilerDeck.local.ToolsEnvironment import ToolsEnvironment
 
 #___________________________________________________________________________________________________ AndroidCompiler
 class AndroidCompiler(SystemCompiler):
@@ -44,8 +45,8 @@ class AndroidCompiler(SystemCompiler):
         #-------------------------------------------------------------------------------------------
         # CREATE/UPDATE ANDROID PROJECT
         cmd = ['"%s%s"' % (
-            ToolsEnvironment.getAndroidSDKPath('tools', 'android', isFile=True),
-            '.bat' if ToolsEnvironment.isWindows() else '')
+            self._owner.mainWindow.getAndroidSDKPath('tools', 'android', isFile=True),
+            '.bat' if PyGlassEnvironment.isWindows() else '')
         ]
 
         if createLibrary:
@@ -70,15 +71,15 @@ class AndroidCompiler(SystemCompiler):
             return False
 
         self._log.write('SUCCESS: UPDATE COMPLETE')
-        self._log.write('JDK PATH: ' + ToolsEnvironment.getJavaJDKPath())
+        self._log.write('JDK PATH: ' + self._owner.mainWindow.getJavaJDKPath())
 
         #-------------------------------------------------------------------------------------------
         # CLEAN PROJECT FOR FRESH COMPILATION
         batchCmd = [
-            'set JAVA_HOME=%s' % ToolsEnvironment.getJavaJDKPath(),
+            'set JAVA_HOME=%s' % self._owner.mainWindow.getJavaJDKPath(),
             'cd "%s"'  % (self.getTargetPath() + 'android'),
             'set errorlevel=',
-            '%s %s' % (ToolsEnvironment.getJavaAntPath('bin', 'ant.bat'), 'clean')
+            '%s %s' % (self._owner.mainWindow.getJavaAntPath('bin', 'ant.bat'), 'clean')
         ]
 
         if self.executeBatchCommand(batchCmd, messageHeader='CLEANING ANDROID PROJECT'):
@@ -105,11 +106,11 @@ class AndroidCompiler(SystemCompiler):
             )
 
         batchCmd = [
-            'set JAVA_HOME=%s' % ToolsEnvironment.getJavaJDKPath(),
+            'set JAVA_HOME=%s' % self._owner.mainWindow.getJavaJDKPath(),
             'cd "%s"'  % (self.getTargetPath() + 'android'),
             'set errorlevel=',
             '%s %s' % (
-                ToolsEnvironment.getJavaAntPath('bin', 'ant.bat'),
+                self._owner.mainWindow.getJavaAntPath('bin', 'ant.bat'),
                 'debug' if self._settings.debug else 'release'
             )
         ]
@@ -165,11 +166,11 @@ class AndroidCompiler(SystemCompiler):
         #-------------------------------------------------------------------------------------------
         # CREATE JAR FILE
         batchCmd = [
-            'set JAVA_HOME=%s' % ToolsEnvironment.getJavaJDKPath(),
+            'set JAVA_HOME=%s' % self._owner.mainWindow.getJavaJDKPath(),
             'cd "%s"' % self.getTargetPath('android', 'bin'),
             'set errorlevel=',
             '"%s" cvf %s -C %s .' % (
-                ToolsEnvironment.getJavaJDKPath('bin', 'jar.exe'),
+                self._owner.mainWindow.getJavaJDKPath('bin', 'jar.exe'),
                 self.getTargetPath('bin', 'android', self._settings.targetName + '.jar'),
                 self.getTargetPath('android', 'bin') + 'classes'
             )
@@ -197,7 +198,7 @@ class AndroidCompiler(SystemCompiler):
 
 #___________________________________________________________________________________________________ _copyV4SupportLib
     def _copyV4SupportLib(self):
-        v4Path = ToolsEnvironment.getAndroidSDKPath(*AndroidCompiler._V4_SUPPORT_LIB, isDir=True)
+        v4Path = self._owner.mainWindow.getAndroidSDKPath(*AndroidCompiler._V4_SUPPORT_LIB, isDir=True)
         for item in os.listdir(v4Path):
             itemPath = FileUtils.createPath(v4Path, item, isDir=True)
             self._copyMerges.append(

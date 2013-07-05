@@ -9,7 +9,6 @@ from collections import namedtuple
 
 from pyaid.ArgsUtils import ArgsUtils
 from pyaid.file.FileUtils import FileUtils
-from pyaid.interactive import queries
 from pyaid.json.JSON import JSON
 from pyaid.radix.Base36 import Base36
 from pyaid.time.TimeUtils import TimeUtils
@@ -23,7 +22,7 @@ class SettingsEditor(object):
 #===================================================================================================
 #                                                                                       C L A S S
 
-    DEF_PREFIX   = u''
+    DEF_PREFIX   = u'Build'
     DEF_SUFFIX   = u'1'
     DEF_MAJOR    = u'0'
     DEF_MINOR    = u'0'
@@ -50,7 +49,7 @@ class SettingsEditor(object):
         return self._prefix.value
     @prefix.setter
     def prefix(self, value):
-        self._prefix = self._putSetting(self._prefix, unicode(value), 2)
+        self._prefix = self._putSetting(self._prefix, unicode(value), self._UNSET)
 
 #___________________________________________________________________________________________________ GS: suffixInteger
     @property
@@ -68,7 +67,7 @@ class SettingsEditor(object):
     def suffix(self, value):
         if not isinstance(value, basestring):
             value = Base36.to36(value).upper()
-        self._suffix = self._putSetting(self._suffix, unicode(value).upper(), 2)
+        self._suffix = self._putSetting(self._suffix, unicode(value).upper(), self._UNSET)
 
 #___________________________________________________________________________________________________ GS: major
     @property
@@ -76,7 +75,7 @@ class SettingsEditor(object):
         return self._major.value
     @major.setter
     def major(self, value):
-        self._major = self._putSetting(self._major, unicode(value), 2)
+        self._major = self._putSetting(self._major, unicode(value), self._UNSET)
 
 #___________________________________________________________________________________________________ GS: minor
     @property
@@ -84,7 +83,7 @@ class SettingsEditor(object):
         return self._minor.value
     @minor.setter
     def minor(self, value):
-        self._minor = self._putSetting(self._minor, unicode(value), 2)
+        self._minor = self._putSetting(self._minor, unicode(value), self._UNSET)
 
 #___________________________________________________________________________________________________ GS: revision
     @property
@@ -92,7 +91,7 @@ class SettingsEditor(object):
         return self._revision.value
     @revision.setter
     def revision(self, value):
-        self._revision = self._putSetting(self._revision, unicode(value), 2)
+        self._revision = self._putSetting(self._revision, unicode(value), self._UNSET)
 
 #___________________________________________________________________________________________________ GS: versionLabel
     @property
@@ -117,6 +116,30 @@ class SettingsEditor(object):
 #===================================================================================================
 #                                                                                     P U B L I C
 
+#___________________________________________________________________________________________________ toDict
+    def toDict(self):
+        return {
+            'prefix':self._prefix.value,
+            'suffix':self._suffix.value,
+            'major':self._major.value,
+            'date':self._date.value,
+            'minor':self._minor.value,
+            'revision':self._revision.value
+        }
+
+#___________________________________________________________________________________________________ setTo
+    def setTo(self, **kwargs):
+        if kwargs.has_key('prefix'):
+            self.prefix = kwargs['prefix']
+        if kwargs.has_key('suffix'):
+            self.suffix = kwargs['suffix']
+        if kwargs.has_key('major'):
+            self.major = kwargs['major']
+        if kwargs.has_key('minor'):
+            self.minor = kwargs['minor']
+        if kwargs.has_key('revision'):
+            self.revision = kwargs['revision']
+
 #___________________________________________________________________________________________________ logBuild
     def logBuild(self, builtDesktop =False, builtAndroid =False, builtIOS =False):
         if not builtDesktop and not builtAndroid and not builtIOS:
@@ -129,7 +152,7 @@ class SettingsEditor(object):
             'IOS' if builtIOS else '---',
             '<<' + self.versionNumber + '>>',
             '<<' + self.versionLabel + '>>'
-        ])
+        ]) + '\n'
         FileUtils.putContents(out, self.buildLogFilePath, True)
         return out
 
@@ -180,7 +203,7 @@ class SettingsEditor(object):
 #___________________________________________________________________________________________________ write
     def write(self):
         settings = JSON.fromFile(CompilerDeckEnvironment.projectSettingsPath)
-        settings['version'] = {
+        settings['VERSION'] = {
             'major':self._major.value,
             'minor':self._minor.value,
             'revision':self._revision.value,
@@ -215,10 +238,6 @@ class SettingsEditor(object):
             iosAppXml, CompilerDeckEnvironment.iosAppXmlFilePath, raiseErrors=True)
         FileUtils.putContents(
             androidAppXml, CompilerDeckEnvironment.androidAppXmlFilePath, raiseErrors=True)
-
-#___________________________________________________________________________________________________ queryForUpdates
-    def queryForUpdates(self):
-        queries.queryGeneralValue('Version Prefix', )
 
 #===================================================================================================
 #                                                                               P R O T E C T E D
@@ -257,14 +276,11 @@ class SettingsEditor(object):
             key, ArgsUtils.get(key, defaultValue, kwargs), 1 if kwargs.has_key(key) else 0)
 
 #___________________________________________________________________________________________________ _updateSetting
-    def _updateSetting(self, setting, kwargs, force =False):
-        if not force and setting.setLevel == self._UNSET:
-            return setting
-
+    def _updateSetting(self, setting, kwargs):
         return self._SETTING_NT(
             setting.key,
             ArgsUtils.get(setting.key, setting.value, kwargs),
-            kwargs.has_key(setting.key))
+            self._UNSET)
 
 #===================================================================================================
 #                                                                               I N T R I N S I C

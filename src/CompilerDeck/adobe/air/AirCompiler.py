@@ -9,7 +9,6 @@ from pyaid.file.FileUtils import FileUtils
 from CompilerDeck.adobe.AdobeSystemCompiler import AdobeSystemCompiler
 from CompilerDeck.adobe.air.AirUtils import AirUtils
 from CompilerDeck.adobe.flex.FlexProjectData import FlexProjectData
-from CompilerDeck.local.ToolsEnvironment import ToolsEnvironment
 
 #___________________________________________________________________________________________________ AirCompiler
 class AirCompiler(AdobeSystemCompiler):
@@ -45,7 +44,7 @@ class AirCompiler(AdobeSystemCompiler):
             return False
 
         cmd.extend([
-            ToolsEnvironment.getRootAIRPath(sets.airVersion, 'bin', 'adt.bat', isFile=True),
+            self._owner.mainWindow.getRootAIRPath(sets.airVersion, 'bin', 'adt.bat', isFile=True),
             '-package'
         ])
 
@@ -57,14 +56,21 @@ class AirCompiler(AdobeSystemCompiler):
             self._addAirConnectionArguments(cmd)
             self._addAIRSigningArguments(cmd)
 
+        distPath = sets.platformDistributionPath
+        if not os.path.exists(distPath):
+            os.makedirs(distPath)
+
+        targetPath = FileUtils.createPath(
+            distPath, sets.targetFilename + '.' + sets.airExtension, isFile=True)
+        # Remove previous builds
+        if os.path.exists(targetPath):
+            os.remove(targetPath)
+
         cmd.extend([
-            '..' + os.sep + 'dist' + os.sep + sets.targetFilename + '.' + sets.airExtension,
-            '..' + os.sep + 'application.xml',
+            targetPath,
+            FileUtils.createPath(sets.platformProjectPath, 'application.xml', isFile=True),
             sets.targetFilename + '.swf'
         ])
-
-        for inc in sets.airIncludes:
-            cmd.append(inc)
 
         # Adds the launch display images for iOS compilation if they exist
         if sets.currentPlatformID == FlexProjectData.IOS_PLATFORM:
@@ -77,12 +83,11 @@ class AirCompiler(AdobeSystemCompiler):
 
         results = AirUtils.deployExternalIncludes(sets)
         self._copyMerges.extend(results['merges'])
-        cmd.extend(results['dirs'])
-        cmd.extend(results['files'])
+        cmd.extend(results['itemNames'])
 
         self._addAIRNativeExtensionArguments(cmd)
 
-        os.chdir(sets.projectBinPath)
+        os.chdir(sets.platformBinPath)
         if self.executeCommand(cmd, 'PACKAGING AIR FILE: "%s"' % sets.currentPlatformID):
             self._log.write('FAILED: AIR PACKAGING')
             return False

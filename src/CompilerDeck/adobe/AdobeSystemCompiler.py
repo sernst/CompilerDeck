@@ -13,7 +13,14 @@ class AdobeSystemCompiler(SystemCompiler):
 
 #___________________________________________________________________________________________________ _getStringDefinition
     def _getStringDefinition(self, name, value):
-        return '--define=CONFIG::%s,%s' % (name, str(value))
+        v = str(value)
+        if not v:
+            v = '-'
+        return '--define=CONFIG::%s,%s' % (name, v)
+
+#___________________________________________________________________________________________________ _getStringVariableDefinition
+    def _getStringVarDefinition(self, name, value):
+        return self._getStringDefinition(name, '"\'' + str(value) + '\'"')
 
 #___________________________________________________________________________________________________ _getBooleanDefinition
     def _getBooleanDefinition(self, name, value, ifTrue ='true', ifFalse = 'false'):

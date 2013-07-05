@@ -7,8 +7,9 @@ import os
 from pyaid.ArgsUtils import ArgsUtils
 from pyaid.file.FileUtils import FileUtils
 
+from pyglass.app.PyGlassEnvironment import PyGlassEnvironment
+
 from CompilerDeck.adobe.shared.ProjectData import ProjectData
-from CompilerDeck.local.ToolsEnvironment import ToolsEnvironment
 
 #___________________________________________________________________________________________________ FlexProjectData
 class FlexProjectData(ProjectData):
@@ -35,14 +36,25 @@ class FlexProjectData(ProjectData):
         self._quickCompile      = ArgsUtils.get('quickCompile', False, kwargs)
         self._usbDebug          = ArgsUtils.get('usbDebug', False, kwargs)
         self.remoteDebug        = ArgsUtils.get('remoteDebug', self._usbDebug, kwargs)
+        self._versionInfo       = ArgsUtils.getAsDict('versionInfo', kwargs)
 
 #===================================================================================================
 #                                                                                   G E T / S E T
 
-#___________________________________________________________________________________________________ GS: projectBinPath
+#___________________________________________________________________________________________________ GS: versionInfo
     @property
-    def projectBinPath(self):
+    def versionInfo(self):
+        return self._versionInfo
+
+#___________________________________________________________________________________________________ GS: platformBinPath
+    @property
+    def platformBinPath(self):
         return FileUtils.createPath(self.platformProjectPath, 'bin', isDir=True)
+
+#___________________________________________________________________________________________________ GS: platformDistributionPath
+    @property
+    def platformDistributionPath(self):
+        return FileUtils.createPath(self.platformProjectPath, 'dist', isDir=True)
 
 #___________________________________________________________________________________________________ GS: externalIncludesPath
     @property
@@ -129,7 +141,7 @@ class FlexProjectData(ProjectData):
         elif self.currentPlatformID == FlexProjectData.ANDROID_PLATFORM:
             return 'apk'
         elif self.currentPlatformID == FlexProjectData.NATIVE_PLATFORM:
-            return 'exe' if ToolsEnvironment.isWindows() else 'dmg'
+            return 'exe' if PyGlassEnvironment.isWindows() else 'dmg'
 
         return 'air'
 

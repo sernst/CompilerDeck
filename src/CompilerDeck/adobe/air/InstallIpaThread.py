@@ -1,4 +1,4 @@
-# InstallApkThread.py
+# InstallIpaThread.py
 # (C)2012-2013
 # Scott Ernst
 
@@ -10,8 +10,8 @@ from pyglass.threading.RemoteExecutionThread import RemoteExecutionThread
 
 from CompilerDeck.adobe.flex.FlexProjectData import FlexProjectData
 
-#___________________________________________________________________________________________________ InstallApkThread
-class InstallApkThread(RemoteExecutionThread):
+#___________________________________________________________________________________________________ InstallIpaThread
+class InstallIpaThread(RemoteExecutionThread):
     """A class for..."""
 
 #===================================================================================================
@@ -19,33 +19,37 @@ class InstallApkThread(RemoteExecutionThread):
 
 #___________________________________________________________________________________________________ __init__
     def __init__(self, parent, **kwargs):
-        """Creates a new instance of InstallAPKThread."""
+        """Creates a new instance of InstallIpaThread."""
         RemoteExecutionThread.__init__(self, parent, **kwargs)
-        self._settings = FlexProjectData(ArgsUtils.get('projectPath', None, kwargs))
+        self._settings = FlexProjectData(**kwargs)
 
 #___________________________________________________________________________________________________ _internalMethod
     def _runImpl(self):
         sets = self._settings
 
-        if not self._settings.hasPlatform(FlexProjectData.ANDROID_PLATFORM):
-            self._log.write('ERROR: No Android platform information found. Install aborted.')
+        if not self._settings.hasPlatform(FlexProjectData.IOS_PLATFORM):
+            self._log.write('ERROR: No iOS platform information found. Install aborted.')
             return 1
 
-        self._settings.setPlatform(FlexProjectData.ANDROID_PLATFORM)
+        self._settings.setPlatform(FlexProjectData.IOS_PLATFORM)
 
         self._log.write(
-            '<div style="font-size:24px">Installing APK...</div>\n'
+            '<div style="font-size:24px">Installing IPA...</div>\n'
             + '(This can take a few minutes. Please stand by)'
         )
 
         cmd = [
-            '"%s"' % self.parent().mainWindow.getAndroidSDKPath('platform-tools', 'adb.exe'),
-            'install',
-            '-r',
+            '"%s"' % self.parent().mainWindow.getRootAIRPath(
+                sets.airVersion, 'bin', 'adt.bat', isFile=True),
+            '-installApp',
+            '-platform',
+            'ios',
+            '-package',
             FileUtils.createPath(
                 sets.platformDistributionPath, sets.targetFilename + '.' + sets.airExtension)
         ]
 
+        self.log.write('<div style="color:#9999CC">' + '\n'.join(cmd) + '</div>')
         result = SystemUtils.executeCommand(cmd)
 
         if result['out']:
