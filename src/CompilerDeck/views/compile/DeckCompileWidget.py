@@ -8,6 +8,7 @@ from PySide import QtCore
 from pyglass.widgets.PyGlassWidget import PyGlassWidget
 
 from CompilerDeck.CompilerDeckEnvironment import CompilerDeckEnvironment
+from CompilerDeck.SettingsEditor import SettingsEditor
 from CompilerDeck.adobe.air.AirDebugThread import AirDebugThread
 from CompilerDeck.adobe.air.InstallApkThread import InstallApkThread
 from CompilerDeck.adobe.ane.ANECompileThread import ANECompileThread
@@ -27,7 +28,7 @@ class DeckCompileWidget(PyGlassWidget):
     _FLASH_PLAYER_VERSION_CFG = 'FLASH_PLAYER_VERSION'
     _FLASH_PROJECT_PATH_CFG   = 'FLASH_PROJECT_PATH'
     _PACKAGE_AIR_CFG          = 'PACKAGE_AIR'
-    _QUICK_COMPILE_CFG        = 'QUICK_COMPILE'
+    _AUTO_VERSION_CFG         = 'AUTO_VERSION'
     _LIVE_CFG                 = 'LIVE'
     _DEBUG_CFG                = 'DEBUG'
     _COMPILE_WEB              = 'COMPILE_WEB'
@@ -88,11 +89,6 @@ class DeckCompileWidget(PyGlassWidget):
         self.liveCheck.stateChanged.connect(self._handleCheckStateChange)
 
         self._setCheckState(
-            self.quickCompileCheck,
-            self.parent().appConfig.get(self._QUICK_COMPILE_CFG, False))
-        self.quickCompileCheck.stateChanged.connect(self._handleCheckStateChange)
-
-        self._setCheckState(
             self.packageAirCheck,
             self.parent().appConfig.get(self._PACKAGE_AIR_CFG, False))
         self.packageAirCheck.stateChanged.connect(self._handleCheckStateChange)
@@ -117,6 +113,14 @@ class DeckCompileWidget(PyGlassWidget):
             self.parent().appConfig.get(self._COMPILE_IOS, True))
         self.iosPlatformCheck.stateChanged.connect(self._handleCheckStateChange)
 
+        self._settingsEditor = SettingsEditor()
+        self._settingsEditor.populate()
+        self._updateSettings()
+
+        self.reloadSettingsBtn.clicked.connect(self._handleReloadSettings)
+        self.incrementSettingsBtn.clicked.connect(self._handleIncrementSettings)
+        self.writeSettingsBtn.clicked.connect(self._handleWriteSettings)
+
 #===================================================================================================
 #                                                                               P R O T E C T E D
 
@@ -125,7 +129,7 @@ class DeckCompileWidget(PyGlassWidget):
         target.setCheckState(QtCore.Qt.Checked if value else QtCore.Qt.Unchecked)
 
 #___________________________________________________________________________________________________ _executeRemoteThread
-    def _executeRemoteThread(self, thread):
+    def _executeRemoteThread(self, thread, completeCallback = None):
         self.resultsTextBrowser.clear()
         self.log.addPrintCallback(self._handleUpdateResults)
         self.resultsTextBrowser.setFocus()
@@ -135,7 +139,10 @@ class DeckCompileWidget(PyGlassWidget):
 
         self._compThread = thread
         thread.logSignal.signal.connect(self._handleUpdateResults)
-        thread.completeSignal.signal.connect(self._handleRemoteThreadComplete)
+        if completeCallback is None:
+            thread.completeSignal.signal.connect(self._handleRemoteThreadComplete)
+        else:
+            thread.completeSignal.signal.connect(completeCallback)
 
         thread.start()
 
@@ -145,17 +152,27 @@ class DeckCompileWidget(PyGlassWidget):
         self.settingsTabPage.setEnabled(value)
         self.utilsTabPage.setEnabled(value)
 
+#___________________________________________________________________________________________________ _updateSettings
+    def _updateSettings(self):
+        self.prefixLine.setText(self._settingsEditor.prefix)
+        self.suffixSpin.setValue(int(self._settingsEditor.suffixInteger))
+        self.majorSpin.setValue(int(self._settingsEditor.major))
+        self.minorSpin.setValue(int(self._settingsEditor.minor))
+        self.revisionSpin.setValue(int(self._settingsEditor.revision))
+
 #===================================================================================================
 #                                                                                 H A N D L E R S
 
 #___________________________________________________________________________________________________ _handleCompileClick
     def _handleCompileClick(self, *args, **kwargs):
+        if self.packageAirCheck.isChecked():
+            self._settingsEditor.write()
+
         self._executeRemoteThread(ANECompileThread(
             parent=self,
             projectPath=CompilerDeckEnvironment.getProjectPath(),
             debug=self.debugCheck.isChecked(),
             live=self.liveCheck.isChecked(),
-            quickCompile=self.quickCompileCheck.isChecked(),
             airVersion=str(self.airSDKComboBox.currentText()),
             flashVersion=str(self.flashPlayerComboBox.currentText()),
             packageAir=self.packageAirCheck.isChecked(),
@@ -168,7 +185,17 @@ class DeckCompileWidget(PyGlassWidget):
                 FlexProjectData.ANDROID_PLATFORM:self.androidPlatformCheck.isChecked(),
                 FlexProjectData.IOS_PLATFORM:self.iosPlatformCheck.isChecked()
             }
-        ))
+        ), self._handleCompilationComplete)
+
+#___________________________________________________________________________________________________ _handleCompilationComplete
+    def _handleCompilationComplete(self, result):
+        if self.packageAirCheck.isChecked() and result.response == 0:
+            self._settingsEditor.logBuild(
+                self.desktopPlatformCheck.isChecked(),
+                self.androidPlatformCheck.isChecked(),
+                self.iosPlatformCheck.isChecked(),
+            )
+        self._handleRemoteThreadComplete(result)
 
 #___________________________________________________________________________________________________ _handleRemoteThreadComplete
     def _handleRemoteThreadComplete(self, result):
@@ -202,8 +229,6 @@ class DeckCompileWidget(PyGlassWidget):
         prop   = None
         if sender == self.packageAirCheck:
             prop = self._PACKAGE_AIR_CFG
-        elif sender == self.quickCompileCheck:
-            prop = self._QUICK_COMPILE_CFG
         elif sender == self.liveCheck:
             prop = self._LIVE_CFG
         elif sender == self.debugCheck:
@@ -254,3 +279,24 @@ class DeckCompileWidget(PyGlassWidget):
     def _handleFlexDebugSession(self):
         self._executeRemoteThread(FlexDebugThread(parent=self))
 
+#___________________________________________________________________________________________________ _handleWriteSettings
+    def _handleWriteSettings(self):
+        sets                = self._settingsEditor
+        sets.prefix         = self.prefixLine.text()
+        sets.suffixInteger  = self.suffixSpin.value()
+        sets.major          = self.majorSpin.value()
+        sets.minor          = self.minorSpin.value()
+        sets.revision       = self.revisionSpin.value()
+        sets.write()
+        sets.reset()
+        sets.populate()
+
+#___________________________________________________________________________________________________ _handleIncrementSettings
+    def _handleIncrementSettings(self):
+        self._settingsEditor.populate()
+        self._updateSettings()
+
+#___________________________________________________________________________________________________ _handleReloadSettings
+    def _handleReloadSettings(self):
+        self._settingsEditor.reset()
+        self._updateSettings()

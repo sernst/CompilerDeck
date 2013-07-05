@@ -16,6 +16,9 @@ class CompilerDeckEnvironment(object):
 
     _rootProjectPath = None
 
+#===================================================================================================
+#                                                                                   G E T / S E T
+
 #___________________________________________________________________________________________________ GS projectSettingsPath
     @ClassGetter
     def projectSettingsPath(cls):
@@ -24,7 +27,25 @@ class CompilerDeckEnvironment(object):
 
         return cls.getCompileConfigsPath( cls.SETTINGS_FILE_NAME, isFile=True)
 
-#___________________________________________________________________________________________________ GS: getProjectPath
+#___________________________________________________________________________________________________ GS: desktopAppXmlFilePath
+    @ClassGetter
+    def desktopAppXmlFilePath(self):
+        return FileUtils.createPath(self._rootProjectPath, 'application.xml', isFile=True)
+
+#___________________________________________________________________________________________________ GS: iosAppXmlFilePath
+    @ClassGetter
+    def iosAppXmlFilePath(self):
+        return FileUtils.createPath(self._rootProjectPath, 'ios', 'application.xml', isFile=True)
+
+#___________________________________________________________________________________________________ GS: androidAppXmlFilePath
+    @ClassGetter
+    def androidAppXmlFilePath(self):
+        return FileUtils.createPath(self._rootProjectPath, 'android', 'application.xml', isFile=True)
+
+#===================================================================================================
+#                                                                                     P U B L I C
+
+#___________________________________________________________________________________________________ getProjectPath
     @classmethod
     def getProjectPath(cls, *args, **kwargs):
         if not args:

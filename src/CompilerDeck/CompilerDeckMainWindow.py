@@ -27,7 +27,7 @@ class CompilerDeckMainWindow(PyGlassWindow):
             title='ActionScript Compiler Deck',
             **kwargs
         )
-        self.setMinimumSize(1020, 600)
+        self.setMinimumSize(820, 480)
         self.setContentsMargins(0, 0, 0, 0)
 
         widget = self._createCentralWidget()

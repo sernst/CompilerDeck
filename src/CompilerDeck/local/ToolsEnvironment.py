@@ -26,22 +26,18 @@ class ToolsEnvironment(object):
     _ENV_SETTINGS         = None
     _GLOBAL_SETTINGS_FILE = 'environment.vcd'
 
-    _PROG_PATH            = 'C:\\Program Files (x86)\\'
-    _PROG_64_PATH         = 'C:\\Program Files\\'
-    _NUM_FINDER           = re.compile('[0-9]+')
-    _JDK_PATH             = None
+    _PROG_PATH          = 'C:\\Program Files (x86)\\'
+    _PROG_64_PATH       = 'C:\\Program Files\\'
+    _NUM_FINDER         = re.compile('[0-9]+')
+    _JDK_PATH           = None
 
-    _AIR_ROOT_PATH           = 'AIR_ROOT_PATH'
-    _FLEX_SDK_PATH           = 'FLEX_SDK_PATH'
-    _JAVA_ROOT_PATH          = 'JAVA_ROOT_PATH'
-    _JAVA_ANT_PATH           = 'JAVA_ANT_PATH'
-    _ANDROID_SDK_PATH        = 'ANDROID_SDK_PATH'
-    _APPLE_PROVISION_PROFILE = 'APPLE_PROVISION_PROFILE'
-    _BASE_UNIX_TIME          = 1293868800
-
-    _qApplication = None
-    _qMainWindow  = None
-    _deployed     = None
+    _AIR_ROOT_PATH      = 'AIR_ROOT_PATH'
+    _FLEX_SDK_PATH      = 'FLEX_SDK_PATH'
+    _JAVA_ROOT_PATH     = 'JAVA_ROOT_PATH'
+    _JAVA_ANT_PATH      = 'JAVA_ANT_PATH'
+    _ANDROID_SDK_PATH   = 'ANDROID_SDK_PATH'
+    _BASE_UNIX_TIME     = 1293868800
+    _deployed           = None
 
 #===================================================================================================
 #                                                                                   G E T / S E T
@@ -65,16 +61,6 @@ class ToolsEnvironment(object):
             )
         return requests.utils.DEFAULT_CA_BUNDLE_PATH
 
-#___________________________________________________________________________________________________ qApplication
-    @ClassGetter
-    def qApplication(cls):
-        return cls._qApplication
-
-#___________________________________________________________________________________________________ qMainWindow
-    @ClassGetter
-    def qMainWindow(cls):
-        return cls._qMainWindow
-
 #___________________________________________________________________________________________________ deployed
     @ClassGetter
     def deployed(cls):
@@ -93,16 +79,6 @@ class ToolsEnvironment(object):
     def isWindows(cls):
         return sys.platform.startswith('win')
 
-#___________________________________________________________________________________________________ setGuiApplication
-    @classmethod
-    def setGuiApplication(cls, value =None):
-        cls._qApplication = value
-
-#___________________________________________________________________________________________________ setGuiWindow
-    @classmethod
-    def setGuiWindow(cls, value =None):
-        cls._qMainWindow = value
-
 #___________________________________________________________________________________________________ refresh
     @classmethod
     def refresh(cls):
@@ -117,35 +93,13 @@ class ToolsEnvironment(object):
             cls.getToolsLocalResourcePath(cls._GLOBAL_SETTINGS_FILE, isFile=True)
         )
 
-#___________________________________________________________________________________________________ getAppleProvisionProfile
-    @classmethod
-    def getAppleProvisionProfile(cls, **kwargs):
-        res = cls._getEnvValue(cls._APPLE_PROVISION_PROFILE)
-        if not res:
-            if ArgsUtils.get('allowEmpty', False, kwargs):
-                return ''
-
-            res = cls._queryForPath('Apple Provisioning Profile')
-            cls.setAppleProvisionProfile(res)
-
-        return res
-
-#___________________________________________________________________________________________________ getAppleProvisionProfile
-    @classmethod
-    def setAppleProvisionProfile(cls, path):
-        return cls._setEnvValue(cls._APPLE_PROVISION_PROFILE, path)
-
 #___________________________________________________________________________________________________ getRootAIRPath
     @classmethod
     def getRootAIRPath(cls, *args, **kwargs):
         """Doc..."""
         res = cls._getEnvValue(cls._AIR_ROOT_PATH)
         if not res:
-            if ArgsUtils.get('allowEmpty', False, kwargs):
-                return ''
-
-            res = FileUtils.createPath(cls._queryForPath('Adobe Air Root Path'))
-            cls.setRootAIRPath(res)
+            return ''
 
         return FileUtils.createPath(res, *args, **kwargs)
 
@@ -161,12 +115,7 @@ class ToolsEnvironment(object):
         """Doc..."""
         res = cls._getEnvValue(cls._FLEX_SDK_PATH)
         if not res:
-            if ArgsUtils.get('allowEmpty', False, kwargs):
-                return ''
-
-            res = FileUtils.createPath(cls._queryForPath('Flex SDK Path'))
-            print 'RES:',res
-            cls.setFlexSDKPath(res)
+            return ''
 
         return FileUtils.createPath(res, *args, **kwargs)
 
@@ -188,11 +137,7 @@ class ToolsEnvironment(object):
         """Doc..."""
         res = cls._getEnvValue(cls._JAVA_ANT_PATH)
         if not res:
-            if ArgsUtils.get('allowEmpty', False, kwargs):
-                return ''
-
-            res = FileUtils.createPath(cls._queryForPath('Java Ant Path'))
-            cls.setJavaAntPath(res)
+            return ''
 
         return FileUtils.createPath(res, *args, **kwargs)
 
@@ -208,11 +153,7 @@ class ToolsEnvironment(object):
         """Doc..."""
         res = cls._getEnvValue(cls._ANDROID_SDK_PATH)
         if not res:
-            if ArgsUtils.get('allowEmpty', False, kwargs):
-                return ''
-
-            res = FileUtils.createPath(cls._queryForPath('Android SDK Path'))
-            cls.setAndroidSDKPath(res)
+            return ''
 
         return FileUtils.createPath(res, *args, **kwargs)
 
@@ -320,19 +261,6 @@ class ToolsEnvironment(object):
             f.close()
 
         return True
-
-#___________________________________________________________________________________________________ _queryForPath
-    @classmethod
-    def _queryForPath(cls, dialogName):
-        path = None
-        while not path:
-            if cls._qMainWindow:
-                caption = 'Select %s Directory' % dialogName
-                path    = QFileDialog.getExistingDirectory(cls._qMainWindow, caption=caption)
-            else:
-                caption = 'Specify %s directory: ' % dialogName
-                path    = queries.queryGeneralValue(caption)
-        return path
 
 #___________________________________________________________________________________________________ _getEnvValue
     @classmethod

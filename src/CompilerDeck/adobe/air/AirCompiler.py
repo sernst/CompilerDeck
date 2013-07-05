@@ -3,7 +3,6 @@
 # Scott Ernst
 
 import os
-import re
 
 from pyaid.file.FileUtils import FileUtils
 
@@ -19,8 +18,7 @@ class AirCompiler(AdobeSystemCompiler):
 #===================================================================================================
 #                                                                                       C L A S S
 
-    _APP_MODIFIER_PATTERN = re.compile(
-        '(?P<prefix><application xmlns="http://ns.adobe.com/air/application/)[0-9\.]+(?P<suffix>">)')
+
 
 #===================================================================================================
 #                                                                               P R O T E C T E D
@@ -38,7 +36,12 @@ class AirCompiler(AdobeSystemCompiler):
             self._log.write('ERROR: No app file found at: ' + sets.appDescriptorPath)
             return False
 
-        if not self._modifyAppXML(sets.appDescriptorPath):
+        if not AirUtils.updateDescriptorNamespace(sets.appDescriptorPath, sets.airVersion):
+            self._log.write([
+                'ERROR: Unable to update the application descriptor file namespace version',
+                'PATH: ' + sets.appDescriptorPath,
+                'VERSION: ' + sets.airVersion
+            ])
             return False
 
         cmd.extend([
@@ -63,48 +66,29 @@ class AirCompiler(AdobeSystemCompiler):
         for inc in sets.airIncludes:
             cmd.append(inc)
 
+        # Adds the launch display images for iOS compilation if they exist
         if sets.currentPlatformID == FlexProjectData.IOS_PLATFORM:
-            launchPath = FileUtils.createPath(sets.targetPath, 'launch')
+            launchPath = FileUtils.createPath(sets.platformProjectPath, 'launch')
             if os.path.exists(launchPath) and os.path.isdir(launchPath):
                 for item in os.listdir(launchPath):
                     itemPath = FileUtils.createPath(launchPath, item, isFile=True)
-                    if not os.path.isfile(itemPath) or not item.endswith('.png'):
-                        continue
+                    if os.path.isfile(itemPath) and item.endswith('.png'):
+                        cmd.extend(['-C', '"' + launchPath + '"', itemPath])
 
-                    cmd.extend(['-C', '"' + launchPath + '"', itemPath])
-
-        incs = sets.airIncludes + []
-        for inc in self._deployPlatformFiles():
-            if inc in incs:
-                continue
-            cmd.append(inc)
-            incs.append(inc)
-
-        for inc in self._deployNativeExtensionAssets():
-            if inc in incs:
-                continue
-            cmd.append(inc)
-            incs.append(inc)
+        results = AirUtils.deployExternalIncludes(sets)
+        self._copyMerges.extend(results['merges'])
+        cmd.extend(results['dirs'])
+        cmd.extend(results['files'])
 
         self._addAIRNativeExtensionArguments(cmd)
 
         os.chdir(sets.projectBinPath)
-        print 'CMD:', cmd
         if self.executeCommand(cmd, 'PACKAGING AIR FILE: "%s"' % sets.currentPlatformID):
             self._log.write('FAILED: AIR PACKAGING')
             return False
 
         self._log.write('SUCCESS: AIR PACKAGED')
         return True
-
-#___________________________________________________________________________________________________ _modifyAppXML
-    def _modifyAppXML(self, appPath):
-        """Doc..."""
-        sets = self._settings
-        data = FileUtils.getContents(appPath)
-        data = AirCompiler._APP_MODIFIER_PATTERN.sub(
-            '\g<prefix>' + sets.airVersion + '\g<suffix>', data)
-        return FileUtils.putContents(data, appPath)
 
 #___________________________________________________________________________________________________ addAIRTargetArguments
     def _addAIRTargetArguments(self, cmd):
@@ -140,52 +124,6 @@ class AirCompiler(AdobeSystemCompiler):
 
         for ane in sets.aneIncludes:
             cmd.extend(['-extdir', FileUtils.createPath(sets.projectPath, 'air', 'ane', ane)])
-
-#___________________________________________________________________________________________________ _deployNativeExtensionAssets
-    def _deployNativeExtensionAssets(self):
-        out  = []
-        sets = self._settings
-
-        print 'ANE Includes:', sets.aneIncludes
-        if not sets.aneIncludes:
-            return []
-
-        if sets.currentPlatformID == FlexProjectData.ANDROID_PLATFORM:
-            aneType = 'android'
-        elif sets.currentPlatformID == FlexProjectData.IOS_PLATFORM:
-            aneType = 'ios'
-        else:
-            aneType = 'default'
-
-        for ane in sets.aneIncludes:
-            aneAssetPath = FileUtils.createPath(
-                self.projectPath, 'air', 'ane', ane, aneType, 'assets'
-            )
-            print 'ANE Asset Path:', aneAssetPath
-            if not os.path.exists(aneAssetPath):
-                print 'ANE Asset path does not exist:', aneAssetPath
-                continue
-            print 'ANE asset path:', os.listdir(aneAssetPath)
-            for item in os.listdir(aneAssetPath):
-                itemPath = FileUtils.createPath(aneAssetPath, item)
-                if item == '.svn' or not os.path.isdir(itemPath):
-                    continue
-                copyResults = FileUtils.mergeCopy(
-                    itemPath,
-                    FileUtils.createPath(sets.targetPath, item),
-                    overwriteExisting=False
-                )
-                self._copyMerges.append(copyResults)
-                out.append(item)
-
-        print 'ANE OUT:', out
-        return out
-
-#___________________________________________________________________________________________________ _deployPlatformFiles
-    def _deployPlatformFiles(self):
-        result = AirUtils.deployPlatformFiles(self._settings)
-        self._copyMerges += result['merges']
-        return result['dirs']
 
 #===================================================================================================
 #                                                                               I N T R I N S I C

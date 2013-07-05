@@ -26,7 +26,7 @@ class ANECompileThread(RemoteExecutionThread):
         self._airVersion    = ArgsUtils.get('airVersion', None, kwargs)
         self._flashVersion  = ArgsUtils.get('flashVersion', None, kwargs)
         self._packageAir    = ArgsUtils.get('packageAir', False, kwargs)
-        self._quickCompile  = ArgsUtils.get('quickCompile', False, kwargs)
+        self._autoVersion   = ArgsUtils.get('autoVersion', False, kwargs)
         self._usbDebug      = ArgsUtils.get('usbDebug', False, kwargs)
         self._remoteDebug   = ArgsUtils.get('remoteDebug', self._usbDebug, kwargs)
         self._platforms     = ArgsUtils.get('platforms', {}, kwargs)
@@ -47,8 +47,6 @@ class ANECompileThread(RemoteExecutionThread):
             remoteDebug=self._remoteDebug,
             usbDebug=self._usbDebug
         )
-
-        print 'TEST!', pd.projectPath
 
         # FLASH
         usePlatform = self._platforms.get(FlexProjectData.FLASH_PLATFORM, False)

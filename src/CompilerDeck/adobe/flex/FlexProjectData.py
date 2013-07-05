@@ -44,6 +44,19 @@ class FlexProjectData(ProjectData):
     def projectBinPath(self):
         return FileUtils.createPath(self.platformProjectPath, 'bin', isDir=True)
 
+#___________________________________________________________________________________________________ GS: externalIncludesPath
+    @property
+    def externalIncludesPath(self):
+        return FileUtils.createPath(self.projectPath, 'includes', isDir=True)
+
+#___________________________________________________________________________________________________ GS: platformExternalIncludesPath
+    @property
+    def platformExternalIncludesPath(self):
+        pp = self.platformProjectPath
+        if pp == self.projectPath:
+            return None
+        return FileUtils.createPath(self.platformProjectPath, 'includes', isDir=True)
+
 #___________________________________________________________________________________________________ GS: appDescriptorPath
     @property
     def appDescriptorPath(self):

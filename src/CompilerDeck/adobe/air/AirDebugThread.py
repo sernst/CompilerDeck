@@ -59,7 +59,7 @@ class AirDebugThread(RemoteExecutionThread):
             FileUtils.createPath(sets.projectPath, 'bin', isDir=True)
         ]
 
-        deployment = AirUtils.deployPlatformFiles(self._settings)
+        deployment = AirUtils.deployExternalIncludes(self._settings)
         code       = 0
         try:
             os.chdir(FileUtils.createPath(sets.projectPath, isDir=True))
@@ -72,6 +72,7 @@ class AirDebugThread(RemoteExecutionThread):
             self._log.writeError('DEBUG ATTEMPT FAILED', err)
             code = 1
 
+        # Cleanup deployment
         for item in deployment['merges']:
             item.removeFiltered(FileList.CREATED)
 

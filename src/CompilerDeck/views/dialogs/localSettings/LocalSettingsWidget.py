@@ -34,9 +34,6 @@ class LocalSettingsWidget(PyGlassWidget):
         self.antLineEdit.setText(ToolsEnvironment.getJavaAntPath(allowEmpty=True))
         self.antToolBtn.clicked.connect(self._handleBrowseAntPath)
 
-        self.appleProvisionLineEdit.setText(ToolsEnvironment.getAppleProvisionProfile(allowEmpty=True))
-        self.appleToolBtn.clicked.connect(self._handleBrowseAppleProfile)
-
 #===================================================================================================
 #                                                                               P R O T E C T E D
 
@@ -69,7 +66,6 @@ class LocalSettingsWidget(PyGlassWidget):
         ToolsEnvironment.setFlexSDKPath(self.flexLineEdit.text())
         ToolsEnvironment.setAndroidSDKPath(self.androidLineEdit.text())
         ToolsEnvironment.setJavaAntPath(self.antLineEdit.text())
-        ToolsEnvironment.setAppleProvisionProfile(self.appleProvisionLineEdit.text())
         self.parent().close()
 
 #___________________________________________________________________________________________________ _handleCancelClick
@@ -91,12 +87,4 @@ class LocalSettingsWidget(PyGlassWidget):
 #___________________________________________________________________________________________________ _handleBrowseAntPath
     def _handleBrowseAntPath(self, *args, **kwargs):
         self._browseForPath(self.antLineEdit, 'Select Java Ant Path')
-
-#___________________________________________________________________________________________________ _handleBrowseAppleProfile
-    def _handleBrowseAppleProfile(self, *args, **kwargs):
-        self._browseForFile(
-            self.appleProvisionLineEdit,
-            'Select Apple Provisioning Profile',
-            'Mobile Provisions (*.mobileprovision)'
-        )
 

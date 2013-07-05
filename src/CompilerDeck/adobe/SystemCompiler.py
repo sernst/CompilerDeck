@@ -106,7 +106,6 @@ class SystemCompiler(object):
         f = open(batFilename, 'w')
         f.write(src.strip())
         f.close()
-        f = None
 
         out = self.executeCommand(batFilename, messageHeader=messageHeader, message=src.strip())
         os.remove(batFilename)
@@ -152,7 +151,6 @@ class SystemCompiler(object):
     def _cleanup(self):
         while len(self._copyMerges) > 0:
             self._copyMerges.pop().removeFiltered(FileList.CREATED)
-
 
 #___________________________________________________________________________________________________ _checkOutput
     def _checkOutput(self, code, raw, error):
