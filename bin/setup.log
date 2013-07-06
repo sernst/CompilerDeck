@@ -1,0 +1,1089 @@
+running py2exe
+creating f:\python\compilerdeck\bin\build
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\bundle-2.7
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp
+creating f:\python\compilerdeck\bin\dist
+*** searching for required modules ***
+*** parsing results ***
+creating python loader for extension 'PySide.QtOpenGL' (C:\Python27\lib\site-packages\PySide\QtOpenGL.pyd -> PySide.QtOpenGL.pyd)
+creating python loader for extension '_ctypes' (C:\Python27\DLLs\_ctypes.pyd -> _ctypes.pyd)
+creating python loader for extension 'PySide.QtXmlPatterns' (C:\Python27\lib\site-packages\PySide\QtXmlPatterns.pyd -> PySide.QtXmlPatterns.pyd)
+creating python loader for extension 'select' (C:\Python27\DLLs\select.pyd -> select.pyd)
+creating python loader for extension 'PySide.QtMultimedia' (C:\Python27\lib\site-packages\PySide\QtMultimedia.pyd -> PySide.QtMultimedia.pyd)
+creating python loader for extension 'unicodedata' (C:\Python27\DLLs\unicodedata.pyd -> unicodedata.pyd)
+creating python loader for extension 'PySide.QtSql' (C:\Python27\lib\site-packages\PySide\QtSql.pyd -> PySide.QtSql.pyd)
+creating python loader for extension 'lxml.objectify' (C:\Python27\lib\site-packages\lxml\objectify.pyd -> lxml.objectify.pyd)
+creating python loader for extension 'PySide.QtUiTools' (C:\Python27\lib\site-packages\PySide\QtUiTools.pyd -> PySide.QtUiTools.pyd)
+creating python loader for extension 'PySide.QtCore' (C:\Python27\lib\site-packages\PySide\QtCore.pyd -> PySide.QtCore.pyd)
+creating python loader for extension '_hashlib' (C:\Python27\DLLs\_hashlib.pyd -> _hashlib.pyd)
+creating python loader for extension 'bz2' (C:\Python27\DLLs\bz2.pyd -> bz2.pyd)
+creating python loader for extension 'PySide.QtScript' (C:\Python27\lib\site-packages\PySide\QtScript.pyd -> PySide.QtScript.pyd)
+creating python loader for extension '_ssl' (C:\Python27\DLLs\_ssl.pyd -> _ssl.pyd)
+creating python loader for extension 'lxml.etree' (C:\Python27\lib\site-packages\lxml\etree.pyd -> lxml.etree.pyd)
+creating python loader for extension 'PySide.QtNetwork' (C:\Python27\lib\site-packages\PySide\QtNetwork.pyd -> PySide.QtNetwork.pyd)
+creating python loader for extension 'PySide.QtDeclarative' (C:\Python27\lib\site-packages\PySide\QtDeclarative.pyd -> PySide.QtDeclarative.pyd)
+creating python loader for extension 'PySide.QtXml' (C:\Python27\lib\site-packages\PySide\QtXml.pyd -> PySide.QtXml.pyd)
+creating python loader for extension 'pyexpat' (C:\Python27\DLLs\pyexpat.pyd -> pyexpat.pyd)
+creating python loader for extension 'PySide.QtHelp' (C:\Python27\lib\site-packages\PySide\QtHelp.pyd -> PySide.QtHelp.pyd)
+creating python loader for extension 'PySide.QtWebKit' (C:\Python27\lib\site-packages\PySide\QtWebKit.pyd -> PySide.QtWebKit.pyd)
+creating python loader for extension 'PySide.QtSvg' (C:\Python27\lib\site-packages\PySide\QtSvg.pyd -> PySide.QtSvg.pyd)
+creating python loader for extension 'PySide.QtGui' (C:\Python27\lib\site-packages\PySide\QtGui.pyd -> PySide.QtGui.pyd)
+creating python loader for extension '_socket' (C:\Python27\DLLs\_socket.pyd -> _socket.pyd)
+creating python loader for extension 'PySide.QtScriptTools' (C:\Python27\lib\site-packages\PySide\QtScriptTools.pyd -> PySide.QtScriptTools.pyd)
+creating python loader for extension 'PySide.QtTest' (C:\Python27\lib\site-packages\PySide\QtTest.pyd -> PySide.QtTest.pyd)
+*** finding dlls needed ***
+*** create binaries ***
+*** byte compile python files ***
+byte-compiling C:\Python27\lib\ConfigParser.py to ConfigParser.pyc
+byte-compiling C:\Python27\lib\Cookie.py to Cookie.pyc
+byte-compiling C:\Python27\lib\Queue.py to Queue.pyc
+byte-compiling C:\Python27\lib\SocketServer.py to SocketServer.pyc
+byte-compiling C:\Python27\lib\StringIO.py to StringIO.pyc
+byte-compiling C:\Python27\lib\UserDict.py to UserDict.pyc
+byte-compiling C:\Python27\lib\_LWPCookieJar.py to _LWPCookieJar.pyc
+byte-compiling C:\Python27\lib\_MozillaCookieJar.py to _MozillaCookieJar.pyc
+byte-compiling C:\Python27\lib\__future__.py to __future__.pyc
+byte-compiling C:\Python27\lib\_abcoll.py to _abcoll.pyc
+byte-compiling C:\Python27\lib\_strptime.py to _strptime.pyc
+byte-compiling C:\Python27\lib\_threading_local.py to _threading_local.pyc
+byte-compiling C:\Python27\lib\_weakrefset.py to _weakrefset.pyc
+byte-compiling C:\Python27\lib\abc.py to abc.pyc
+byte-compiling C:\Python27\lib\argparse.py to argparse.pyc
+byte-compiling C:\Python27\lib\ast.py to ast.pyc
+byte-compiling C:\Python27\lib\atexit.py to atexit.pyc
+byte-compiling C:\Python27\lib\base64.py to base64.pyc
+byte-compiling C:\Python27\lib\bdb.py to bdb.pyc
+byte-compiling C:\Python27\lib\bisect.py to bisect.pyc
+byte-compiling C:\Python27\lib\calendar.py to calendar.pyc
+byte-compiling C:\Python27\lib\cgi.py to cgi.pyc
+byte-compiling C:\Python27\lib\cmd.py to cmd.pyc
+byte-compiling C:\Python27\lib\codecs.py to codecs.pyc
+byte-compiling C:\Python27\lib\collections.py to collections.pyc
+byte-compiling C:\Python27\lib\compiler\__init__.py to compiler\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\compiler
+byte-compiling C:\Python27\lib\compiler\ast.py to compiler\ast.pyc
+byte-compiling C:\Python27\lib\compiler\consts.py to compiler\consts.pyc
+byte-compiling C:\Python27\lib\compiler\future.py to compiler\future.pyc
+byte-compiling C:\Python27\lib\compiler\misc.py to compiler\misc.pyc
+byte-compiling C:\Python27\lib\compiler\pyassem.py to compiler\pyassem.pyc
+byte-compiling C:\Python27\lib\compiler\pycodegen.py to compiler\pycodegen.pyc
+byte-compiling C:\Python27\lib\compiler\symbols.py to compiler\symbols.pyc
+byte-compiling C:\Python27\lib\compiler\syntax.py to compiler\syntax.pyc
+byte-compiling C:\Python27\lib\compiler\transformer.py to compiler\transformer.pyc
+byte-compiling C:\Python27\lib\compiler\visitor.py to compiler\visitor.pyc
+byte-compiling C:\Python27\lib\contextlib.py to contextlib.pyc
+byte-compiling C:\Python27\lib\cookielib.py to cookielib.pyc
+byte-compiling C:\Python27\lib\copy.py to copy.pyc
+byte-compiling C:\Python27\lib\copy_reg.py to copy_reg.pyc
+byte-compiling C:\Python27\lib\ctypes\__init__.py to ctypes\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\ctypes
+byte-compiling C:\Python27\lib\ctypes\_endian.py to ctypes\_endian.pyc
+byte-compiling C:\Python27\lib\ctypes\macholib\__init__.py to ctypes\macholib\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\ctypes\macholib
+byte-compiling C:\Python27\lib\ctypes\macholib\dyld.py to ctypes\macholib\dyld.pyc
+byte-compiling C:\Python27\lib\ctypes\macholib\dylib.py to ctypes\macholib\dylib.pyc
+byte-compiling C:\Python27\lib\ctypes\macholib\framework.py to ctypes\macholib\framework.pyc
+byte-compiling C:\Python27\lib\ctypes\util.py to ctypes\util.pyc
+byte-compiling C:\Python27\lib\decimal.py to decimal.pyc
+byte-compiling C:\Python27\lib\difflib.py to difflib.pyc
+byte-compiling C:\Python27\lib\dis.py to dis.pyc
+byte-compiling C:\Python27\lib\distutils\__init__.py to distutils\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\distutils
+byte-compiling C:\Python27\lib\distutils\dep_util.py to distutils\dep_util.pyc
+byte-compiling C:\Python27\lib\distutils\errors.py to distutils\errors.pyc
+byte-compiling C:\Python27\lib\distutils\log.py to distutils\log.pyc
+byte-compiling C:\Python27\lib\distutils\spawn.py to distutils\spawn.pyc
+byte-compiling C:\Python27\lib\distutils\sysconfig.py to distutils\sysconfig.pyc
+byte-compiling C:\Python27\lib\distutils\text_file.py to distutils\text_file.pyc
+byte-compiling C:\Python27\lib\distutils\util.py to distutils\util.pyc
+byte-compiling C:\Python27\lib\doctest.py to doctest.pyc
+byte-compiling C:\Python27\lib\dummy_thread.py to dummy_thread.pyc
+byte-compiling C:\Python27\lib\dummy_threading.py to dummy_threading.pyc
+byte-compiling C:\Python27\lib\email\__init__.py to email\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\email
+byte-compiling C:\Python27\lib\email\_parseaddr.py to email\_parseaddr.pyc
+byte-compiling C:\Python27\lib\email\base64mime.py to email\base64mime.pyc
+byte-compiling C:\Python27\lib\email\charset.py to email\charset.pyc
+byte-compiling C:\Python27\lib\email\encoders.py to email\encoders.pyc
+byte-compiling C:\Python27\lib\email\errors.py to email\errors.pyc
+byte-compiling C:\Python27\lib\email\feedparser.py to email\feedparser.pyc
+byte-compiling C:\Python27\lib\email\generator.py to email\generator.pyc
+byte-compiling C:\Python27\lib\email\header.py to email\header.pyc
+byte-compiling C:\Python27\lib\email\iterators.py to email\iterators.pyc
+byte-compiling C:\Python27\lib\email\message.py to email\message.pyc
+byte-compiling C:\Python27\lib\email\mime\__init__.py to email\mime\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\email\mime
+byte-compiling C:\Python27\lib\email\mime\base.py to email\mime\base.pyc
+byte-compiling C:\Python27\lib\email\mime\multipart.py to email\mime\multipart.pyc
+byte-compiling C:\Python27\lib\email\mime\nonmultipart.py to email\mime\nonmultipart.pyc
+byte-compiling C:\Python27\lib\email\mime\text.py to email\mime\text.pyc
+byte-compiling C:\Python27\lib\email\parser.py to email\parser.pyc
+byte-compiling C:\Python27\lib\email\quoprimime.py to email\quoprimime.pyc
+byte-compiling C:\Python27\lib\email\utils.py to email\utils.pyc
+byte-compiling C:\Python27\lib\encodings\__init__.py to encodings\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\encodings
+byte-compiling C:\Python27\lib\encodings\aliases.py to encodings\aliases.pyc
+byte-compiling C:\Python27\lib\encodings\ascii.py to encodings\ascii.pyc
+byte-compiling C:\Python27\lib\encodings\base64_codec.py to encodings\base64_codec.pyc
+byte-compiling C:\Python27\lib\encodings\big5.py to encodings\big5.pyc
+byte-compiling C:\Python27\lib\encodings\big5hkscs.py to encodings\big5hkscs.pyc
+byte-compiling C:\Python27\lib\encodings\bz2_codec.py to encodings\bz2_codec.pyc
+byte-compiling C:\Python27\lib\encodings\charmap.py to encodings\charmap.pyc
+byte-compiling C:\Python27\lib\encodings\cp037.py to encodings\cp037.pyc
+byte-compiling C:\Python27\lib\encodings\cp1006.py to encodings\cp1006.pyc
+byte-compiling C:\Python27\lib\encodings\cp1026.py to encodings\cp1026.pyc
+byte-compiling C:\Python27\lib\encodings\cp1140.py to encodings\cp1140.pyc
+byte-compiling C:\Python27\lib\encodings\cp1250.py to encodings\cp1250.pyc
+byte-compiling C:\Python27\lib\encodings\cp1251.py to encodings\cp1251.pyc
+byte-compiling C:\Python27\lib\encodings\cp1252.py to encodings\cp1252.pyc
+byte-compiling C:\Python27\lib\encodings\cp1253.py to encodings\cp1253.pyc
+byte-compiling C:\Python27\lib\encodings\cp1254.py to encodings\cp1254.pyc
+byte-compiling C:\Python27\lib\encodings\cp1255.py to encodings\cp1255.pyc
+byte-compiling C:\Python27\lib\encodings\cp1256.py to encodings\cp1256.pyc
+byte-compiling C:\Python27\lib\encodings\cp1257.py to encodings\cp1257.pyc
+byte-compiling C:\Python27\lib\encodings\cp1258.py to encodings\cp1258.pyc
+byte-compiling C:\Python27\lib\encodings\cp424.py to encodings\cp424.pyc
+byte-compiling C:\Python27\lib\encodings\cp437.py to encodings\cp437.pyc
+byte-compiling C:\Python27\lib\encodings\cp500.py to encodings\cp500.pyc
+byte-compiling C:\Python27\lib\encodings\cp720.py to encodings\cp720.pyc
+byte-compiling C:\Python27\lib\encodings\cp737.py to encodings\cp737.pyc
+byte-compiling C:\Python27\lib\encodings\cp775.py to encodings\cp775.pyc
+byte-compiling C:\Python27\lib\encodings\cp850.py to encodings\cp850.pyc
+byte-compiling C:\Python27\lib\encodings\cp852.py to encodings\cp852.pyc
+byte-compiling C:\Python27\lib\encodings\cp855.py to encodings\cp855.pyc
+byte-compiling C:\Python27\lib\encodings\cp856.py to encodings\cp856.pyc
+byte-compiling C:\Python27\lib\encodings\cp857.py to encodings\cp857.pyc
+byte-compiling C:\Python27\lib\encodings\cp858.py to encodings\cp858.pyc
+byte-compiling C:\Python27\lib\encodings\cp860.py to encodings\cp860.pyc
+byte-compiling C:\Python27\lib\encodings\cp861.py to encodings\cp861.pyc
+byte-compiling C:\Python27\lib\encodings\cp862.py to encodings\cp862.pyc
+byte-compiling C:\Python27\lib\encodings\cp863.py to encodings\cp863.pyc
+byte-compiling C:\Python27\lib\encodings\cp864.py to encodings\cp864.pyc
+byte-compiling C:\Python27\lib\encodings\cp865.py to encodings\cp865.pyc
+byte-compiling C:\Python27\lib\encodings\cp866.py to encodings\cp866.pyc
+byte-compiling C:\Python27\lib\encodings\cp869.py to encodings\cp869.pyc
+byte-compiling C:\Python27\lib\encodings\cp874.py to encodings\cp874.pyc
+byte-compiling C:\Python27\lib\encodings\cp875.py to encodings\cp875.pyc
+byte-compiling C:\Python27\lib\encodings\cp932.py to encodings\cp932.pyc
+byte-compiling C:\Python27\lib\encodings\cp949.py to encodings\cp949.pyc
+byte-compiling C:\Python27\lib\encodings\cp950.py to encodings\cp950.pyc
+byte-compiling C:\Python27\lib\encodings\euc_jis_2004.py to encodings\euc_jis_2004.pyc
+byte-compiling C:\Python27\lib\encodings\euc_jisx0213.py to encodings\euc_jisx0213.pyc
+byte-compiling C:\Python27\lib\encodings\euc_jp.py to encodings\euc_jp.pyc
+byte-compiling C:\Python27\lib\encodings\euc_kr.py to encodings\euc_kr.pyc
+byte-compiling C:\Python27\lib\encodings\gb18030.py to encodings\gb18030.pyc
+byte-compiling C:\Python27\lib\encodings\gb2312.py to encodings\gb2312.pyc
+byte-compiling C:\Python27\lib\encodings\gbk.py to encodings\gbk.pyc
+byte-compiling C:\Python27\lib\encodings\hex_codec.py to encodings\hex_codec.pyc
+byte-compiling C:\Python27\lib\encodings\hp_roman8.py to encodings\hp_roman8.pyc
+byte-compiling C:\Python27\lib\encodings\hz.py to encodings\hz.pyc
+byte-compiling C:\Python27\lib\encodings\idna.py to encodings\idna.pyc
+byte-compiling C:\Python27\lib\encodings\iso2022_jp.py to encodings\iso2022_jp.pyc
+byte-compiling C:\Python27\lib\encodings\iso2022_jp_1.py to encodings\iso2022_jp_1.pyc
+byte-compiling C:\Python27\lib\encodings\iso2022_jp_2.py to encodings\iso2022_jp_2.pyc
+byte-compiling C:\Python27\lib\encodings\iso2022_jp_2004.py to encodings\iso2022_jp_2004.pyc
+byte-compiling C:\Python27\lib\encodings\iso2022_jp_3.py to encodings\iso2022_jp_3.pyc
+byte-compiling C:\Python27\lib\encodings\iso2022_jp_ext.py to encodings\iso2022_jp_ext.pyc
+byte-compiling C:\Python27\lib\encodings\iso2022_kr.py to encodings\iso2022_kr.pyc
+byte-compiling C:\Python27\lib\encodings\iso8859_1.py to encodings\iso8859_1.pyc
+byte-compiling C:\Python27\lib\encodings\iso8859_10.py to encodings\iso8859_10.pyc
+byte-compiling C:\Python27\lib\encodings\iso8859_11.py to encodings\iso8859_11.pyc
+byte-compiling C:\Python27\lib\encodings\iso8859_13.py to encodings\iso8859_13.pyc
+byte-compiling C:\Python27\lib\encodings\iso8859_14.py to encodings\iso8859_14.pyc
+byte-compiling C:\Python27\lib\encodings\iso8859_15.py to encodings\iso8859_15.pyc
+byte-compiling C:\Python27\lib\encodings\iso8859_16.py to encodings\iso8859_16.pyc
+byte-compiling C:\Python27\lib\encodings\iso8859_2.py to encodings\iso8859_2.pyc
+byte-compiling C:\Python27\lib\encodings\iso8859_3.py to encodings\iso8859_3.pyc
+byte-compiling C:\Python27\lib\encodings\iso8859_4.py to encodings\iso8859_4.pyc
+byte-compiling C:\Python27\lib\encodings\iso8859_5.py to encodings\iso8859_5.pyc
+byte-compiling C:\Python27\lib\encodings\iso8859_6.py to encodings\iso8859_6.pyc
+byte-compiling C:\Python27\lib\encodings\iso8859_7.py to encodings\iso8859_7.pyc
+byte-compiling C:\Python27\lib\encodings\iso8859_8.py to encodings\iso8859_8.pyc
+byte-compiling C:\Python27\lib\encodings\iso8859_9.py to encodings\iso8859_9.pyc
+byte-compiling C:\Python27\lib\encodings\johab.py to encodings\johab.pyc
+byte-compiling C:\Python27\lib\encodings\koi8_r.py to encodings\koi8_r.pyc
+byte-compiling C:\Python27\lib\encodings\koi8_u.py to encodings\koi8_u.pyc
+byte-compiling C:\Python27\lib\encodings\latin_1.py to encodings\latin_1.pyc
+byte-compiling C:\Python27\lib\encodings\mac_arabic.py to encodings\mac_arabic.pyc
+byte-compiling C:\Python27\lib\encodings\mac_centeuro.py to encodings\mac_centeuro.pyc
+byte-compiling C:\Python27\lib\encodings\mac_croatian.py to encodings\mac_croatian.pyc
+byte-compiling C:\Python27\lib\encodings\mac_cyrillic.py to encodings\mac_cyrillic.pyc
+byte-compiling C:\Python27\lib\encodings\mac_farsi.py to encodings\mac_farsi.pyc
+byte-compiling C:\Python27\lib\encodings\mac_greek.py to encodings\mac_greek.pyc
+byte-compiling C:\Python27\lib\encodings\mac_iceland.py to encodings\mac_iceland.pyc
+byte-compiling C:\Python27\lib\encodings\mac_latin2.py to encodings\mac_latin2.pyc
+byte-compiling C:\Python27\lib\encodings\mac_roman.py to encodings\mac_roman.pyc
+byte-compiling C:\Python27\lib\encodings\mac_romanian.py to encodings\mac_romanian.pyc
+byte-compiling C:\Python27\lib\encodings\mac_turkish.py to encodings\mac_turkish.pyc
+byte-compiling C:\Python27\lib\encodings\mbcs.py to encodings\mbcs.pyc
+byte-compiling C:\Python27\lib\encodings\palmos.py to encodings\palmos.pyc
+byte-compiling C:\Python27\lib\encodings\ptcp154.py to encodings\ptcp154.pyc
+byte-compiling C:\Python27\lib\encodings\punycode.py to encodings\punycode.pyc
+byte-compiling C:\Python27\lib\encodings\quopri_codec.py to encodings\quopri_codec.pyc
+byte-compiling C:\Python27\lib\encodings\raw_unicode_escape.py to encodings\raw_unicode_escape.pyc
+byte-compiling C:\Python27\lib\encodings\rot_13.py to encodings\rot_13.pyc
+byte-compiling C:\Python27\lib\encodings\shift_jis.py to encodings\shift_jis.pyc
+byte-compiling C:\Python27\lib\encodings\shift_jis_2004.py to encodings\shift_jis_2004.pyc
+byte-compiling C:\Python27\lib\encodings\shift_jisx0213.py to encodings\shift_jisx0213.pyc
+byte-compiling C:\Python27\lib\encodings\string_escape.py to encodings\string_escape.pyc
+byte-compiling C:\Python27\lib\encodings\tis_620.py to encodings\tis_620.pyc
+byte-compiling C:\Python27\lib\encodings\undefined.py to encodings\undefined.pyc
+byte-compiling C:\Python27\lib\encodings\unicode_escape.py to encodings\unicode_escape.pyc
+byte-compiling C:\Python27\lib\encodings\unicode_internal.py to encodings\unicode_internal.pyc
+byte-compiling C:\Python27\lib\encodings\utf_16.py to encodings\utf_16.pyc
+byte-compiling C:\Python27\lib\encodings\utf_16_be.py to encodings\utf_16_be.pyc
+byte-compiling C:\Python27\lib\encodings\utf_16_le.py to encodings\utf_16_le.pyc
+byte-compiling C:\Python27\lib\encodings\utf_32.py to encodings\utf_32.pyc
+byte-compiling C:\Python27\lib\encodings\utf_32_be.py to encodings\utf_32_be.pyc
+byte-compiling C:\Python27\lib\encodings\utf_32_le.py to encodings\utf_32_le.pyc
+byte-compiling C:\Python27\lib\encodings\utf_7.py to encodings\utf_7.pyc
+byte-compiling C:\Python27\lib\encodings\utf_8.py to encodings\utf_8.pyc
+byte-compiling C:\Python27\lib\encodings\utf_8_sig.py to encodings\utf_8_sig.pyc
+byte-compiling C:\Python27\lib\encodings\uu_codec.py to encodings\uu_codec.pyc
+byte-compiling C:\Python27\lib\encodings\zlib_codec.py to encodings\zlib_codec.pyc
+byte-compiling C:\Python27\lib\fnmatch.py to fnmatch.pyc
+byte-compiling C:\Python27\lib\ftplib.py to ftplib.pyc
+byte-compiling C:\Python27\lib\functools.py to functools.pyc
+byte-compiling C:\Python27\lib\genericpath.py to genericpath.pyc
+byte-compiling C:\Python27\lib\getopt.py to getopt.pyc
+byte-compiling C:\Python27\lib\getpass.py to getpass.pyc
+byte-compiling C:\Python27\lib\gettext.py to gettext.pyc
+byte-compiling C:\Python27\lib\glob.py to glob.pyc
+byte-compiling C:\Python27\lib\gzip.py to gzip.pyc
+byte-compiling C:\Python27\lib\hashlib.py to hashlib.pyc
+byte-compiling C:\Python27\lib\heapq.py to heapq.pyc
+byte-compiling C:\Python27\lib\hmac.py to hmac.pyc
+byte-compiling C:\Python27\lib\htmlentitydefs.py to htmlentitydefs.pyc
+byte-compiling C:\Python27\lib\httplib.py to httplib.pyc
+byte-compiling C:\Python27\lib\importlib\__init__.py to importlib\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\importlib
+byte-compiling C:\Python27\lib\inspect.py to inspect.pyc
+byte-compiling C:\Python27\lib\io.py to io.pyc
+byte-compiling C:\Python27\lib\json\__init__.py to json\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\json
+byte-compiling C:\Python27\lib\json\decoder.py to json\decoder.pyc
+byte-compiling C:\Python27\lib\json\encoder.py to json\encoder.pyc
+byte-compiling C:\Python27\lib\json\scanner.py to json\scanner.pyc
+byte-compiling C:\Python27\lib\keyword.py to keyword.pyc
+byte-compiling C:\Python27\lib\linecache.py to linecache.pyc
+byte-compiling C:\Python27\lib\locale.py to locale.pyc
+byte-compiling C:\Python27\lib\logging\__init__.py to logging\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\logging
+byte-compiling C:\Python27\lib\logging\config.py to logging\config.pyc
+byte-compiling C:\Python27\lib\logging\handlers.py to logging\handlers.pyc
+byte-compiling C:\Python27\lib\md5.py to md5.pyc
+byte-compiling C:\Python27\lib\mimetools.py to mimetools.pyc
+byte-compiling C:\Python27\lib\mimetypes.py to mimetypes.pyc
+byte-compiling C:\Python27\lib\netrc.py to netrc.pyc
+byte-compiling C:\Python27\lib\ntpath.py to ntpath.pyc
+byte-compiling C:\Python27\lib\nturl2path.py to nturl2path.pyc
+byte-compiling C:\Python27\lib\numbers.py to numbers.pyc
+byte-compiling C:\Python27\lib\opcode.py to opcode.pyc
+byte-compiling C:\Python27\lib\optparse.py to optparse.pyc
+byte-compiling C:\Python27\lib\os.py to os.pyc
+byte-compiling C:\Python27\lib\os2emxpath.py to os2emxpath.pyc
+byte-compiling C:\Python27\lib\pdb.py to pdb.pyc
+byte-compiling C:\Python27\lib\pickle.py to pickle.pyc
+byte-compiling C:\Python27\lib\pkgutil.py to pkgutil.pyc
+byte-compiling C:\Python27\lib\platform.py to platform.pyc
+byte-compiling C:\Python27\lib\plistlib.py to plistlib.pyc
+byte-compiling C:\Python27\lib\posixpath.py to posixpath.pyc
+byte-compiling C:\Python27\lib\pprint.py to pprint.pyc
+byte-compiling C:\Python27\lib\py_compile.py to py_compile.pyc
+byte-compiling C:\Python27\lib\quopri.py to quopri.pyc
+byte-compiling C:\Python27\lib\random.py to random.pyc
+byte-compiling C:\Python27\lib\re.py to re.pyc
+byte-compiling C:\Python27\lib\repr.py to repr.pyc
+byte-compiling C:\Python27\lib\rfc822.py to rfc822.pyc
+byte-compiling C:\Python27\lib\sets.py to sets.pyc
+byte-compiling C:\Python27\lib\sha.py to sha.pyc
+byte-compiling C:\Python27\lib\shlex.py to shlex.pyc
+byte-compiling C:\Python27\lib\shutil.py to shutil.pyc
+byte-compiling C:\Python27\lib\site-packages\PySide\__init__.py to PySide\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\PySide
+byte-compiling C:\Python27\lib\site-packages\_markerlib\__init__.py to _markerlib\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\_markerlib
+byte-compiling C:\Python27\lib\site-packages\_markerlib\markers.py to _markerlib\markers.pyc
+byte-compiling C:\Python27\lib\site-packages\alembic\__init__.py to alembic\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\alembic
+byte-compiling C:\Python27\lib\site-packages\alembic\autogenerate.py to alembic\autogenerate.pyc
+byte-compiling C:\Python27\lib\site-packages\alembic\command.py to alembic\command.pyc
+byte-compiling C:\Python27\lib\site-packages\alembic\config.py to alembic\config.pyc
+byte-compiling C:\Python27\lib\site-packages\alembic\context.py to alembic\context.pyc
+byte-compiling C:\Python27\lib\site-packages\alembic\ddl\__init__.py to alembic\ddl\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\alembic\ddl
+byte-compiling C:\Python27\lib\site-packages\alembic\ddl\base.py to alembic\ddl\base.pyc
+byte-compiling C:\Python27\lib\site-packages\alembic\ddl\impl.py to alembic\ddl\impl.pyc
+byte-compiling C:\Python27\lib\site-packages\alembic\ddl\mssql.py to alembic\ddl\mssql.pyc
+byte-compiling C:\Python27\lib\site-packages\alembic\ddl\mysql.py to alembic\ddl\mysql.pyc
+byte-compiling C:\Python27\lib\site-packages\alembic\ddl\oracle.py to alembic\ddl\oracle.pyc
+byte-compiling C:\Python27\lib\site-packages\alembic\ddl\postgresql.py to alembic\ddl\postgresql.pyc
+byte-compiling C:\Python27\lib\site-packages\alembic\ddl\sqlite.py to alembic\ddl\sqlite.pyc
+byte-compiling C:\Python27\lib\site-packages\alembic\environment.py to alembic\environment.pyc
+byte-compiling C:\Python27\lib\site-packages\alembic\migration.py to alembic\migration.pyc
+byte-compiling C:\Python27\lib\site-packages\alembic\op.py to alembic\op.pyc
+byte-compiling C:\Python27\lib\site-packages\alembic\operations.py to alembic\operations.pyc
+byte-compiling C:\Python27\lib\site-packages\alembic\script.py to alembic\script.pyc
+byte-compiling C:\Python27\lib\site-packages\alembic\util.py to alembic\util.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\__init__.py to boto\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto
+byte-compiling C:\Python27\lib\site-packages\boto\auth.py to boto\auth.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\auth_handler.py to boto\auth_handler.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\beanstalk\__init__.py to boto\beanstalk\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\beanstalk
+byte-compiling C:\Python27\lib\site-packages\boto\beanstalk\layer1.py to boto\beanstalk\layer1.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\cacerts\__init__.py to boto\cacerts\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\cacerts
+byte-compiling C:\Python27\lib\site-packages\boto\cloudformation\__init__.py to boto\cloudformation\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\cloudformation
+byte-compiling C:\Python27\lib\site-packages\boto\cloudformation\connection.py to boto\cloudformation\connection.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\cloudformation\stack.py to boto\cloudformation\stack.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\cloudformation\template.py to boto\cloudformation\template.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\cloudfront\__init__.py to boto\cloudfront\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\cloudfront
+byte-compiling C:\Python27\lib\site-packages\boto\cloudfront\distribution.py to boto\cloudfront\distribution.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\cloudfront\exception.py to boto\cloudfront\exception.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\cloudfront\identity.py to boto\cloudfront\identity.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\cloudfront\invalidation.py to boto\cloudfront\invalidation.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\cloudfront\logging.py to boto\cloudfront\logging.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\cloudfront\object.py to boto\cloudfront\object.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\cloudfront\origin.py to boto\cloudfront\origin.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\cloudfront\signers.py to boto\cloudfront\signers.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\cloudsearch\__init__.py to boto\cloudsearch\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\cloudsearch
+byte-compiling C:\Python27\lib\site-packages\boto\cloudsearch\document.py to boto\cloudsearch\document.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\cloudsearch\domain.py to boto\cloudsearch\domain.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\cloudsearch\layer1.py to boto\cloudsearch\layer1.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\cloudsearch\layer2.py to boto\cloudsearch\layer2.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\cloudsearch\optionstatus.py to boto\cloudsearch\optionstatus.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\cloudsearch\search.py to boto\cloudsearch\search.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\compat.py to boto\compat.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\connection.py to boto\connection.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\dynamodb\__init__.py to boto\dynamodb\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\dynamodb
+byte-compiling C:\Python27\lib\site-packages\boto\dynamodb\batch.py to boto\dynamodb\batch.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\dynamodb\exceptions.py to boto\dynamodb\exceptions.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\dynamodb\item.py to boto\dynamodb\item.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\dynamodb\layer1.py to boto\dynamodb\layer1.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\dynamodb\layer2.py to boto\dynamodb\layer2.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\dynamodb\schema.py to boto\dynamodb\schema.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\dynamodb\table.py to boto\dynamodb\table.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\dynamodb\types.py to boto\dynamodb\types.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\__init__.py to boto\ec2\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\ec2
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\address.py to boto\ec2\address.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\attributes.py to boto\ec2\attributes.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\autoscale\__init__.py to boto\ec2\autoscale\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\ec2\autoscale
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\autoscale\activity.py to boto\ec2\autoscale\activity.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\autoscale\group.py to boto\ec2\autoscale\group.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\autoscale\instance.py to boto\ec2\autoscale\instance.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\autoscale\launchconfig.py to boto\ec2\autoscale\launchconfig.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\autoscale\policy.py to boto\ec2\autoscale\policy.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\autoscale\request.py to boto\ec2\autoscale\request.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\autoscale\scheduled.py to boto\ec2\autoscale\scheduled.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\autoscale\tag.py to boto\ec2\autoscale\tag.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\blockdevicemapping.py to boto\ec2\blockdevicemapping.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\bundleinstance.py to boto\ec2\bundleinstance.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\cloudwatch\__init__.py to boto\ec2\cloudwatch\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\ec2\cloudwatch
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\cloudwatch\alarm.py to boto\ec2\cloudwatch\alarm.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\cloudwatch\datapoint.py to boto\ec2\cloudwatch\datapoint.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\cloudwatch\dimension.py to boto\ec2\cloudwatch\dimension.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\cloudwatch\listelement.py to boto\ec2\cloudwatch\listelement.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\cloudwatch\metric.py to boto\ec2\cloudwatch\metric.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\connection.py to boto\ec2\connection.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\ec2object.py to boto\ec2\ec2object.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\elb\__init__.py to boto\ec2\elb\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\ec2\elb
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\elb\healthcheck.py to boto\ec2\elb\healthcheck.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\elb\instancestate.py to boto\ec2\elb\instancestate.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\elb\listelement.py to boto\ec2\elb\listelement.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\elb\listener.py to boto\ec2\elb\listener.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\elb\loadbalancer.py to boto\ec2\elb\loadbalancer.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\elb\policies.py to boto\ec2\elb\policies.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\elb\securitygroup.py to boto\ec2\elb\securitygroup.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\group.py to boto\ec2\group.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\image.py to boto\ec2\image.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\instance.py to boto\ec2\instance.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\instanceinfo.py to boto\ec2\instanceinfo.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\instancestatus.py to boto\ec2\instancestatus.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\keypair.py to boto\ec2\keypair.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\launchspecification.py to boto\ec2\launchspecification.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\networkinterface.py to boto\ec2\networkinterface.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\placementgroup.py to boto\ec2\placementgroup.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\regioninfo.py to boto\ec2\regioninfo.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\reservedinstance.py to boto\ec2\reservedinstance.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\securitygroup.py to boto\ec2\securitygroup.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\snapshot.py to boto\ec2\snapshot.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\spotdatafeedsubscription.py to boto\ec2\spotdatafeedsubscription.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\spotinstancerequest.py to boto\ec2\spotinstancerequest.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\spotpricehistory.py to boto\ec2\spotpricehistory.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\tag.py to boto\ec2\tag.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\vmtype.py to boto\ec2\vmtype.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\volume.py to boto\ec2\volume.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\volumestatus.py to boto\ec2\volumestatus.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ec2\zone.py to boto\ec2\zone.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\elastictranscoder\__init__.py to boto\elastictranscoder\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\elastictranscoder
+byte-compiling C:\Python27\lib\site-packages\boto\elastictranscoder\exceptions.py to boto\elastictranscoder\exceptions.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\elastictranscoder\layer1.py to boto\elastictranscoder\layer1.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\emr\__init__.py to boto\emr\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\emr
+byte-compiling C:\Python27\lib\site-packages\boto\emr\bootstrap_action.py to boto\emr\bootstrap_action.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\emr\connection.py to boto\emr\connection.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\emr\emrobject.py to boto\emr\emrobject.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\emr\step.py to boto\emr\step.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\exception.py to boto\exception.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\file\__init__.py to boto\file\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\file
+byte-compiling C:\Python27\lib\site-packages\boto\file\bucket.py to boto\file\bucket.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\file\connection.py to boto\file\connection.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\file\key.py to boto\file\key.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\file\simpleresultset.py to boto\file\simpleresultset.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\fps\__init__.py to boto\fps\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\fps
+byte-compiling C:\Python27\lib\site-packages\boto\fps\connection.py to boto\fps\connection.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\fps\exception.py to boto\fps\exception.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\fps\response.py to boto\fps\response.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\glacier\__init__.py to boto\glacier\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\glacier
+byte-compiling C:\Python27\lib\site-packages\boto\glacier\concurrent.py to boto\glacier\concurrent.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\glacier\exceptions.py to boto\glacier\exceptions.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\glacier\job.py to boto\glacier\job.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\glacier\layer1.py to boto\glacier\layer1.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\glacier\layer2.py to boto\glacier\layer2.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\glacier\response.py to boto\glacier\response.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\glacier\utils.py to boto\glacier\utils.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\glacier\vault.py to boto\glacier\vault.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\glacier\writer.py to boto\glacier\writer.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\gs\__init__.py to boto\gs\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\gs
+byte-compiling C:\Python27\lib\site-packages\boto\gs\acl.py to boto\gs\acl.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\gs\bucket.py to boto\gs\bucket.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\gs\bucketlistresultset.py to boto\gs\bucketlistresultset.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\gs\connection.py to boto\gs\connection.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\gs\cors.py to boto\gs\cors.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\gs\key.py to boto\gs\key.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\gs\user.py to boto\gs\user.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\handler.py to boto\handler.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\https_connection.py to boto\https_connection.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\iam\__init__.py to boto\iam\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\iam
+byte-compiling C:\Python27\lib\site-packages\boto\iam\connection.py to boto\iam\connection.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\iam\summarymap.py to boto\iam\summarymap.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\jsonresponse.py to boto\jsonresponse.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\mturk\__init__.py to boto\mturk\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\mturk
+byte-compiling C:\Python27\lib\site-packages\boto\mturk\connection.py to boto\mturk\connection.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\mturk\notification.py to boto\mturk\notification.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\mturk\price.py to boto\mturk\price.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\mturk\question.py to boto\mturk\question.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\opsworks\__init__.py to boto\opsworks\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\opsworks
+byte-compiling C:\Python27\lib\site-packages\boto\opsworks\exceptions.py to boto\opsworks\exceptions.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\opsworks\layer1.py to boto\opsworks\layer1.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\plugin.py to boto\plugin.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\provider.py to boto\provider.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\pyami\__init__.py to boto\pyami\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\pyami
+byte-compiling C:\Python27\lib\site-packages\boto\pyami\config.py to boto\pyami\config.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\rds\__init__.py to boto\rds\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\rds
+byte-compiling C:\Python27\lib\site-packages\boto\rds\dbinstance.py to boto\rds\dbinstance.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\rds\dbsecuritygroup.py to boto\rds\dbsecuritygroup.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\rds\dbsnapshot.py to boto\rds\dbsnapshot.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\rds\event.py to boto\rds\event.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\rds\parametergroup.py to boto\rds\parametergroup.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\rds\regioninfo.py to boto\rds\regioninfo.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\redshift\__init__.py to boto\redshift\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\redshift
+byte-compiling C:\Python27\lib\site-packages\boto\redshift\exceptions.py to boto\redshift\exceptions.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\redshift\layer1.py to boto\redshift\layer1.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\regioninfo.py to boto\regioninfo.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\resultset.py to boto\resultset.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\route53\__init__.py to boto\route53\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\route53
+byte-compiling C:\Python27\lib\site-packages\boto\route53\connection.py to boto\route53\connection.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\route53\exception.py to boto\route53\exception.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\route53\record.py to boto\route53\record.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\route53\status.py to boto\route53\status.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\route53\zone.py to boto\route53\zone.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\s3\__init__.py to boto\s3\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\s3
+byte-compiling C:\Python27\lib\site-packages\boto\s3\acl.py to boto\s3\acl.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\s3\bucket.py to boto\s3\bucket.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\s3\bucketlistresultset.py to boto\s3\bucketlistresultset.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\s3\bucketlogging.py to boto\s3\bucketlogging.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\s3\connection.py to boto\s3\connection.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\s3\cors.py to boto\s3\cors.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\s3\deletemarker.py to boto\s3\deletemarker.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\s3\key.py to boto\s3\key.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\s3\keyfile.py to boto\s3\keyfile.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\s3\lifecycle.py to boto\s3\lifecycle.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\s3\multidelete.py to boto\s3\multidelete.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\s3\multipart.py to boto\s3\multipart.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\s3\prefix.py to boto\s3\prefix.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\s3\tagging.py to boto\s3\tagging.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\s3\user.py to boto\s3\user.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\s3\website.py to boto\s3\website.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\sdb\__init__.py to boto\sdb\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\sdb
+byte-compiling C:\Python27\lib\site-packages\boto\sdb\connection.py to boto\sdb\connection.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\sdb\domain.py to boto\sdb\domain.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\sdb\item.py to boto\sdb\item.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\sdb\queryresultset.py to boto\sdb\queryresultset.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\sdb\regioninfo.py to boto\sdb\regioninfo.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ses\__init__.py to boto\ses\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\ses
+byte-compiling C:\Python27\lib\site-packages\boto\ses\connection.py to boto\ses\connection.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\ses\exceptions.py to boto\ses\exceptions.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\sns\__init__.py to boto\sns\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\sns
+byte-compiling C:\Python27\lib\site-packages\boto\sns\connection.py to boto\sns\connection.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\sqs\__init__.py to boto\sqs\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\sqs
+byte-compiling C:\Python27\lib\site-packages\boto\sqs\attributes.py to boto\sqs\attributes.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\sqs\batchresults.py to boto\sqs\batchresults.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\sqs\connection.py to boto\sqs\connection.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\sqs\message.py to boto\sqs\message.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\sqs\queue.py to boto\sqs\queue.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\sqs\regioninfo.py to boto\sqs\regioninfo.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\storage_uri.py to boto\storage_uri.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\sts\__init__.py to boto\sts\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\sts
+byte-compiling C:\Python27\lib\site-packages\boto\sts\connection.py to boto\sts\connection.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\sts\credentials.py to boto\sts\credentials.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\support\__init__.py to boto\support\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\support
+byte-compiling C:\Python27\lib\site-packages\boto\support\exceptions.py to boto\support\exceptions.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\support\layer1.py to boto\support\layer1.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\swf\__init__.py to boto\swf\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\swf
+byte-compiling C:\Python27\lib\site-packages\boto\swf\exceptions.py to boto\swf\exceptions.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\swf\layer1.py to boto\swf\layer1.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\utils.py to boto\utils.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\vpc\__init__.py to boto\vpc\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\boto\vpc
+byte-compiling C:\Python27\lib\site-packages\boto\vpc\customergateway.py to boto\vpc\customergateway.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\vpc\dhcpoptions.py to boto\vpc\dhcpoptions.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\vpc\internetgateway.py to boto\vpc\internetgateway.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\vpc\routetable.py to boto\vpc\routetable.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\vpc\subnet.py to boto\vpc\subnet.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\vpc\vpc.py to boto\vpc\vpc.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\vpc\vpnconnection.py to boto\vpc\vpnconnection.pyc
+byte-compiling C:\Python27\lib\site-packages\boto\vpc\vpngateway.py to boto\vpc\vpngateway.pyc
+byte-compiling C:\Python27\lib\site-packages\lxml\ElementInclude.py to lxml\ElementInclude.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\lxml
+byte-compiling C:\Python27\lib\site-packages\lxml\__init__.py to lxml\__init__.pyc
+byte-compiling C:\Python27\lib\site-packages\lxml\_elementpath.py to lxml\_elementpath.pyc
+byte-compiling C:\Python27\lib\site-packages\lxml\builder.py to lxml\builder.pyc
+byte-compiling C:\Python27\lib\site-packages\lxml\cssselect.py to lxml\cssselect.pyc
+byte-compiling C:\Python27\lib\site-packages\lxml\doctestcompare.py to lxml\doctestcompare.pyc
+byte-compiling C:\Python27\lib\site-packages\lxml\html\ElementSoup.py to lxml\html\ElementSoup.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\lxml\html
+byte-compiling C:\Python27\lib\site-packages\lxml\html\__init__.py to lxml\html\__init__.pyc
+byte-compiling C:\Python27\lib\site-packages\lxml\html\_diffcommand.py to lxml\html\_diffcommand.pyc
+byte-compiling C:\Python27\lib\site-packages\lxml\html\_html5builder.py to lxml\html\_html5builder.pyc
+byte-compiling C:\Python27\lib\site-packages\lxml\html\_setmixin.py to lxml\html\_setmixin.pyc
+byte-compiling C:\Python27\lib\site-packages\lxml\html\builder.py to lxml\html\builder.pyc
+byte-compiling C:\Python27\lib\site-packages\lxml\html\clean.py to lxml\html\clean.pyc
+byte-compiling C:\Python27\lib\site-packages\lxml\html\defs.py to lxml\html\defs.pyc
+byte-compiling C:\Python27\lib\site-packages\lxml\html\diff.py to lxml\html\diff.pyc
+byte-compiling C:\Python27\lib\site-packages\lxml\html\formfill.py to lxml\html\formfill.pyc
+byte-compiling C:\Python27\lib\site-packages\lxml\html\html5parser.py to lxml\html\html5parser.pyc
+byte-compiling C:\Python27\lib\site-packages\lxml\html\soupparser.py to lxml\html\soupparser.pyc
+byte-compiling C:\Python27\lib\site-packages\lxml\html\usedoctest.py to lxml\html\usedoctest.pyc
+byte-compiling C:\Python27\lib\site-packages\lxml\includes\__init__.py to lxml\includes\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\lxml\includes
+byte-compiling C:\Python27\lib\site-packages\lxml\isoschematron\__init__.py to lxml\isoschematron\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\lxml\isoschematron
+byte-compiling C:\Python27\lib\site-packages\lxml\pyclasslookup.py to lxml\pyclasslookup.pyc
+byte-compiling C:\Python27\lib\site-packages\lxml\sax.py to lxml\sax.pyc
+byte-compiling C:\Python27\lib\site-packages\lxml\usedoctest.py to lxml\usedoctest.pyc
+byte-compiling C:\Python27\lib\site-packages\mako\__init__.py to mako\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\mako
+byte-compiling C:\Python27\lib\site-packages\mako\_ast_util.py to mako\_ast_util.pyc
+byte-compiling C:\Python27\lib\site-packages\mako\ast.py to mako\ast.pyc
+byte-compiling C:\Python27\lib\site-packages\mako\cache.py to mako\cache.pyc
+byte-compiling C:\Python27\lib\site-packages\mako\codegen.py to mako\codegen.pyc
+byte-compiling C:\Python27\lib\site-packages\mako\compat.py to mako\compat.pyc
+byte-compiling C:\Python27\lib\site-packages\mako\exceptions.py to mako\exceptions.pyc
+byte-compiling C:\Python27\lib\site-packages\mako\ext\__init__.py to mako\ext\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\mako\ext
+byte-compiling C:\Python27\lib\site-packages\mako\ext\pygmentplugin.py to mako\ext\pygmentplugin.pyc
+byte-compiling C:\Python27\lib\site-packages\mako\filters.py to mako\filters.pyc
+byte-compiling C:\Python27\lib\site-packages\mako\lexer.py to mako\lexer.pyc
+byte-compiling C:\Python27\lib\site-packages\mako\parsetree.py to mako\parsetree.pyc
+byte-compiling C:\Python27\lib\site-packages\mako\pygen.py to mako\pygen.pyc
+byte-compiling C:\Python27\lib\site-packages\mako\pyparser.py to mako\pyparser.pyc
+byte-compiling C:\Python27\lib\site-packages\mako\runtime.py to mako\runtime.pyc
+byte-compiling C:\Python27\lib\site-packages\mako\template.py to mako\template.pyc
+byte-compiling C:\Python27\lib\site-packages\mako\util.py to mako\util.pyc
+byte-compiling C:\Python27\lib\site-packages\markupsafe\__init__.py to markupsafe\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\markupsafe
+byte-compiling C:\Python27\lib\site-packages\markupsafe\_constants.py to markupsafe\_constants.pyc
+byte-compiling C:\Python27\lib\site-packages\markupsafe\_native.py to markupsafe\_native.pyc
+byte-compiling C:\Python27\lib\site-packages\pkg_resources.py to pkg_resources.pyc
+byte-compiling C:\Python27\lib\site-packages\pytz\__init__.py to pytz\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pytz
+byte-compiling C:\Python27\lib\site-packages\pytz\exceptions.py to pytz\exceptions.pyc
+byte-compiling C:\Python27\lib\site-packages\pytz\tzfile.py to pytz\tzfile.pyc
+byte-compiling C:\Python27\lib\site-packages\pytz\tzinfo.py to pytz\tzinfo.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\__init__.py to requests\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\requests
+byte-compiling C:\Python27\lib\site-packages\requests\adapters.py to requests\adapters.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\api.py to requests\api.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\auth.py to requests\auth.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\certs.py to requests\certs.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\compat.py to requests\compat.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\cookies.py to requests\cookies.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\exceptions.py to requests\exceptions.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\hooks.py to requests\hooks.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\models.py to requests\models.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\__init__.py to requests\packages\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\requests\packages
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\__init__.py to requests\packages\charade\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\requests\packages\charade
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\big5freq.py to requests\packages\charade\big5freq.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\big5prober.py to requests\packages\charade\big5prober.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\chardistribution.py to requests\packages\charade\chardistribution.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\charsetgroupprober.py to requests\packages\charade\charsetgroupprober.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\charsetprober.py to requests\packages\charade\charsetprober.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\codingstatemachine.py to requests\packages\charade\codingstatemachine.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\compat.py to requests\packages\charade\compat.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\constants.py to requests\packages\charade\constants.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\escprober.py to requests\packages\charade\escprober.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\escsm.py to requests\packages\charade\escsm.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\eucjpprober.py to requests\packages\charade\eucjpprober.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\euckrfreq.py to requests\packages\charade\euckrfreq.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\euckrprober.py to requests\packages\charade\euckrprober.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\euctwfreq.py to requests\packages\charade\euctwfreq.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\euctwprober.py to requests\packages\charade\euctwprober.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\gb2312freq.py to requests\packages\charade\gb2312freq.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\gb2312prober.py to requests\packages\charade\gb2312prober.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\hebrewprober.py to requests\packages\charade\hebrewprober.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\jisfreq.py to requests\packages\charade\jisfreq.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\jpcntx.py to requests\packages\charade\jpcntx.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\langbulgarianmodel.py to requests\packages\charade\langbulgarianmodel.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\langcyrillicmodel.py to requests\packages\charade\langcyrillicmodel.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\langgreekmodel.py to requests\packages\charade\langgreekmodel.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\langhebrewmodel.py to requests\packages\charade\langhebrewmodel.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\langhungarianmodel.py to requests\packages\charade\langhungarianmodel.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\langthaimodel.py to requests\packages\charade\langthaimodel.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\latin1prober.py to requests\packages\charade\latin1prober.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\mbcharsetprober.py to requests\packages\charade\mbcharsetprober.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\mbcsgroupprober.py to requests\packages\charade\mbcsgroupprober.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\mbcssm.py to requests\packages\charade\mbcssm.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\sbcharsetprober.py to requests\packages\charade\sbcharsetprober.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\sbcsgroupprober.py to requests\packages\charade\sbcsgroupprober.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\sjisprober.py to requests\packages\charade\sjisprober.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\universaldetector.py to requests\packages\charade\universaldetector.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\utf8prober.py to requests\packages\charade\utf8prober.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\urllib3\__init__.py to requests\packages\urllib3\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\requests\packages\urllib3
+byte-compiling C:\Python27\lib\site-packages\requests\packages\urllib3\_collections.py to requests\packages\urllib3\_collections.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\urllib3\connectionpool.py to requests\packages\urllib3\connectionpool.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\urllib3\exceptions.py to requests\packages\urllib3\exceptions.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\urllib3\filepost.py to requests\packages\urllib3\filepost.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\urllib3\packages\__init__.py to requests\packages\urllib3\packages\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\requests\packages\urllib3\packages
+byte-compiling C:\Python27\lib\site-packages\requests\packages\urllib3\packages\ordered_dict.py to requests\packages\urllib3\packages\ordered_dict.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\urllib3\packages\six.py to requests\packages\urllib3\packages\six.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\urllib3\packages\ssl_match_hostname\__init__.py to requests\packages\urllib3\packages\ssl_match_hostname\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\requests\packages\urllib3\packages\ssl_match_hostname
+byte-compiling C:\Python27\lib\site-packages\requests\packages\urllib3\poolmanager.py to requests\packages\urllib3\poolmanager.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\urllib3\request.py to requests\packages\urllib3\request.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\urllib3\response.py to requests\packages\urllib3\response.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\urllib3\util.py to requests\packages\urllib3\util.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\sessions.py to requests\sessions.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\status_codes.py to requests\status_codes.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\structures.py to requests\structures.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\utils.py to requests\utils.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\__init__.py to sqlalchemy\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\sqlalchemy
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\dialects\__init__.py to sqlalchemy\dialects\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\sqlalchemy\dialects
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\engine\__init__.py to sqlalchemy\engine\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\sqlalchemy\engine
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\engine\base.py to sqlalchemy\engine\base.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\engine\ddl.py to sqlalchemy\engine\ddl.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\engine\interfaces.py to sqlalchemy\engine\interfaces.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\engine\reflection.py to sqlalchemy\engine\reflection.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\engine\result.py to sqlalchemy\engine\result.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\engine\strategies.py to sqlalchemy\engine\strategies.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\engine\threadlocal.py to sqlalchemy\engine\threadlocal.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\engine\url.py to sqlalchemy\engine\url.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\engine\util.py to sqlalchemy\engine\util.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\event.py to sqlalchemy\event.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\events.py to sqlalchemy\events.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\exc.py to sqlalchemy\exc.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\ext\__init__.py to sqlalchemy\ext\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\sqlalchemy\ext
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\ext\compiler.py to sqlalchemy\ext\compiler.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\inspection.py to sqlalchemy\inspection.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\interfaces.py to sqlalchemy\interfaces.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\log.py to sqlalchemy\log.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\pool.py to sqlalchemy\pool.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\processors.py to sqlalchemy\processors.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\schema.py to sqlalchemy\schema.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\sql\__init__.py to sqlalchemy\sql\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\sqlalchemy\sql
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\sql\expression.py to sqlalchemy\sql\expression.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\sql\operators.py to sqlalchemy\sql\operators.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\sql\util.py to sqlalchemy\sql\util.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\sql\visitors.py to sqlalchemy\sql\visitors.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\types.py to sqlalchemy\types.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\util\__init__.py to sqlalchemy\util\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\sqlalchemy\util
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\util\_collections.py to sqlalchemy\util\_collections.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\util\compat.py to sqlalchemy\util\compat.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\util\deprecations.py to sqlalchemy\util\deprecations.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\util\langhelpers.py to sqlalchemy\util\langhelpers.pyc
+byte-compiling C:\Python27\lib\site-packages\sqlalchemy\util\topological.py to sqlalchemy\util\topological.pyc
+byte-compiling C:\Python27\lib\smtplib.py to smtplib.pyc
+byte-compiling C:\Python27\lib\socket.py to socket.pyc
+byte-compiling C:\Python27\lib\sre.py to sre.pyc
+byte-compiling C:\Python27\lib\sre_compile.py to sre_compile.pyc
+byte-compiling C:\Python27\lib\sre_constants.py to sre_constants.pyc
+byte-compiling C:\Python27\lib\sre_parse.py to sre_parse.pyc
+byte-compiling C:\Python27\lib\ssl.py to ssl.pyc
+byte-compiling C:\Python27\lib\stat.py to stat.pyc
+byte-compiling C:\Python27\lib\string.py to string.pyc
+byte-compiling C:\Python27\lib\stringprep.py to stringprep.pyc
+byte-compiling C:\Python27\lib\struct.py to struct.pyc
+byte-compiling C:\Python27\lib\subprocess.py to subprocess.pyc
+byte-compiling C:\Python27\lib\symbol.py to symbol.pyc
+byte-compiling C:\Python27\lib\symtable.py to symtable.pyc
+byte-compiling C:\Python27\lib\sysconfig.py to sysconfig.pyc
+byte-compiling C:\Python27\lib\tarfile.py to tarfile.pyc
+byte-compiling C:\Python27\lib\tempfile.py to tempfile.pyc
+byte-compiling C:\Python27\lib\textwrap.py to textwrap.pyc
+byte-compiling C:\Python27\lib\threading.py to threading.pyc
+byte-compiling C:\Python27\lib\token.py to token.pyc
+byte-compiling C:\Python27\lib\tokenize.py to tokenize.pyc
+byte-compiling C:\Python27\lib\traceback.py to traceback.pyc
+byte-compiling C:\Python27\lib\types.py to types.pyc
+byte-compiling C:\Python27\lib\unittest\__init__.py to unittest\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\unittest
+byte-compiling C:\Python27\lib\unittest\case.py to unittest\case.pyc
+byte-compiling C:\Python27\lib\unittest\loader.py to unittest\loader.pyc
+byte-compiling C:\Python27\lib\unittest\main.py to unittest\main.pyc
+byte-compiling C:\Python27\lib\unittest\result.py to unittest\result.pyc
+byte-compiling C:\Python27\lib\unittest\runner.py to unittest\runner.pyc
+byte-compiling C:\Python27\lib\unittest\signals.py to unittest\signals.pyc
+byte-compiling C:\Python27\lib\unittest\suite.py to unittest\suite.pyc
+byte-compiling C:\Python27\lib\unittest\util.py to unittest\util.pyc
+byte-compiling C:\Python27\lib\urllib.py to urllib.pyc
+byte-compiling C:\Python27\lib\urllib2.py to urllib2.pyc
+byte-compiling C:\Python27\lib\urlparse.py to urlparse.pyc
+byte-compiling C:\Python27\lib\uu.py to uu.pyc
+byte-compiling C:\Python27\lib\uuid.py to uuid.pyc
+byte-compiling C:\Python27\lib\warnings.py to warnings.pyc
+byte-compiling C:\Python27\lib\weakref.py to weakref.pyc
+byte-compiling C:\Python27\lib\webbrowser.py to webbrowser.pyc
+byte-compiling C:\Python27\lib\xml\__init__.py to xml\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\xml
+byte-compiling C:\Python27\lib\xml\parsers\__init__.py to xml\parsers\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\xml\parsers
+byte-compiling C:\Python27\lib\xml\parsers\expat.py to xml\parsers\expat.pyc
+byte-compiling C:\Python27\lib\xml\sax\__init__.py to xml\sax\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\xml\sax
+byte-compiling C:\Python27\lib\xml\sax\_exceptions.py to xml\sax\_exceptions.pyc
+byte-compiling C:\Python27\lib\xml\sax\expatreader.py to xml\sax\expatreader.pyc
+byte-compiling C:\Python27\lib\xml\sax\handler.py to xml\sax\handler.pyc
+byte-compiling C:\Python27\lib\xml\sax\saxutils.py to xml\sax\saxutils.pyc
+byte-compiling C:\Python27\lib\xml\sax\xmlreader.py to xml\sax\xmlreader.pyc
+byte-compiling C:\Python27\lib\zipfile.py to zipfile.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\CompilerDeckEnvironment.py to CompilerDeck\CompilerDeckEnvironment.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\CompilerDeck
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\CompilerDeckMainWindow.py to CompilerDeck\CompilerDeckMainWindow.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\SettingsEditor.py to CompilerDeck\SettingsEditor.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\__init__.py to CompilerDeck\__init__.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\adobe\AdobeSystemCompiler.py to CompilerDeck\adobe\AdobeSystemCompiler.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\CompilerDeck\adobe
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\adobe\SystemCompiler.py to CompilerDeck\adobe\SystemCompiler.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\adobe\__init__.py to CompilerDeck\adobe\__init__.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\adobe\air\AirCompiler.py to CompilerDeck\adobe\air\AirCompiler.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\CompilerDeck\adobe\air
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\adobe\air\AirDebugThread.py to CompilerDeck\adobe\air\AirDebugThread.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\adobe\air\AirUtils.py to CompilerDeck\adobe\air\AirUtils.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\adobe\air\InstallApkThread.py to CompilerDeck\adobe\air\InstallApkThread.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\adobe\air\InstallIpaThread.py to CompilerDeck\adobe\air\InstallIpaThread.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\adobe\air\__init__.py to CompilerDeck\adobe\air\__init__.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\adobe\ane\ANECompileThread.py to CompilerDeck\adobe\ane\ANECompileThread.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\CompilerDeck\adobe\ane
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\adobe\ane\__init__.py to CompilerDeck\adobe\ane\__init__.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\adobe\flex\FlexCompiler.py to CompilerDeck\adobe\flex\FlexCompiler.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\CompilerDeck\adobe\flex
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\adobe\flex\FlexDebugThread.py to CompilerDeck\adobe\flex\FlexDebugThread.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\adobe\flex\FlexProjectData.py to CompilerDeck\adobe\flex\FlexProjectData.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\adobe\flex\__init__.py to CompilerDeck\adobe\flex\__init__.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\adobe\shared\FlashUtils.py to CompilerDeck\adobe\shared\FlashUtils.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\CompilerDeck\adobe\shared
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\adobe\shared\ProjectData.py to CompilerDeck\adobe\shared\ProjectData.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\adobe\shared\__init__.py to CompilerDeck\adobe\shared\__init__.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\android\AndroidLogcatThread.py to CompilerDeck\android\AndroidLogcatThread.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\CompilerDeck\android
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\android\__init__.py to CompilerDeck\android\__init__.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\deploy\ReleaseNotesGenerator.py to CompilerDeck\deploy\ReleaseNotesGenerator.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\CompilerDeck\deploy
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\deploy\S3DeployerThread.py to CompilerDeck\deploy\S3DeployerThread.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\deploy\__init__.py to CompilerDeck\deploy\__init__.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\views\__init__.py to CompilerDeck\views\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\CompilerDeck\views
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\views\compile\DeckCompileWidget.py to CompilerDeck\views\compile\DeckCompileWidget.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\CompilerDeck\views\compile
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\views\compile\__init__.py to CompilerDeck\views\compile\__init__.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\views\dialogs\__init__.py to CompilerDeck\views\dialogs\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\CompilerDeck\views\dialogs
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\views\dialogs\localSettings\LocalSettingsDialog.py to CompilerDeck\views\dialogs\localSettings\LocalSettingsDialog.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\CompilerDeck\views\dialogs\localSettings
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\views\dialogs\localSettings\LocalSettingsWidget.py to CompilerDeck\views\dialogs\localSettings\LocalSettingsWidget.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\views\dialogs\localSettings\__init__.py to CompilerDeck\views\dialogs\localSettings\__init__.pyc
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\views\home\DeckHomeWidget.py to CompilerDeck\views\home\DeckHomeWidget.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\CompilerDeck\views\home
+byte-compiling F:\Python\CompilerDeck\src\CompilerDeck\views\home\__init__.py to CompilerDeck\views\home\__init__.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\ArgsUtils.py to pyaid\ArgsUtils.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyaid
+byte-compiling F:\Python\PyAid\src\pyaid\ClassUtils.py to pyaid\ClassUtils.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\NullUtils.py to pyaid\NullUtils.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\__init__.py to pyaid\__init__.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\aws\__init__.py to pyaid\aws\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyaid\aws
+byte-compiling F:\Python\PyAid\src\pyaid\aws\s3\S3Bucket.py to pyaid\aws\s3\S3Bucket.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyaid\aws\s3
+byte-compiling F:\Python\PyAid\src\pyaid\aws\s3\__init__.py to pyaid\aws\s3\__init__.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\config\ConfigsDict.py to pyaid\config\ConfigsDict.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyaid\config
+byte-compiling F:\Python\PyAid\src\pyaid\config\SettingsConfig.py to pyaid\config\SettingsConfig.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\config\__init__.py to pyaid\config\__init__.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\debug\Logger.py to pyaid\debug\Logger.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyaid\debug
+byte-compiling F:\Python\PyAid\src\pyaid\debug\__init__.py to pyaid\debug\__init__.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\decorators\ClassGetter.py to pyaid\decorators\ClassGetter.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyaid\decorators
+byte-compiling F:\Python\PyAid\src\pyaid\decorators\__init__.py to pyaid\decorators\__init__.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\dict\DictUtils.py to pyaid\dict\DictUtils.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyaid\dict
+byte-compiling F:\Python\PyAid\src\pyaid\dict\__init__.py to pyaid\dict\__init__.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\enum\MimeTypeEnum.py to pyaid\enum\MimeTypeEnum.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyaid\enum
+byte-compiling F:\Python\PyAid\src\pyaid\enum\__init__.py to pyaid\enum\__init__.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\file\FileList.py to pyaid\file\FileList.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyaid\file
+byte-compiling F:\Python\PyAid\src\pyaid\file\FileLock.py to pyaid\file\FileLock.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\file\FileUtils.py to pyaid\file\FileUtils.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\file\__init__.py to pyaid\file\__init__.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\json\JSON.py to pyaid\json\JSON.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyaid\json
+byte-compiling F:\Python\PyAid\src\pyaid\json\__init__.py to pyaid\json\__init__.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\list\ListUtils.py to pyaid\list\ListUtils.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyaid\list
+byte-compiling F:\Python\PyAid\src\pyaid\list\__init__.py to pyaid\list\__init__.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\number\IntUtils.py to pyaid\number\IntUtils.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyaid\number
+byte-compiling F:\Python\PyAid\src\pyaid\number\__init__.py to pyaid\number\__init__.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\radix\Base36.py to pyaid\radix\Base36.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyaid\radix
+byte-compiling F:\Python\PyAid\src\pyaid\radix\Base64.py to pyaid\radix\Base64.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\radix\__init__.py to pyaid\radix\__init__.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\string\StringUtils.py to pyaid\string\StringUtils.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyaid\string
+byte-compiling F:\Python\PyAid\src\pyaid\string\__init__.py to pyaid\string\__init__.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\system\SystemUtils.py to pyaid\system\SystemUtils.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyaid\system
+byte-compiling F:\Python\PyAid\src\pyaid\system\__init__.py to pyaid\system\__init__.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\threading\ThreadUtils.py to pyaid\threading\ThreadUtils.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyaid\threading
+byte-compiling F:\Python\PyAid\src\pyaid\threading\__init__.py to pyaid\threading\__init__.pyc
+byte-compiling F:\Python\PyAid\src\pyaid\time\TimeUtils.py to pyaid\time\TimeUtils.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyaid\time
+byte-compiling F:\Python\PyAid\src\pyaid\time\__init__.py to pyaid\time\__init__.pyc
+byte-compiling F:\Python\PyGlass\src\pyglass\__init__.py to pyglass\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyglass
+byte-compiling F:\Python\PyGlass\src\pyglass\alembic\AlembicUtils.py to pyglass\alembic\AlembicUtils.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyglass\alembic
+byte-compiling F:\Python\PyGlass\src\pyglass\alembic\__init__.py to pyglass\alembic\__init__.pyc
+byte-compiling F:\Python\PyGlass\src\pyglass\app\ApplicationConfig.py to pyglass\app\ApplicationConfig.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyglass\app
+byte-compiling F:\Python\PyGlass\src\pyglass\app\PyGlassApplication.py to pyglass\app\PyGlassApplication.pyc
+byte-compiling F:\Python\PyGlass\src\pyglass\app\PyGlassEnvironment.py to pyglass\app\PyGlassEnvironment.pyc
+byte-compiling F:\Python\PyGlass\src\pyglass\app\__init__.py to pyglass\app\__init__.pyc
+byte-compiling F:\Python\PyGlass\src\pyglass\dialogs\PyGlassDialog.py to pyglass\dialogs\PyGlassDialog.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyglass\dialogs
+byte-compiling F:\Python\PyGlass\src\pyglass\dialogs\__init__.py to pyglass\dialogs\__init__.pyc
+byte-compiling F:\Python\PyGlass\src\pyglass\elements\PyGlassElement.py to pyglass\elements\PyGlassElement.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyglass\elements
+byte-compiling F:\Python\PyGlass\src\pyglass\elements\__init__.py to pyglass\elements\__init__.pyc
+byte-compiling F:\Python\PyGlass\src\pyglass\gui\PyGlassBackgroundParent.py to pyglass\gui\PyGlassBackgroundParent.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyglass\gui
+byte-compiling F:\Python\PyGlass\src\pyglass\gui\PyGlassGuiUtils.py to pyglass\gui\PyGlassGuiUtils.pyc
+byte-compiling F:\Python\PyGlass\src\pyglass\gui\UiFileLoader.py to pyglass\gui\UiFileLoader.pyc
+byte-compiling F:\Python\PyGlass\src\pyglass\gui\__init__.py to pyglass\gui\__init__.pyc
+byte-compiling F:\Python\PyGlass\src\pyglass\sqlalchemy\PyGlassModelUtils.py to pyglass\sqlalchemy\PyGlassModelUtils.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyglass\sqlalchemy
+byte-compiling F:\Python\PyGlass\src\pyglass\sqlalchemy\__init__.py to pyglass\sqlalchemy\__init__.pyc
+byte-compiling F:\Python\PyGlass\src\pyglass\threading\RemoteExecutionThread.py to pyglass\threading\RemoteExecutionThread.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyglass\threading
+byte-compiling F:\Python\PyGlass\src\pyglass\threading\__init__.py to pyglass\threading\__init__.pyc
+byte-compiling F:\Python\PyGlass\src\pyglass\widgets\LoadingWidget.py to pyglass\widgets\LoadingWidget.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyglass\widgets
+byte-compiling F:\Python\PyGlass\src\pyglass\widgets\PyGlassWidget.py to pyglass\widgets\PyGlassWidget.pyc
+byte-compiling F:\Python\PyGlass\src\pyglass\widgets\__init__.py to pyglass\widgets\__init__.pyc
+byte-compiling F:\Python\PyGlass\src\pyglass\windows\PyGlassWindow.py to pyglass\windows\PyGlassWindow.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyglass\windows
+byte-compiling F:\Python\PyGlass\src\pyglass\windows\__init__.py to pyglass\windows\__init__.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\PySide.QtCore.py to PySide\QtCore.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\PySide.QtDeclarative.py to PySide\QtDeclarative.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\PySide.QtGui.py to PySide\QtGui.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\PySide.QtHelp.py to PySide\QtHelp.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\PySide.QtMultimedia.py to PySide\QtMultimedia.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\PySide.QtNetwork.py to PySide\QtNetwork.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\PySide.QtOpenGL.py to PySide\QtOpenGL.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\PySide.QtScript.py to PySide\QtScript.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\PySide.QtScriptTools.py to PySide\QtScriptTools.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\PySide.QtSql.py to PySide\QtSql.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\PySide.QtSvg.py to PySide\QtSvg.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\PySide.QtTest.py to PySide\QtTest.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\PySide.QtUiTools.py to PySide\QtUiTools.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\PySide.QtWebKit.py to PySide\QtWebKit.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\PySide.QtXml.py to PySide\QtXml.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\PySide.QtXmlPatterns.py to PySide\QtXmlPatterns.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\_ctypes.py to _ctypes.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\_hashlib.py to _hashlib.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\_socket.py to _socket.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\_ssl.py to _ssl.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\bz2.py to bz2.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\lxml.etree.py to lxml\etree.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\lxml.objectify.py to lxml\objectify.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\pyexpat.py to pyexpat.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\select.py to select.pyc
+byte-compiling f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp\unicodedata.py to unicodedata.pyc
+*** copy extensions ***
+copying C:\Python27\DLLs\_ctypes.pyd -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\DLLs\_hashlib.pyd -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\DLLs\_socket.pyd -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\DLLs\_ssl.pyd -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\DLLs\bz2.pyd -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\DLLs\pyexpat.pyd -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\DLLs\select.pyd -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\DLLs\unicodedata.pyd -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\lib\site-packages\PySide\QtCore.pyd -> f:\python\compilerdeck\bin\dist\PySide.QtCore.pyd
+copying C:\Python27\lib\site-packages\PySide\QtDeclarative.pyd -> f:\python\compilerdeck\bin\dist\PySide.QtDeclarative.pyd
+copying C:\Python27\lib\site-packages\PySide\QtGui.pyd -> f:\python\compilerdeck\bin\dist\PySide.QtGui.pyd
+copying C:\Python27\lib\site-packages\PySide\QtHelp.pyd -> f:\python\compilerdeck\bin\dist\PySide.QtHelp.pyd
+copying C:\Python27\lib\site-packages\PySide\QtMultimedia.pyd -> f:\python\compilerdeck\bin\dist\PySide.QtMultimedia.pyd
+copying C:\Python27\lib\site-packages\PySide\QtNetwork.pyd -> f:\python\compilerdeck\bin\dist\PySide.QtNetwork.pyd
+copying C:\Python27\lib\site-packages\PySide\QtOpenGL.pyd -> f:\python\compilerdeck\bin\dist\PySide.QtOpenGL.pyd
+copying C:\Python27\lib\site-packages\PySide\QtScript.pyd -> f:\python\compilerdeck\bin\dist\PySide.QtScript.pyd
+copying C:\Python27\lib\site-packages\PySide\QtScriptTools.pyd -> f:\python\compilerdeck\bin\dist\PySide.QtScriptTools.pyd
+copying C:\Python27\lib\site-packages\PySide\QtSql.pyd -> f:\python\compilerdeck\bin\dist\PySide.QtSql.pyd
+copying C:\Python27\lib\site-packages\PySide\QtSvg.pyd -> f:\python\compilerdeck\bin\dist\PySide.QtSvg.pyd
+copying C:\Python27\lib\site-packages\PySide\QtTest.pyd -> f:\python\compilerdeck\bin\dist\PySide.QtTest.pyd
+copying C:\Python27\lib\site-packages\PySide\QtUiTools.pyd -> f:\python\compilerdeck\bin\dist\PySide.QtUiTools.pyd
+copying C:\Python27\lib\site-packages\PySide\QtWebKit.pyd -> f:\python\compilerdeck\bin\dist\PySide.QtWebKit.pyd
+copying C:\Python27\lib\site-packages\PySide\QtXml.pyd -> f:\python\compilerdeck\bin\dist\PySide.QtXml.pyd
+copying C:\Python27\lib\site-packages\PySide\QtXmlPatterns.pyd -> f:\python\compilerdeck\bin\dist\PySide.QtXmlPatterns.pyd
+copying C:\Python27\lib\site-packages\lxml\etree.pyd -> f:\python\compilerdeck\bin\dist\lxml.etree.pyd
+copying C:\Python27\lib\site-packages\lxml\objectify.pyd -> f:\python\compilerdeck\bin\dist\lxml.objectify.pyd
+*** copy dlls ***
+copying C:\Python27\lib\site-packages\PySide\QtScript4.dll -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\lib\site-packages\PySide\QtXml4.dll -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\lib\site-packages\PySide\QtSvg4.dll -> f:\python\compilerdeck\bin\dist
+copying C:\Windows\system32\python27.dll -> f:\python\compilerdeck\bin\dist
+setting sys.winver for 'f:\python\compilerdeck\bin\dist\python27.dll' to 'py2exe'
+copying C:\Python27\lib\site-packages\PySide\QtCLucene4.dll -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\lib\site-packages\PySide\QtSql4.dll -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\lib\site-packages\PySide\QtDeclarative4.dll -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\lib\site-packages\PySide\phonon4.dll -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\lib\site-packages\PySide\QtWebKit4.dll -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\lib\site-packages\PySide\QtHelp4.dll -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\lib\site-packages\PySide\pyside-python2.7.dll -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\lib\site-packages\PySide\QtOpenGL4.dll -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\lib\site-packages\PySide\QtCore4.dll -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\lib\site-packages\PySide\QtGui4.dll -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\lib\site-packages\PySide\QtMultimedia4.dll -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\lib\site-packages\PySide\QtNetwork4.dll -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\lib\site-packages\PySide\QtScriptTools4.dll -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\lib\site-packages\PySide\shiboken-python2.7.dll -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\lib\site-packages\PySide\QtXmlPatterns4.dll -> f:\python\compilerdeck\bin\dist
+copying C:\Python27\lib\site-packages\PySide\QtTest4.dll -> f:\python\compilerdeck\bin\dist
+*** copy data files ***
+creating f:\python\compilerdeck\bin\dist\Microsoft.VC90.CRT
+copying C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\redist\x86\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest -> f:\python\compilerdeck\bin\dist\Microsoft.VC90.CRT
+copying C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\redist\x86\Microsoft.VC90.CRT\msvcm90.dll -> f:\python\compilerdeck\bin\dist\Microsoft.VC90.CRT
+copying C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\redist\x86\Microsoft.VC90.CRT\msvcp90.dll -> f:\python\compilerdeck\bin\dist\Microsoft.VC90.CRT
+copying C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\redist\x86\Microsoft.VC90.CRT\msvcr90.dll -> f:\python\compilerdeck\bin\dist\Microsoft.VC90.CRT
+creating f:\python\compilerdeck\bin\dist\accessible
+copying C:\Python27\Lib\site-packages\PySide\plugins\accessible\qtaccessiblecompatwidgets4.dll -> f:\python\compilerdeck\bin\dist\accessible
+copying C:\Python27\Lib\site-packages\PySide\plugins\accessible\qtaccessiblewidgets4.dll -> f:\python\compilerdeck\bin\dist\accessible
+creating f:\python\compilerdeck\bin\dist\bearer
+copying C:\Python27\Lib\site-packages\PySide\plugins\bearer\qgenericbearer4.dll -> f:\python\compilerdeck\bin\dist\bearer
+copying C:\Python27\Lib\site-packages\PySide\plugins\bearer\qnativewifibearer4.dll -> f:\python\compilerdeck\bin\dist\bearer
+creating f:\python\compilerdeck\bin\dist\codecs
+copying C:\Python27\Lib\site-packages\PySide\plugins\codecs\qcncodecs4.dll -> f:\python\compilerdeck\bin\dist\codecs
+copying C:\Python27\Lib\site-packages\PySide\plugins\codecs\qjpcodecs4.dll -> f:\python\compilerdeck\bin\dist\codecs
+copying C:\Python27\Lib\site-packages\PySide\plugins\codecs\qkrcodecs4.dll -> f:\python\compilerdeck\bin\dist\codecs
+copying C:\Python27\Lib\site-packages\PySide\plugins\codecs\qtwcodecs4.dll -> f:\python\compilerdeck\bin\dist\codecs
+creating f:\python\compilerdeck\bin\dist\designer
+copying C:\Python27\Lib\site-packages\PySide\plugins\designer\arthurplugin.dll -> f:\python\compilerdeck\bin\dist\designer
+copying C:\Python27\Lib\site-packages\PySide\plugins\designer\containerextension.dll -> f:\python\compilerdeck\bin\dist\designer
+copying C:\Python27\Lib\site-packages\PySide\plugins\designer\customwidgetplugin.dll -> f:\python\compilerdeck\bin\dist\designer
+copying C:\Python27\Lib\site-packages\PySide\plugins\designer\phononwidgets.dll -> f:\python\compilerdeck\bin\dist\designer
+copying C:\Python27\Lib\site-packages\PySide\plugins\designer\pythonplugin.dll -> f:\python\compilerdeck\bin\dist\designer
+copying C:\Python27\Lib\site-packages\PySide\plugins\designer\qaxwidget.dll -> f:\python\compilerdeck\bin\dist\designer
+copying C:\Python27\Lib\site-packages\PySide\plugins\designer\qdeclarativeview.dll -> f:\python\compilerdeck\bin\dist\designer
+copying C:\Python27\Lib\site-packages\PySide\plugins\designer\qscintillaplugin.dll -> f:\python\compilerdeck\bin\dist\designer
+copying C:\Python27\Lib\site-packages\PySide\plugins\designer\qt3supportwidgets.dll -> f:\python\compilerdeck\bin\dist\designer
+copying C:\Python27\Lib\site-packages\PySide\plugins\designer\qwebview.dll -> f:\python\compilerdeck\bin\dist\designer
+copying C:\Python27\Lib\site-packages\PySide\plugins\designer\taskmenuextension.dll -> f:\python\compilerdeck\bin\dist\designer
+copying C:\Python27\Lib\site-packages\PySide\plugins\designer\worldtimeclockplugin.dll -> f:\python\compilerdeck\bin\dist\designer
+creating f:\python\compilerdeck\bin\dist\graphicssystems
+copying C:\Python27\Lib\site-packages\PySide\plugins\graphicssystems\qglgraphicssystem4.dll -> f:\python\compilerdeck\bin\dist\graphicssystems
+copying C:\Python27\Lib\site-packages\PySide\plugins\graphicssystems\qtracegraphicssystem4.dll -> f:\python\compilerdeck\bin\dist\graphicssystems
+creating f:\python\compilerdeck\bin\dist\iconengines
+copying C:\Python27\Lib\site-packages\PySide\plugins\iconengines\qsvgicon4.dll -> f:\python\compilerdeck\bin\dist\iconengines
+creating f:\python\compilerdeck\bin\dist\imageformats
+copying C:\Python27\Lib\site-packages\PySide\plugins\imageformats\qgif4.dll -> f:\python\compilerdeck\bin\dist\imageformats
+copying C:\Python27\Lib\site-packages\PySide\plugins\imageformats\qico4.dll -> f:\python\compilerdeck\bin\dist\imageformats
+copying C:\Python27\Lib\site-packages\PySide\plugins\imageformats\qjpeg4.dll -> f:\python\compilerdeck\bin\dist\imageformats
+copying C:\Python27\Lib\site-packages\PySide\plugins\imageformats\qmng4.dll -> f:\python\compilerdeck\bin\dist\imageformats
+copying C:\Python27\Lib\site-packages\PySide\plugins\imageformats\qsvg4.dll -> f:\python\compilerdeck\bin\dist\imageformats
+copying C:\Python27\Lib\site-packages\PySide\plugins\imageformats\qtiff4.dll -> f:\python\compilerdeck\bin\dist\imageformats
+creating f:\python\compilerdeck\bin\dist\phonon_backend
+copying C:\Python27\Lib\site-packages\PySide\plugins\phonon_backend\phonon_ds94.dll -> f:\python\compilerdeck\bin\dist\phonon_backend
+creating f:\python\compilerdeck\bin\dist\qmltooling
+copying C:\Python27\Lib\site-packages\PySide\plugins\qmltooling\qmldbg_tcp4.dll -> f:\python\compilerdeck\bin\dist\qmltooling
+creating f:\python\compilerdeck\bin\dist\sqldrivers
+copying C:\Python27\Lib\site-packages\PySide\plugins\sqldrivers\qsqlodbc4.dll -> f:\python\compilerdeck\bin\dist\sqldrivers
+copying C:\Python27\lib\site-packages\py2exe\run_w.exe -> f:\python\compilerdeck\bin\dist\compilerdeckapplication.exe
+The following modules appear to be missing
+['BeautifulSoup', 'Carbon', 'Carbon.Files', '_dummy_thread', '_scproxy', '_thread', 'builtins', 'certifi', 'engine.create_engine', 'engine.engine_from_config', 'html.entities', 'html5lib', 'html5lib.treebuilders', 'html5lib.treebuilders.etree_lxml', 'http', 'http.client', 'http.cookies', 'importlib._bootstrap', 'keyring', 'markupsafe._speedups', 'netbios', 'packages.ssl_match_hostname.CertificateError', 'packages.ssl_match_hostname.match_hostname', 'pygments', 'pygments.formatters.html', 'pygments.lexer', 'pygments.lexers.agile', 'pygments.lexers.web', 'pygments.token', 'queue', 'rsa', 'simplejson', 'sql.alias', 'sql.and_', 'sql.asc', 'sql.between', 'sql.bindparam', 'sql.case', 'sql.cast', 'sql.collate', 'sql.delete', 'sql.desc', 'sql.distinct', 'sql.except_', 'sql.except_all', 'sql.exists', 'sql.extract', 'sql.func', 'sql.insert', 'sql.intersect', 'sql.intersect_all', 'sql.join', 'sql.literal', 'sql.literal_column', 'sql.modifier', 'sql.not_', 'sql.null', 'sql.or_', 'sql.outerjoin', 'sql.outparam', 'sql.over', 'sql.select', 'sql.subquery', 'sql.text', 'sql.tuple_', 'sql.type_coerce', 'sql.union', 'sql.union_all', 'sql.update', 'sqlalchemy.cprocessors', 'sqlalchemy.cresultproxy', 'sqlalchemy.cutils', 'urllib.parse', 'urllib.request', 'util.chop_traceback', 'util.deprecated', 'util.memoized_property', 'util.pickle', 'util.symbol', 'util.threading', 'win32api', 'win32con', 'win32evtlog', 'win32evtlogutil', 'win32pipe', 'win32wnet']
+
+*** binary dependencies ***
+Your executable(s) also depend on these dlls which are not included,
+you may or may not need to distribute them.
+
+Make sure you have the license if you distribute any of them, and
+make sure you don't distribute files belonging to the operating system.
+
+   MSVCP90.dll - C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\redist\x86\Microsoft.VC90.CRT\MSVCP90.dll
+   USER32.dll - C:\Windows\system32\USER32.dll
+   IMM32.dll - C:\Windows\system32\IMM32.dll
+   SHLWAPI.dll - C:\Windows\system32\SHLWAPI.dll
+   ole32.dll - C:\Windows\system32\ole32.dll
+   OLEAUT32.dll - C:\Windows\system32\OLEAUT32.dll
+   WINMM.dll - C:\Windows\system32\WINMM.dll
+   ADVAPI32.dll - C:\Windows\system32\ADVAPI32.dll
+   WS2_32.dll - C:\Windows\system32\WS2_32.dll
+   WINSPOOL.DRV - C:\Windows\system32\WINSPOOL.DRV
+   GDI32.dll - C:\Windows\system32\GDI32.dll
+   VERSION.dll - C:\Windows\system32\VERSION.dll
+   KERNEL32.dll - C:\Windows\system32\KERNEL32.dll
+   SHELL32.dll - C:\Windows\system32\SHELL32.dll
+   COMDLG32.dll - C:\Windows\system32\COMDLG32.dll
+   OPENGL32.dll - C:\Windows\system32\OPENGL32.dll
