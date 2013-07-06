@@ -191,7 +191,14 @@ class SettingsEditor(object):
         self._minor     = self._updateSetting(self._minor, settings)
         self._prefix    = self._updateSetting(self._prefix, settings)
         self._revision  = self._updateSetting(self._revision, settings)
-        self._suffix    = self._updateSetting(self._suffix, settings)
+
+        # Only load the suffix value from file if the last date and the current date match.
+        # Otherwise, the suffix should reset for the new day builds.
+        lastDate        = self._updateSetting(self._date, settings)
+        if lastDate.value == self._dateValue:
+            self._suffix    = self._updateSetting(self._suffix, settings)
+        else:
+            self._suffix = self._SETTING_NT(self._suffix.key, self.DEF_SUFFIX, 0)
 
         self.makeUnique()
 

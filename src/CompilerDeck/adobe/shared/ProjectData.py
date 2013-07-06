@@ -7,8 +7,9 @@ import socket
 
 from pyaid.ArgsUtils import ArgsUtils
 from pyaid.NullUtils import NullUtils
+from pyaid.config.ConfigsDict import ConfigsDict
+from pyaid.config.SettingsConfig import SettingsConfig
 from pyaid.file.FileUtils import FileUtils
-from pyaid.json.JSON import JSON
 
 from CompilerDeck.CompilerDeckEnvironment import CompilerDeckEnvironment
 from CompilerDeck.adobe.shared.FlashUtils import FlashUtils
@@ -39,7 +40,7 @@ class ProjectData(object):
         self._flashVersion = ArgsUtils.get('flashVersion', '11.7', kwargs)
 
         # Loads the settings file where the project settings are stored
-        self._settings = JSON.fromFile(CompilerDeckEnvironment.projectSettingsPath)
+        self._settings = SettingsConfig(CompilerDeckEnvironment.projectSettingsPath, pretty=True)
         self._overrideSettings = None
 
 #===================================================================================================
@@ -51,6 +52,8 @@ class ProjectData(object):
         return self._overrideSettings
     @overrideSettings.setter
     def overrideSettings(self, value):
+        if value:
+            value = ConfigsDict(value)
         self._overrideSettings = value
 
 #___________________________________________________________________________________________________ GS: ipAddress
@@ -105,45 +108,12 @@ class ProjectData(object):
 
 #___________________________________________________________________________________________________ getSetting
     def getSetting(self, key, defaultValue =None, error =False):
-        sources = None
+        if self._overrideSettings:
+            res = self._overrideSettings.get(key, NullUtils.UNIVERSAL_NULL)
+            if res != NullUtils.UNIVERSAL_NULL:
+                return res
 
-        for k in (key if isinstance(key, list) else [key]):
-            if sources is None:
-                sources = [self._settings]
-                if self._overrideSettings:
-                    sources.insert(0, self._overrideSettings)
-
-            sources = self._getSettingValue(k, sources)
-
-        for val in sources:
-            if val == NullUtils.UNIVERSAL_NULL:
-                continue
-            else:
-                return val
-
-        if error:
-            print 'ERROR: Missing Compiler Setting in source:'
-            print sources
-            raise Exception, 'Missing compiler setting: ' + str(key)
-
-        return defaultValue
-
-#===================================================================================================
-#                                                                               P R O T E C T E D
-
-#___________________________________________________________________________________________________ _getSettingValue
-    def _getSettingValue(self, key, sources):
-        out = []
-        for src in sources:
-            if not src:
-                out.append(NullUtils.UNIVERSAL_NULL)
-                continue
-
-            if key in src:
-                val = src[key]
-                out.append(val if val is not None and val != u"" else NullUtils.UNIVERSAL_NULL)
-
-        return out
+        return self._settings.get(key, defaultValue=defaultValue)
 
 #===================================================================================================
 #                                                                               I N T R I N S I C

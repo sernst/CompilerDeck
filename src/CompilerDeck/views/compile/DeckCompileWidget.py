@@ -5,6 +5,8 @@
 from PySide import QtGui
 from PySide import QtCore
 
+from pyaid.config.SettingsConfig import SettingsConfig
+
 from pyglass.widgets.PyGlassWidget import PyGlassWidget
 
 from CompilerDeck.CompilerDeckEnvironment import CompilerDeckEnvironment
@@ -16,6 +18,7 @@ from CompilerDeck.adobe.ane.ANECompileThread import ANECompileThread
 from CompilerDeck.adobe.flex.FlexDebugThread import FlexDebugThread
 from CompilerDeck.adobe.flex.FlexProjectData import FlexProjectData
 from CompilerDeck.android.AndroidLogcatThread import AndroidLogcatThread
+from CompilerDeck.deploy.S3DeployerThread import S3DeployerThread
 
 #___________________________________________________________________________________________________ DeckCompileWidget
 class DeckCompileWidget(PyGlassWidget):
@@ -41,8 +44,9 @@ class DeckCompileWidget(PyGlassWidget):
         """Creates a new instance of DeckCompileWidget."""
         super(DeckCompileWidget, self).__init__(*args, **kwargs)
 
-        self._results    = ''
-        self._compThread = None
+        self._results       = ''
+        self._compThread    = None
+        self._buildSnapshot = None
 
         versions = self.mainWindow.listInstalledAirSDKs()
         if versions:
@@ -69,6 +73,12 @@ class DeckCompileWidget(PyGlassWidget):
         for item in ['None', 'WiFi Connection', 'USB Connection (Android)']:
             self.remoteDebugComboBox.addItem(item)
 
+        self.releaseInfoDefaultBtn.clicked.connect(self._handleDefaultReleaseText)
+        self.removalsDefaultBtn.clicked.connect(self._handleDefaultReleaseText)
+        self.fixesDefaultBtn.clicked.connect(self._handleDefaultReleaseText)
+        self.additionsDefaultBtn.clicked.connect(self._handleDefaultReleaseText)
+        self.summaryDefaultBtn.clicked.connect(self._handleDefaultReleaseText)
+
         self.resultsTextBrowser.setReadOnly(True)
         self.compileBtn.clicked.connect(self._handleCompileClick)
         self.runDebugBtn.clicked.connect(self._handleRunDebug)
@@ -77,6 +87,7 @@ class DeckCompileWidget(PyGlassWidget):
         self.logcatDumpBtn.clicked.connect(self._handleGetLogcatDump)
         self.clearLogcatBtn.clicked.connect(self._handleClearLogcat)
         self.flexDebugBtn.clicked.connect(self._handleFlexDebugSession)
+        self.deployBuildBtn.clicked.connect(self._handleDeployBuild)
         self.mainTab.setCurrentIndex(0)
 
         self._setCheckState(
@@ -125,6 +136,25 @@ class DeckCompileWidget(PyGlassWidget):
 #===================================================================================================
 #                                                                               P R O T E C T E D
 
+#___________________________________________________________________________________________________ _activateWidgetDisplayImpl
+    def _activateWidgetDisplayImpl(self, **kwargs):
+        settings = SettingsConfig(CompilerDeckEnvironment.projectSettingsPath, pretty=True)
+        self._populateDeployText('SUMMARY', self.summaryText, settings)
+        self._populateDeployText('ADDITIONS', self.additionsText, settings)
+        self._populateDeployText('FIXES', self.fixesText, settings)
+        self._populateDeployText('REMOVALS', self.removalsText, settings)
+        self._populateDeployText('INFO', self.releaseInfoText, settings)
+
+#___________________________________________________________________________________________________ _populateDeployText
+    def _populateDeployText(self, key, target, settings):
+        val = settings.get(['DEPLOY', 'DEFAULTS', key])
+        if val:
+            target.setPlainText(val)
+            return
+        val = settings.get(['DEPLOY', 'LAST', key])
+        if val:
+            target.setPlainText(val)
+
 #___________________________________________________________________________________________________ _setCheckState
     def _setCheckState(self, target, value):
         target.setCheckState(QtCore.Qt.Checked if value else QtCore.Qt.Unchecked)
@@ -150,7 +180,9 @@ class DeckCompileWidget(PyGlassWidget):
 #___________________________________________________________________________________________________ _toggleInteractivity
     def _toggleInteractivity(self, value):
         self.compileBtn.setEnabled(value)
+        self.deployBuildBtn.setEnabled(value)
         self.settingsTabPage.setEnabled(value)
+        self.descriptorTabPage.setEnabled(value)
         self.utilsTabPage.setEnabled(value)
 
 #___________________________________________________________________________________________________ _updateSettings
@@ -175,7 +207,7 @@ class DeckCompileWidget(PyGlassWidget):
         )
         self._settingsEditor.write()
 
-        self._executeRemoteThread(ANECompileThread(
+        self._buildSnapshot = dict(
             parent=self,
             versionInfo=self._settingsEditor.toDict(),
             projectPath=CompilerDeckEnvironment.getProjectPath(),
@@ -193,7 +225,10 @@ class DeckCompileWidget(PyGlassWidget):
                 FlexProjectData.ANDROID_PLATFORM:self.androidPlatformCheck.isChecked(),
                 FlexProjectData.IOS_PLATFORM:self.iosPlatformCheck.isChecked()
             }
-        ), self._handleCompilationComplete)
+        )
+
+        self._executeRemoteThread(
+            ANECompileThread(**self._buildSnapshot), self._handleCompilationComplete)
 
 #___________________________________________________________________________________________________ _handleCompilationComplete
     def _handleCompilationComplete(self, result):
@@ -219,14 +254,14 @@ class DeckCompileWidget(PyGlassWidget):
 
 #___________________________________________________________________________________________________ _handleFlashVersionChanged
     def _handleFlashVersionChanged(self):
-        self.parent().appConfig.set(
+        self.mainWindow.appConfig.set(
             self._FLASH_PLAYER_VERSION_CFG,
             self.flashPlayerComboBox.currentText()
         )
 
 #___________________________________________________________________________________________________ _handleAirVersionChanged
     def _handleAirVersionChanged(self):
-        self.parent().appConfig.set(
+        self.mainWindow.appConfig.set(
             self._AIR_SDK_VERSION_CFG,
             self.airSDKComboBox.currentText()
         )
@@ -317,3 +352,51 @@ class DeckCompileWidget(PyGlassWidget):
         self._settingsEditor.reset()
         self._settingsEditor.populate()
         self._updateSettings()
+
+#___________________________________________________________________________________________________ _handleDeployBuild
+    def _handleDeployBuild(self):
+        if not self._buildSnapshot:
+            print 'No build snapshot to deploy:', self._buildSnapshot
+            return
+
+        releaseNotes = dict(
+            summary=self.summaryText.toPlainText(),
+            additions=self.additionsText.toPlainText(),
+            fixes=self.fixesText.toPlainText(),
+            removals=self.removalsText.toPlainText(),
+            info=self.releaseInfoText.toPlainText())
+
+        self._executeRemoteThread(
+            S3DeployerThread(
+                parent=self,
+                snapshot=self._buildSnapshot,
+                sendEmails=self.sendEmailCheck.isChecked(),
+                releaseNotes=releaseNotes),
+            self._handleDeployResult)
+
+#___________________________________________________________________________________________________ _handleDeployResult
+    def _handleDeployResult(self, result):
+        if result['response'] == 0:
+            settings = SettingsConfig(CompilerDeckEnvironment.projectSettingsPath, pretty=True)
+            settings.set(['DEPLOY', 'LAST', 'SUMMARY'], self.summaryText.toPlainText())
+            settings.set(['DEPLOY', 'LAST', 'ADDITIONS'], self.additionsText.toPlainText())
+            settings.set(['DEPLOY', 'LAST', 'FIXES'], self.fixesText.toPlainText())
+            settings.set(['DEPLOY', 'LAST', 'REMOVALS'], self.removalsText.toPlainText())
+            settings.set(['DEPLOY', 'LAST', 'INFO'], self.releaseInfoText.toPlainText())
+
+        self._handleRemoteThreadComplete(result)
+
+#___________________________________________________________________________________________________ _handleDefaultReleaseText
+    def _handleDefaultReleaseText(self):
+        btn = self.sender()
+        settings = SettingsConfig(CompilerDeckEnvironment.projectSettingsPath, pretty=True)
+        if btn == self.summaryDefaultBtn:
+            settings.set(['DEPLOY', 'DEFAULTS', 'SUMMARY'], self.summaryText.toPlainText())
+        elif btn == self.additionsDefaultBtn:
+            settings.set(['DEPLOY', 'DEFAULTS', 'ADDITIONS'], self.additionsText.toPlainText())
+        elif btn == self.fixesDefaultBtn:
+            settings.set(['DEPLOY', 'DEFAULTS', 'FIXES'], self.fixesText.toPlainText())
+        elif btn == self.removalsDefaultBtn:
+            settings.set(['DEPLOY', 'DEFAULTS', 'REMOVALS'], self.removalsText.toPlainText())
+        elif btn == self.releaseInfoDefaultBtn:
+            settings.set(['DEPLOY', 'DEFAULTS', 'INFO'], self.releaseInfoText.toPlainText())

@@ -37,14 +37,34 @@ class FlexProjectData(ProjectData):
         self._usbDebug          = ArgsUtils.get('usbDebug', False, kwargs)
         self.remoteDebug        = ArgsUtils.get('remoteDebug', self._usbDebug, kwargs)
         self._versionInfo       = ArgsUtils.getAsDict('versionInfo', kwargs)
+        self._platforms         = ArgsUtils.getAsDict('platforms', kwargs)
 
 #===================================================================================================
 #                                                                                   G E T / S E T
+
+#___________________________________________________________________________________________________ GS: platformSelection
+    @property
+    def platformSelection(self):
+        return self._platforms
 
 #___________________________________________________________________________________________________ GS: versionInfo
     @property
     def versionInfo(self):
         return self._versionInfo
+
+#___________________________________________________________________________________________________ GS: versionInfoLabel
+    @property
+    def versionInfoLabel(self):
+        return  self._versionInfo.get('prefix', u'') + u'-' + \
+                self._versionInfo.get('date', u'???') + u'-' + \
+                self._versionInfo.get('suffix', u'1')
+
+#___________________________________________________________________________________________________ GS: versionInfoNumber
+    @property
+    def versionInfoNumber(self):
+        return self._versionInfo.get('major', u'0') + u'.' + \
+               self._versionInfo.get('minor', u'0') + u'.' + \
+               self._versionInfo.get('revision', u'0')
 
 #___________________________________________________________________________________________________ GS: platformBinPath
     @property
@@ -90,7 +110,7 @@ class FlexProjectData(ProjectData):
     def usbDebugPort(self):
         return FlexProjectData.USB_DEBUG_PORT if self._usbDebug else None
 
-#___________________________________________________________________________________________________ GS: usbDebugPort
+#___________________________________________________________________________________________________ GS: certificate
     @property
     def certificate(self):
         """Returns the absolute path to the certificate file needed for packaging."""
@@ -185,6 +205,12 @@ class FlexProjectData(ProjectData):
     @property
     def targetFilename(self):
         return self.getSetting('FILENAME', '')
+
+#___________________________________________________________________________________________________ GS: targetFilePath
+    @property
+    def targetFilePath(self):
+        return FileUtils.createPath(
+            self.platformDistributionPath, self.targetFilename + '.' + self.airExtension)
 
 #___________________________________________________________________________________________________ GS: platforms
     @property

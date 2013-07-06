@@ -34,6 +34,18 @@ class AirUtils(object):
         out = {'dirs':[], 'files':[], 'merges':[], 'itemNames':[]}
         sets = flexProjectData
 
+        # Copy the icons for the platform deployment from the icons folder for that platform, or,
+        # if not platform specific icons folder exists, from the main icons folder instead.
+        iconPath = FileUtils.createPath(sets.platformProjectPath, 'icons', isDir=True)
+        print 'ICON PATH:', iconPath, os.path.exists(iconPath)
+        if not os.path.exists(iconPath):
+            iconPath = FileUtils.createPath(sets.projectPath, 'icons', isDir=True)
+        if os.path.exists(iconPath):
+            out['merges'].append(FileUtils.mergeCopy(
+                iconPath, FileUtils.createPath(sets.platformBinPath, 'icons', isDir=True)))
+            out['dirs'].append(iconPath)
+            out['itemNames'].append('icons')
+
         # Copy everything in the includes directory
         includesPath = sets.externalIncludesPath
         if os.path.exists(includesPath):
