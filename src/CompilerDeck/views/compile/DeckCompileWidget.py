@@ -47,6 +47,7 @@ class DeckCompileWidget(PyGlassWidget):
         self._results       = ''
         self._compThread    = None
         self._buildSnapshot = None
+        self._package       = False
 
         versions = self.mainWindow.listInstalledAirSDKs()
         if versions:
@@ -81,6 +82,8 @@ class DeckCompileWidget(PyGlassWidget):
 
         self.resultsTextBrowser.setReadOnly(True)
         self.compileBtn.clicked.connect(self._handleCompileClick)
+        self.compileDebugBtn.clicked.connect(self._handleCompileDebugClick)
+        self.packageBtn.clicked.connect(self._handlePackageClick)
         self.runDebugBtn.clicked.connect(self._handleRunDebug)
         self.installApkBtn.clicked.connect(self._handleInstallApk)
         self.installIpaBtn.clicked.connect(self._handleInstallIpa)
@@ -88,6 +91,8 @@ class DeckCompileWidget(PyGlassWidget):
         self.clearLogcatBtn.clicked.connect(self._handleClearLogcat)
         self.flexDebugBtn.clicked.connect(self._handleFlexDebugSession)
         self.deployBuildBtn.clicked.connect(self._handleDeployBuild)
+        self.saveDeployBtn.clicked.connect(self._handleSaveDeployInfo)
+        self.reloadDeployBtn.clicked.connect(self._handleReloadDeployInfo)
         self.mainTab.setCurrentIndex(0)
 
         self._setCheckState(
@@ -99,11 +104,6 @@ class DeckCompileWidget(PyGlassWidget):
             self.liveCheck,
             self.parent().appConfig.get(self._LIVE_CFG, False))
         self.liveCheck.stateChanged.connect(self._handleCheckStateChange)
-
-        self._setCheckState(
-            self.packageAirCheck,
-            self.parent().appConfig.get(self._PACKAGE_AIR_CFG, False))
-        self.packageAirCheck.stateChanged.connect(self._handleCheckStateChange)
 
         self._setCheckState(
             self.webPlatformCheck,
@@ -138,6 +138,10 @@ class DeckCompileWidget(PyGlassWidget):
 
 #___________________________________________________________________________________________________ _activateWidgetDisplayImpl
     def _activateWidgetDisplayImpl(self, **kwargs):
+        self._reloadDeployText()
+
+#___________________________________________________________________________________________________ _reloadDeployText
+    def _reloadDeployText(self):
         settings = SettingsConfig(CompilerDeckEnvironment.projectSettingsPath, pretty=True)
         self._populateDeployText('SUMMARY', self.summaryText, settings)
         self._populateDeployText('ADDITIONS', self.additionsText, settings)
@@ -147,10 +151,16 @@ class DeckCompileWidget(PyGlassWidget):
 
 #___________________________________________________________________________________________________ _populateDeployText
     def _populateDeployText(self, key, target, settings):
+        val = settings.get(['DEPLOY', 'STORED', key])
+        if val:
+            target.setPlainText(val)
+            return
+
         val = settings.get(['DEPLOY', 'DEFAULTS', key])
         if val:
             target.setPlainText(val)
             return
+
         val = settings.get(['DEPLOY', 'LAST', key])
         if val:
             target.setPlainText(val)
@@ -193,11 +203,8 @@ class DeckCompileWidget(PyGlassWidget):
         self.minorSpin.setValue(int(self._settingsEditor.minor))
         self.revisionSpin.setValue(int(self._settingsEditor.revision))
 
-#===================================================================================================
-#                                                                                 H A N D L E R S
-
-#___________________________________________________________________________________________________ _handleCompileClick
-    def _handleCompileClick(self, *args, **kwargs):
+#___________________________________________________________________________________________________ _executeCompilation
+    def _executeCompilation(self, callback):
         self._settingsEditor.setTo(
             prefix=self.prefixLine.text(),
             suffix=self.suffixSpin.value(),
@@ -215,7 +222,7 @@ class DeckCompileWidget(PyGlassWidget):
             live=self.liveCheck.isChecked(),
             airVersion=str(self.airSDKComboBox.currentText()),
             flashVersion=str(self.flashPlayerComboBox.currentText()),
-            packageAir=self.packageAirCheck.isChecked(),
+            packageAir=self._package,
             remoteDebug=(not self.remoteDebugComboBox.currentText().lower().startswith('none')),
             usbDebug=(self.remoteDebugComboBox.currentText().lower().startswith('usb')),
             platforms={
@@ -227,18 +234,52 @@ class DeckCompileWidget(PyGlassWidget):
             }
         )
 
-        self._executeRemoteThread(
-            ANECompileThread(**self._buildSnapshot), self._handleCompilationComplete)
+        self._executeRemoteThread(ANECompileThread(**self._buildSnapshot), callback)
+
+#___________________________________________________________________________________________________ _executeDebugProcess
+    def _executeDebugProcess(self):
+        self._executeRemoteThread(AirDebugThread(
+            parent=self,
+            projectPath=CompilerDeckEnvironment.getProjectPath(),
+            airVersion=str(self.airSDKComboBox.currentText()),
+            flashVersion=str(self.flashPlayerComboBox.currentText()),
+        ))
+
+#===================================================================================================
+#                                                                                 H A N D L E R S
+
+#___________________________________________________________________________________________________ _handleCompileDebugClick
+    def _handleCompileDebugClick(self):
+        self._package = False
+        self._executeCompilation(self._handleDebugCompilation)
+
+#___________________________________________________________________________________________________ _handleDebugCompilation
+    def _handleDebugCompilation(self, result):
+        if result['response'] == 0:
+            self._executeDebugProcess()
+        else:
+            self._handleRemoteThreadComplete(result)
+
+#___________________________________________________________________________________________________ _handleCompileClick
+    def _handleCompileClick(self):
+        self._package = False
+        self._executeCompilation(self._handleCompilationComplete)
+
+#___________________________________________________________________________________________________ _handlePackageClick
+    def _handlePackageClick(self):
+        self._package = True
+        self._executeCompilation(self._handleCompilationComplete)
 
 #___________________________________________________________________________________________________ _handleCompilationComplete
     def _handleCompilationComplete(self, result):
-        if self.packageAirCheck.isChecked() and result['response'] == 0:
+        if self._package and result['response'] == 0:
             self._settingsEditor.logBuild(
                 self.desktopPlatformCheck.isChecked(),
                 self.androidPlatformCheck.isChecked(),
                 self.iosPlatformCheck.isChecked(),
             )
         self._handleRemoteThreadComplete(result)
+        self._package = False
 
 #___________________________________________________________________________________________________ _handleRemoteThreadComplete
     def _handleRemoteThreadComplete(self, result):
@@ -270,9 +311,7 @@ class DeckCompileWidget(PyGlassWidget):
     def _handleCheckStateChange(self):
         sender = self.sender()
         prop   = None
-        if sender == self.packageAirCheck:
-            prop = self._PACKAGE_AIR_CFG
-        elif sender == self.liveCheck:
+        if sender == self.liveCheck:
             prop = self._LIVE_CFG
         elif sender == self.debugCheck:
             prop = self._DEBUG_CFG
@@ -290,12 +329,7 @@ class DeckCompileWidget(PyGlassWidget):
 
 #___________________________________________________________________________________________________ _handleRunDebug
     def _handleRunDebug(self):
-        self._executeRemoteThread(AirDebugThread(
-            parent=self,
-            projectPath=CompilerDeckEnvironment.getProjectPath(),
-            airVersion=str(self.airSDKComboBox.currentText()),
-            flashVersion=str(self.flashPlayerComboBox.currentText()),
-        ))
+        self._executeDebugProcess()
 
 #___________________________________________________________________________________________________ _handleInstallApk
     def _handleInstallApk(self):
@@ -383,6 +417,7 @@ class DeckCompileWidget(PyGlassWidget):
             settings.set(['DEPLOY', 'LAST', 'FIXES'], self.fixesText.toPlainText())
             settings.set(['DEPLOY', 'LAST', 'REMOVALS'], self.removalsText.toPlainText())
             settings.set(['DEPLOY', 'LAST', 'INFO'], self.releaseInfoText.toPlainText())
+            settings.remove(['DEPLOY', 'STORED'])
 
         self._handleRemoteThreadComplete(result)
 
@@ -400,3 +435,16 @@ class DeckCompileWidget(PyGlassWidget):
             settings.set(['DEPLOY', 'DEFAULTS', 'REMOVALS'], self.removalsText.toPlainText())
         elif btn == self.releaseInfoDefaultBtn:
             settings.set(['DEPLOY', 'DEFAULTS', 'INFO'], self.releaseInfoText.toPlainText())
+
+#___________________________________________________________________________________________________ _handleSaveDeployInfo
+    def _handleSaveDeployInfo(self):
+        settings = SettingsConfig(CompilerDeckEnvironment.projectSettingsPath, pretty=True)
+        settings.set(['DEPLOY', 'STORED', 'SUMMARY'], self.summaryText.toPlainText())
+        settings.set(['DEPLOY', 'STORED', 'ADDITIONS'], self.additionsText.toPlainText())
+        settings.set(['DEPLOY', 'STORED', 'FIXES'], self.fixesText.toPlainText())
+        settings.set(['DEPLOY', 'STORED', 'REMOVALS'], self.removalsText.toPlainText())
+        settings.set(['DEPLOY', 'STORED', 'INFO'], self.releaseInfoText.toPlainText())
+
+#___________________________________________________________________________________________________ _handleReloadDeployInfo
+    def _handleReloadDeployInfo(self):
+        self._reloadDeployText()
