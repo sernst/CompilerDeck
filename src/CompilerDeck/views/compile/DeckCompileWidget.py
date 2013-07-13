@@ -38,6 +38,7 @@ class DeckCompileWidget(PyGlassWidget):
     _COMPILE_DESKTOP          = 'COMPILE_DESKTOP'
     _COMPILE_ANDROID          = 'COMPILE_ANDROID'
     _COMPILE_IOS              = 'COMPILE_IOS'
+    _IOS_INTERP               = 'IOS_INTERP'
 
 #___________________________________________________________________________________________________ __init__
     def __init__(self, *args, **kwargs):
@@ -94,6 +95,11 @@ class DeckCompileWidget(PyGlassWidget):
         self.saveDeployBtn.clicked.connect(self._handleSaveDeployInfo)
         self.reloadDeployBtn.clicked.connect(self._handleReloadDeployInfo)
         self.mainTab.setCurrentIndex(0)
+
+        self._setCheckState(
+            self.iosInterpCheck,
+            self.parent().appConfig.get(self._IOS_INTERP, False))
+        self.iosInterpCheck.stateChanged.connect(self._handleCheckStateChange)
 
         self._setCheckState(
             self.debugCheck,
@@ -216,6 +222,7 @@ class DeckCompileWidget(PyGlassWidget):
 
         self._buildSnapshot = dict(
             parent=self,
+            iosInterpreter=self.iosInterpCheck.isChecked(),
             versionInfo=self._settingsEditor.toDict(),
             projectPath=CompilerDeckEnvironment.getProjectPath(),
             debug=self.debugCheck.isChecked(),
@@ -313,6 +320,8 @@ class DeckCompileWidget(PyGlassWidget):
         prop   = None
         if sender == self.liveCheck:
             prop = self._LIVE_CFG
+        elif sender == self.iosInterpCheck:
+            prop = self._IOS_INTERP
         elif sender == self.debugCheck:
             prop = self._DEBUG_CFG
         elif sender == self.webPlatformCheck:

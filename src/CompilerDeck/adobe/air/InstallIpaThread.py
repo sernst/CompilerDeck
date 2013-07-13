@@ -51,6 +51,7 @@ class InstallIpaThread(RemoteExecutionThread):
 
         self.log.write('<div style="color:#9999CC">' + '\n'.join(cmd) + '</div>')
         result = SystemUtils.executeCommand(cmd)
+        print 'IPA Install:', result
 
         if result['out']:
             self._log.write(
@@ -67,5 +68,7 @@ class InstallIpaThread(RemoteExecutionThread):
                 + '<div style="font-size:18px">Error:'
                 + '</div>' + result['error'] + '</div>'
             )
+
+        self._log.write('Installation attempt complete')
 
         return result['code']

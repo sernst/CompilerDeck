@@ -31,6 +31,7 @@ class FlexProjectData(ProjectData):
         ProjectData.__init__(self, projectPath=projectPath, **kwargs)
         self._currentPlatform   = None
         self._currentPlatformID = None
+        self._iosInterpreter    = ArgsUtils.get('iosInterpreter', False, kwargs)
         self._live              = ArgsUtils.get('live', False, kwargs)
         self._packageAir        = ArgsUtils.get('packageAir', False, kwargs)
         self._quickCompile      = ArgsUtils.get('quickCompile', False, kwargs)
@@ -161,7 +162,7 @@ class FlexProjectData(ProjectData):
         elif self.currentPlatformID == FlexProjectData.ANDROID_PLATFORM:
             return 'apk'
         elif self.currentPlatformID == FlexProjectData.NATIVE_PLATFORM:
-            return 'exe' if PyGlassEnvironment.isWindows() else 'dmg'
+            return 'exe' if PyGlassEnvironment.isWindows else 'dmg'
 
         return 'air'
 
@@ -183,7 +184,10 @@ class FlexProjectData(ProjectData):
                 return 'apk-captive-runtime'
         elif self.currentPlatformID == FlexProjectData.IOS_PLATFORM:
             if self.debug:
-                return 'ipa-debug' if self.remoteDebug else 'ipa-test'
+                if self.remoteDebug:
+                    return 'ipa-debug-interpreter' if self._iosInterpreter else 'ipa-debug'
+                else:
+                    return 'ipa-test-interpreter' if self._iosInterpreter else 'ipa-test'
             else:
                 return 'ipa-app-store'
         elif self.currentPlatformID == FlexProjectData.NATIVE_PLATFORM:

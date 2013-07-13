@@ -8,11 +8,11 @@ creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\temp
 creating f:\python\compilerdeck\bin\dist
 *** searching for required modules ***
 *** parsing results ***
+creating python loader for extension 'PySide.QtMultimedia' (C:\Python27\lib\site-packages\PySide\QtMultimedia.pyd -> PySide.QtMultimedia.pyd)
 creating python loader for extension 'PySide.QtOpenGL' (C:\Python27\lib\site-packages\PySide\QtOpenGL.pyd -> PySide.QtOpenGL.pyd)
 creating python loader for extension '_ctypes' (C:\Python27\DLLs\_ctypes.pyd -> _ctypes.pyd)
 creating python loader for extension 'PySide.QtXmlPatterns' (C:\Python27\lib\site-packages\PySide\QtXmlPatterns.pyd -> PySide.QtXmlPatterns.pyd)
 creating python loader for extension 'select' (C:\Python27\DLLs\select.pyd -> select.pyd)
-creating python loader for extension 'PySide.QtMultimedia' (C:\Python27\lib\site-packages\PySide\QtMultimedia.pyd -> PySide.QtMultimedia.pyd)
 creating python loader for extension 'unicodedata' (C:\Python27\DLLs\unicodedata.pyd -> unicodedata.pyd)
 creating python loader for extension 'PySide.QtSql' (C:\Python27\lib\site-packages\PySide\QtSql.pyd -> PySide.QtSql.pyd)
 creating python loader for extension 'lxml.objectify' (C:\Python27\lib\site-packages\lxml\objectify.pyd -> lxml.objectify.pyd)
@@ -23,6 +23,7 @@ creating python loader for extension 'bz2' (C:\Python27\DLLs\bz2.pyd -> bz2.pyd)
 creating python loader for extension 'PySide.QtScript' (C:\Python27\lib\site-packages\PySide\QtScript.pyd -> PySide.QtScript.pyd)
 creating python loader for extension '_ssl' (C:\Python27\DLLs\_ssl.pyd -> _ssl.pyd)
 creating python loader for extension 'lxml.etree' (C:\Python27\lib\site-packages\lxml\etree.pyd -> lxml.etree.pyd)
+creating python loader for extension 'PySide.QtGui' (C:\Python27\lib\site-packages\PySide\QtGui.pyd -> PySide.QtGui.pyd)
 creating python loader for extension 'PySide.QtNetwork' (C:\Python27\lib\site-packages\PySide\QtNetwork.pyd -> PySide.QtNetwork.pyd)
 creating python loader for extension 'PySide.QtDeclarative' (C:\Python27\lib\site-packages\PySide\QtDeclarative.pyd -> PySide.QtDeclarative.pyd)
 creating python loader for extension 'PySide.QtXml' (C:\Python27\lib\site-packages\PySide\QtXml.pyd -> PySide.QtXml.pyd)
@@ -30,7 +31,6 @@ creating python loader for extension 'pyexpat' (C:\Python27\DLLs\pyexpat.pyd -> 
 creating python loader for extension 'PySide.QtHelp' (C:\Python27\lib\site-packages\PySide\QtHelp.pyd -> PySide.QtHelp.pyd)
 creating python loader for extension 'PySide.QtWebKit' (C:\Python27\lib\site-packages\PySide\QtWebKit.pyd -> PySide.QtWebKit.pyd)
 creating python loader for extension 'PySide.QtSvg' (C:\Python27\lib\site-packages\PySide\QtSvg.pyd -> PySide.QtSvg.pyd)
-creating python loader for extension 'PySide.QtGui' (C:\Python27\lib\site-packages\PySide\QtGui.pyd -> PySide.QtGui.pyd)
 creating python loader for extension '_socket' (C:\Python27\DLLs\_socket.pyd -> _socket.pyd)
 creating python loader for extension 'PySide.QtScriptTools' (C:\Python27\lib\site-packages\PySide\QtScriptTools.pyd -> PySide.QtScriptTools.pyd)
 creating python loader for extension 'PySide.QtTest' (C:\Python27\lib\site-packages\PySide\QtTest.pyd -> PySide.QtTest.pyd)
@@ -47,6 +47,7 @@ byte-compiling C:\Python27\lib\_LWPCookieJar.py to _LWPCookieJar.pyc
 byte-compiling C:\Python27\lib\_MozillaCookieJar.py to _MozillaCookieJar.pyc
 byte-compiling C:\Python27\lib\__future__.py to __future__.pyc
 byte-compiling C:\Python27\lib\_abcoll.py to _abcoll.pyc
+byte-compiling C:\Python27\lib\_osx_support.py to _osx_support.pyc
 byte-compiling C:\Python27\lib\_strptime.py to _strptime.pyc
 byte-compiling C:\Python27\lib\_threading_local.py to _threading_local.pyc
 byte-compiling C:\Python27\lib\_weakrefset.py to _weakrefset.pyc
@@ -625,6 +626,7 @@ byte-compiling C:\Python27\lib\site-packages\mako\template.py to mako\template.p
 byte-compiling C:\Python27\lib\site-packages\mako\util.py to mako\util.pyc
 byte-compiling C:\Python27\lib\site-packages\markupsafe\__init__.py to markupsafe\__init__.pyc
 creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\markupsafe
+byte-compiling C:\Python27\lib\site-packages\markupsafe\_compat.py to markupsafe\_compat.pyc
 byte-compiling C:\Python27\lib\site-packages\markupsafe\_constants.py to markupsafe\_constants.pyc
 byte-compiling C:\Python27\lib\site-packages\markupsafe\_native.py to markupsafe\_native.pyc
 byte-compiling C:\Python27\lib\site-packages\pkg_resources.py to pkg_resources.pyc
@@ -656,6 +658,7 @@ byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\charsetpr
 byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\codingstatemachine.py to requests\packages\charade\codingstatemachine.pyc
 byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\compat.py to requests\packages\charade\compat.pyc
 byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\constants.py to requests\packages\charade\constants.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\cp949prober.py to requests\packages\charade\cp949prober.pyc
 byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\escprober.py to requests\packages\charade\escprober.pyc
 byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\escsm.py to requests\packages\charade\escsm.pyc
 byte-compiling C:\Python27\lib\site-packages\requests\packages\charade\eucjpprober.py to requests\packages\charade\eucjpprober.pyc
@@ -687,6 +690,9 @@ byte-compiling C:\Python27\lib\site-packages\requests\packages\urllib3\__init__.
 creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\requests\packages\urllib3
 byte-compiling C:\Python27\lib\site-packages\requests\packages\urllib3\_collections.py to requests\packages\urllib3\_collections.pyc
 byte-compiling C:\Python27\lib\site-packages\requests\packages\urllib3\connectionpool.py to requests\packages\urllib3\connectionpool.pyc
+byte-compiling C:\Python27\lib\site-packages\requests\packages\urllib3\contrib\__init__.py to requests\packages\urllib3\contrib\__init__.pyc
+creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\requests\packages\urllib3\contrib
+byte-compiling C:\Python27\lib\site-packages\requests\packages\urllib3\contrib\pyopenssl.py to requests\packages\urllib3\contrib\pyopenssl.pyc
 byte-compiling C:\Python27\lib\site-packages\requests\packages\urllib3\exceptions.py to requests\packages\urllib3\exceptions.pyc
 byte-compiling C:\Python27\lib\site-packages\requests\packages\urllib3\filepost.py to requests\packages\urllib3\filepost.pyc
 byte-compiling C:\Python27\lib\site-packages\requests\packages\urllib3\packages\__init__.py to requests\packages\urllib3\packages\__init__.pyc
@@ -1062,7 +1068,7 @@ creating f:\python\compilerdeck\bin\dist\sqldrivers
 copying C:\Python27\Lib\site-packages\PySide\plugins\sqldrivers\qsqlodbc4.dll -> f:\python\compilerdeck\bin\dist\sqldrivers
 copying C:\Python27\lib\site-packages\py2exe\run_w.exe -> f:\python\compilerdeck\bin\dist\compilerdeckapplication.exe
 The following modules appear to be missing
-['BeautifulSoup', 'Carbon', 'Carbon.Files', '_dummy_thread', '_scproxy', '_thread', 'builtins', 'certifi', 'engine.create_engine', 'engine.engine_from_config', 'html.entities', 'html5lib', 'html5lib.treebuilders', 'html5lib.treebuilders.etree_lxml', 'http', 'http.client', 'http.cookies', 'importlib._bootstrap', 'keyring', 'markupsafe._speedups', 'netbios', 'packages.ssl_match_hostname.CertificateError', 'packages.ssl_match_hostname.match_hostname', 'pygments', 'pygments.formatters.html', 'pygments.lexer', 'pygments.lexers.agile', 'pygments.lexers.web', 'pygments.token', 'queue', 'rsa', 'simplejson', 'sql.alias', 'sql.and_', 'sql.asc', 'sql.between', 'sql.bindparam', 'sql.case', 'sql.cast', 'sql.collate', 'sql.delete', 'sql.desc', 'sql.distinct', 'sql.except_', 'sql.except_all', 'sql.exists', 'sql.extract', 'sql.func', 'sql.insert', 'sql.intersect', 'sql.intersect_all', 'sql.join', 'sql.literal', 'sql.literal_column', 'sql.modifier', 'sql.not_', 'sql.null', 'sql.or_', 'sql.outerjoin', 'sql.outparam', 'sql.over', 'sql.select', 'sql.subquery', 'sql.text', 'sql.tuple_', 'sql.type_coerce', 'sql.union', 'sql.union_all', 'sql.update', 'sqlalchemy.cprocessors', 'sqlalchemy.cresultproxy', 'sqlalchemy.cutils', 'urllib.parse', 'urllib.request', 'util.chop_traceback', 'util.deprecated', 'util.memoized_property', 'util.pickle', 'util.symbol', 'util.threading', 'win32api', 'win32con', 'win32evtlog', 'win32evtlogutil', 'win32pipe', 'win32wnet']
+['BeautifulSoup', 'Carbon', 'Carbon.Files', 'OpenSSL.SSL', '_dummy_thread', '_scproxy', '_sysconfigdata', '_thread', 'builtins', 'engine.create_engine', 'engine.engine_from_config', 'html.entities', 'html5lib', 'html5lib.treebuilders', 'html5lib.treebuilders.etree_lxml', 'http', 'http.client', 'http.cookies', 'importlib._bootstrap', 'importlib.machinery', 'keyring', 'markupsafe._speedups', 'ndg.httpsclient.ssl_peer_verification', 'ndg.httpsclient.subj_alt_name', 'netbios', 'packages.ssl_match_hostname.CertificateError', 'packages.ssl_match_hostname.match_hostname', 'pyasn1.codec.der', 'pygments', 'pygments.formatters.html', 'pygments.lexer', 'pygments.lexers.agile', 'pygments.lexers.web', 'pygments.token', 'queue', 'rsa', 'simplejson', 'sql.alias', 'sql.and_', 'sql.asc', 'sql.between', 'sql.bindparam', 'sql.case', 'sql.cast', 'sql.collate', 'sql.delete', 'sql.desc', 'sql.distinct', 'sql.except_', 'sql.except_all', 'sql.exists', 'sql.extract', 'sql.func', 'sql.insert', 'sql.intersect', 'sql.intersect_all', 'sql.join', 'sql.literal', 'sql.literal_column', 'sql.modifier', 'sql.not_', 'sql.null', 'sql.or_', 'sql.outerjoin', 'sql.outparam', 'sql.over', 'sql.select', 'sql.subquery', 'sql.text', 'sql.tuple_', 'sql.type_coerce', 'sql.union', 'sql.union_all', 'sql.update', 'sqlalchemy.cprocessors', 'sqlalchemy.cresultproxy', 'sqlalchemy.cutils', 'urllib.parse', 'urllib.request', 'util.chop_traceback', 'util.deprecated', 'util.memoized_property', 'util.pickle', 'util.symbol', 'util.threading', 'win32api', 'win32con', 'win32evtlog', 'win32evtlogutil', 'win32pipe', 'win32wnet']
 
 *** binary dependencies ***
 Your executable(s) also depend on these dlls which are not included,
