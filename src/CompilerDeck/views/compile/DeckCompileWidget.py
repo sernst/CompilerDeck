@@ -72,7 +72,9 @@ class DeckCompileWidget(PyGlassWidget):
             self.flashPlayerComboBox.setCurrentIndex(self.flashPlayerComboBox.findText(version))
         self.flashPlayerComboBox.currentIndexChanged.connect(self._handleFlashVersionChanged)
 
-        for item in ['None', 'WiFi Connection', 'USB Connection (Android)']:
+        debugTypes = [
+            'None', 'WiFi Connection', 'USB Connection (%s)' % str(FlexProjectData.USB_DEBUG_PORT)]
+        for item in debugTypes:
             self.remoteDebugComboBox.addItem(item)
 
         self.releaseInfoDefaultBtn.clicked.connect(self._handleDefaultReleaseText)
@@ -96,40 +98,13 @@ class DeckCompileWidget(PyGlassWidget):
         self.reloadDeployBtn.clicked.connect(self._handleReloadDeployInfo)
         self.mainTab.setCurrentIndex(0)
 
-        self._setCheckState(
-            self.iosInterpCheck,
-            self.parent().appConfig.get(self._IOS_INTERP, False))
-        self.iosInterpCheck.stateChanged.connect(self._handleCheckStateChange)
-
-        self._setCheckState(
-            self.debugCheck,
-            self.parent().appConfig.get(self._DEBUG_CFG, True))
-        self.debugCheck.stateChanged.connect(self._handleCheckStateChange)
-
-        self._setCheckState(
-            self.liveCheck,
-            self.parent().appConfig.get(self._LIVE_CFG, False))
-        self.liveCheck.stateChanged.connect(self._handleCheckStateChange)
-
-        self._setCheckState(
-            self.webPlatformCheck,
-            self.parent().appConfig.get(self._COMPILE_WEB, True))
-        self.webPlatformCheck.stateChanged.connect(self._handleCheckStateChange)
-
-        self._setCheckState(
-            self.desktopPlatformCheck,
-            self.parent().appConfig.get(self._COMPILE_DESKTOP, True))
-        self.webPlatformCheck.stateChanged.connect(self._handleCheckStateChange)
-
-        self._setCheckState(
-            self.androidPlatformCheck,
-            self.parent().appConfig.get(self._COMPILE_ANDROID, True))
-        self.androidPlatformCheck.stateChanged.connect(self._handleCheckStateChange)
-
-        self._setCheckState(
-            self.iosPlatformCheck,
-            self.parent().appConfig.get(self._COMPILE_IOS, True))
-        self.iosPlatformCheck.stateChanged.connect(self._handleCheckStateChange)
+        self._initializeCheck(self.iosInterpCheck, self._IOS_INTERP, False)
+        self._initializeCheck(self.debugCheck, self._DEBUG_CFG, True)
+        self._initializeCheck(self.liveCheck, self._LIVE_CFG, False)
+        self._initializeCheck(self.webPlatformCheck, self._COMPILE_WEB, True)
+        self._initializeCheck(self.desktopPlatformCheck, self._COMPILE_DESKTOP, True)
+        self._initializeCheck(self.androidPlatformCheck, self._COMPILE_ANDROID, True)
+        self._initializeCheck(self.iosPlatformCheck, self._COMPILE_IOS, True)
 
         self._settingsEditor = SettingsEditor()
         self._settingsEditor.populate()
@@ -141,6 +116,11 @@ class DeckCompileWidget(PyGlassWidget):
 
 #===================================================================================================
 #                                                                               P R O T E C T E D
+
+#___________________________________________________________________________________________________ _initializeCheck
+    def _initializeCheck(self, checkBox, configValue, defaultValue):
+        self._setCheckState(checkBox, self.parent().appConfig.get(configValue, defaultValue))
+        checkBox.stateChanged.connect(self._handleCheckStateChange)
 
 #___________________________________________________________________________________________________ _activateWidgetDisplayImpl
     def _activateWidgetDisplayImpl(self, **kwargs):
@@ -210,7 +190,7 @@ class DeckCompileWidget(PyGlassWidget):
         self.revisionSpin.setValue(int(self._settingsEditor.revision))
 
 #___________________________________________________________________________________________________ _executeCompilation
-    def _executeCompilation(self, callback):
+    def _executeCompilation(self, callback, buildSnapshot =None):
         self._settingsEditor.setTo(
             prefix=self.prefixLine.text(),
             suffix=self.suffixSpin.value(),
@@ -220,7 +200,20 @@ class DeckCompileWidget(PyGlassWidget):
         )
         self._settingsEditor.write()
 
-        self._buildSnapshot = dict(
+        if buildSnapshot is None:
+            self._buildSnapshot = self._createBuildSnapshot()
+        else:
+            self._buildSnapshot = buildSnapshot
+
+        self._executeRemoteThread(ANECompileThread(**self._buildSnapshot), callback)
+
+#___________________________________________________________________________________________________ _executeDebugProcess
+    def _executeDebugProcess(self):
+        self._executeRemoteThread(AirDebugThread(**self._createBuildSnapshot()))
+
+#___________________________________________________________________________________________________ _createBuildSnapshot
+    def _createBuildSnapshot(self):
+        return dict(
             parent=self,
             iosInterpreter=self.iosInterpCheck.isChecked(),
             versionInfo=self._settingsEditor.toDict(),
@@ -241,24 +234,19 @@ class DeckCompileWidget(PyGlassWidget):
             }
         )
 
-        self._executeRemoteThread(ANECompileThread(**self._buildSnapshot), callback)
-
-#___________________________________________________________________________________________________ _executeDebugProcess
-    def _executeDebugProcess(self):
-        self._executeRemoteThread(AirDebugThread(
-            parent=self,
-            projectPath=CompilerDeckEnvironment.getProjectPath(),
-            airVersion=str(self.airSDKComboBox.currentText()),
-            flashVersion=str(self.flashPlayerComboBox.currentText()),
-        ))
-
 #===================================================================================================
 #                                                                                 H A N D L E R S
 
 #___________________________________________________________________________________________________ _handleCompileDebugClick
     def _handleCompileDebugClick(self):
         self._package = False
-        self._executeCompilation(self._handleDebugCompilation)
+        snap = self._createBuildSnapshot()
+        snap['platforms'][FlexProjectData.IOS_PLATFORM]     = False
+        snap['platforms'][FlexProjectData.ANDROID_PLATFORM] = False
+        snap['platforms'][FlexProjectData.FLASH_PLATFORM]   = True
+        snap['platforms'][FlexProjectData.AIR_PLATFORM]     = True
+        snap['platforms'][FlexProjectData.NATIVE_PLATFORM]  = True
+        self._executeCompilation(self._handleDebugCompilation, snap)
 
 #___________________________________________________________________________________________________ _handleDebugCompilation
     def _handleDebugCompilation(self, result):

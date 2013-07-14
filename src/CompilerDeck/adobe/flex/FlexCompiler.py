@@ -81,9 +81,10 @@ class FlexCompiler(AdobeSystemCompiler):
         cmd.extend([
             self._getBooleanDefinition('LIVE', sets.live),
             self._getBooleanDefinition('DEBUG', sets.debug),
+            self._getBooleanDefinition('REMOTE_DEBUG', sets.remoteDebug),
             self._getBooleanDefinition('RELEASE', not sets.debug),
             self._getBooleanDefinition('AIR', isAir),
-            self._getBooleanDefinition('DESKTOP', isAir and not isAndroid and isIOS),
+            self._getBooleanDefinition('DESKTOP', isAir and not isAndroid and not isIOS),
             self._getBooleanDefinition('IOS', isIOS),
             self._getBooleanDefinition('ANDROID', isAndroid),
             self._getStringVarDefinition('VERSION_LABEL_PREFIX', sets.versionInfo.get('prefix', '')),
@@ -110,7 +111,7 @@ class FlexCompiler(AdobeSystemCompiler):
             mainClass
         ])
 
-        cmd.insert(0, os.path.join(airPath, sets.airVersion, 'bin', 'mxmlc.bat'))
+        cmd.insert(0, os.path.join(airPath, sets.airVersion, 'bin', 'amxmlc.bat' if isAir else 'mxmlc.bat'))
 
         if self.executeCommand(cmd, 'COMPILING SWF: "%s"' % sets.currentPlatformID):
             self._log.write('FAILED: SWF COMPILATION')

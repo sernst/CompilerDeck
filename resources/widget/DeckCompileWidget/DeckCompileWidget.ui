@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>640</width>
-    <height>480</height>
+    <height>555</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,7 +29,7 @@
    <item>
     <widget class="QTabWidget" name="mainTab">
      <property name="currentIndex">
-      <number>0</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="settingsTabPage">
       <attribute name="title">
@@ -1137,6 +1137,35 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Debug Info</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_14">
+       <item>
+        <widget class="QTextEdit" name="textEdit">
+         <property name="html">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; color:#000000;&quot;&gt;1) You first need to start the application on the iOS device&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#000000;&quot;&gt;2) Get the decide Handle from idb.exe:&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:10pt; color:#5555ff;&quot;&gt;AIR/3.8/lib/aot/bin/iOSBin/idb&lt;/span&gt;&lt;span style=&quot; font-family:'Courier New,courier'; font-size:10pt; color:#5555ff;&quot;&gt;/idb -devices &lt;/span&gt;&lt;span style=&quot; font-family:'Courier New,courier'; font-size:10pt; color:#005500;&quot;&gt;(probably going to be 1)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#000000;&quot;&gt;3) Forward desktop debugging port to remote iOS debugging port:&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Courier New,courier'; font-size:10pt; color:#333333;&quot;&gt;idb -forward 7936 16000 1&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#000000;&quot;&gt;4) Run FDB using the desktop port:&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;fdb -p 7936&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#000000;&quot;&gt;5) Inside FDB run the debugging instance:&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#000000;&quot;&gt;(fdb) run&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#000000;&quot;&gt;For details see:&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>
@@ -1152,7 +1181,6 @@
   <tabstop>flashPlayerComboBox</tabstop>
   <tabstop>airSDKComboBox</tabstop>
   <tabstop>iosPlatformCheck</tabstop>
-  <tabstop>mainTab</tabstop>
   <tabstop>compileBtn</tabstop>
   <tabstop>prefixLine</tabstop>
   <tabstop>suffixSpin</tabstop>

@@ -117,7 +117,10 @@ class AirCompiler(AdobeSystemCompiler):
         sets = self._settings
         if sets.remoteDebug:
             if sets.usbDebugPort:
-                cmd.extend(['-listen', sets.usbDebugPort])
+                if sets.currentPlatformID == FlexProjectData.IOS_PLATFORM:
+                    cmd.extend(['-listen', '16000'])
+                else:
+                    cmd.extend(['-listen', sets.usbDebugPort])
             elif sets.ipAddress:
                 cmd.extend(['-connect', sets.ipAddress])
 
