@@ -86,7 +86,7 @@ class AndroidLogcatThread(RemoteExecutionThread):
         )
 
         cmd = [
-            '"%s"' % self._owner.mainWindow.getAndroidSDKPath('platform-tools', 'adb.exe'),
+            '"%s"' % self.parent().mainWindow.getAndroidSDKPath('platform-tools', 'adb.exe'),
             'logcat',
             '-d',
             '-v', 'long'
@@ -140,7 +140,7 @@ class AndroidLogcatThread(RemoteExecutionThread):
         )
 
         cmd = [
-            '"%s"' % self._owner.mainWindow.getAndroidSDKPath('platform-tools', 'adb.exe'),
+            '"%s"' % self.parent().mainWindow.getAndroidSDKPath('platform-tools', 'adb.exe'),
             'logcat',
             '-c'
         ]

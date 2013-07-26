@@ -273,6 +273,9 @@ class DeckCompileWidget(PyGlassWidget):
                 self.androidPlatformCheck.isChecked(),
                 self.iosPlatformCheck.isChecked(),
             )
+            self._settingsEditor.reset()
+            self._settingsEditor.populate()
+
         self._handleRemoteThreadComplete(result)
         self._package = False
 
