@@ -146,7 +146,7 @@ class SettingsEditor(object):
             return
 
         out = '\t'.join([
-            TimeUtils.getNowDatetime().strftime('[%a %M-%d %H:%M]'),
+            TimeUtils.getNowDatetime().strftime('[%a %m-%d %H:%M]'),
             'DSK' if builtDesktop else '---',
             'AND' if builtAndroid else '---',
             'IOS' if builtIOS else '---',

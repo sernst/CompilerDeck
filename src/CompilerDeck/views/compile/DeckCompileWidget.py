@@ -6,6 +6,7 @@ from PySide import QtGui
 from PySide import QtCore
 
 from pyaid.config.SettingsConfig import SettingsConfig
+from pyaid.json.JSON import JSON
 
 from pyglass.widgets.PyGlassWidget import PyGlassWidget
 
@@ -124,6 +125,8 @@ class DeckCompileWidget(PyGlassWidget):
 
 #___________________________________________________________________________________________________ _activateWidgetDisplayImpl
     def _activateWidgetDisplayImpl(self, **kwargs):
+        self._buildSnapshot = None
+        self._loadBuildSnapshot()
         self._reloadDeployText()
 
 #___________________________________________________________________________________________________ _reloadDeployText
@@ -234,6 +237,33 @@ class DeckCompileWidget(PyGlassWidget):
             }
         )
 
+#___________________________________________________________________________________________________ _storeBuildSnapshot
+    def _storeBuildSnapshot(self):
+        if not self._buildSnapshot:
+            return
+
+        snap = dict()
+        for n,v in self._buildSnapshot.iteritems():
+            if n in ['parent']:
+                continue
+
+            snap[n] = v
+
+        settings = SettingsConfig(CompilerDeckEnvironment.projectSettingsPath, pretty=True)
+        settings.set(['BUILD', 'LAST_SNAPSHOT'], JSON.asString(snap))
+
+#___________________________________________________________________________________________________ _loadBuildSnapshot
+    def _loadBuildSnapshot(self):
+        settings = SettingsConfig(CompilerDeckEnvironment.projectSettingsPath, pretty=True)
+        snap = settings.get(['BUILD', 'LAST_SNAPSHOT'])
+        if snap is None:
+            return
+
+        try:
+            self._buildSnapshot = JSON.fromString(snap)
+        except Exception, err:
+            pass
+
 #===================================================================================================
 #                                                                                 H A N D L E R S
 
@@ -268,6 +298,7 @@ class DeckCompileWidget(PyGlassWidget):
 #___________________________________________________________________________________________________ _handleCompilationComplete
     def _handleCompilationComplete(self, result):
         if self._package and result['response'] == 0:
+            self._storeBuildSnapshot()
             self._settingsEditor.logBuild(
                 self.desktopPlatformCheck.isChecked(),
                 self.androidPlatformCheck.isChecked(),
