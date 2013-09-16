@@ -34,10 +34,10 @@ class ProjectData(object):
         self._debug        = ArgsUtils.get('debug', None, kwargs)
 
         # The version of the AIR runtime to use for compiling/debugging/packaging
-        self._airVersion   = ArgsUtils.get('airVersion', '3.7', kwargs)
+        self._airVersion   = ArgsUtils.get('airVersion', '3.9', kwargs)
 
         # The version of the Flash player to use for compiling/debugging
-        self._flashVersion = ArgsUtils.get('flashVersion', '11.7', kwargs)
+        self._flashVersion = ArgsUtils.get('flashVersion', '11.8', kwargs)
 
         # Loads the settings file where the project settings are stored
         self._settings = SettingsConfig(CompilerDeckEnvironment.projectSettingsPath, pretty=True)

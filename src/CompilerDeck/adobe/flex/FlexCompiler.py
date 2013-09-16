@@ -8,6 +8,7 @@ from pyaid.file.FileUtils import FileUtils
 
 from CompilerDeck.adobe.AdobeSystemCompiler import AdobeSystemCompiler
 from CompilerDeck.adobe.flex.FlexProjectData import FlexProjectData
+from CompilerDeck.adobe.shared.FlashUtils import FlashUtils
 
 #___________________________________________________________________________________________________ FlexCompiler
 class FlexCompiler(AdobeSystemCompiler):
@@ -28,12 +29,13 @@ class FlexCompiler(AdobeSystemCompiler):
     def _compileImpl(self):
         """Doc..."""
 
-        cmd       = []
-        sets      = self._settings
-        airPath   = self._owner.mainWindow.getRootAIRPath()
-        isAir     = sets.currentPlatformID != FlexProjectData.FLASH_PLATFORM
-        isAndroid = sets.currentPlatformID == FlexProjectData.ANDROID_PLATFORM
-        isIOS     = sets.currentPlatformID == FlexProjectData.IOS_PLATFORM
+        cmd          = []
+        sets         = self._settings
+        airPath      = self._owner.mainWindow.getRootAIRPath()
+        isAir        = sets.currentPlatformID != FlexProjectData.FLASH_PLATFORM
+        isAndroid    = sets.currentPlatformID == FlexProjectData.ANDROID_PLATFORM
+        isIOS        = sets.currentPlatformID == FlexProjectData.IOS_PLATFORM
+        flashVersion = self._getFlashVersion()
 
         fileParts = sets.targetClass.split('.')
         mainClass = FileUtils.createPath(
@@ -45,8 +47,7 @@ class FlexCompiler(AdobeSystemCompiler):
         cmd.append('-load-config+=' + FileUtils.createPath(
             sets.projectPath, 'compiler', 'shared-targets-asc2.xml', isFile=True))
 
-        flashGlobals  = airPath + sets.airVersion + os.sep
-        flashGlobals += 'frameworks' + os.sep
+        flashGlobals = FileUtils.createPath(airPath, sets.airVersion, 'frameworks', isDir=True)
 
         if sets.aneIncludes:
             aneType = 'android' if isAndroid else ('ios' if isIOS else 'default')
@@ -61,8 +62,7 @@ class FlexCompiler(AdobeSystemCompiler):
                 '-external-library-path+=' + os.path.join(airGlobals, 'airglobal.swc'),
                 '-library-path+=' + FileUtils.createPath(airRoot, 'libs', isDir=True),
                 '-library-path+=' + FileUtils.createPath(airRoot, 'libs', 'air', isDir=True),
-                '-library-path+=' + FileUtils.createPath(flashGlobals, 'locale', 'en_US', isDir=True)
-            ])
+                '-library-path+=' + FileUtils.createPath(flashGlobals, 'locale', 'en_US', isDir=True) ])
         else:
             flashGlobals += 'libs'
             cmd.extend([
@@ -70,13 +70,11 @@ class FlexCompiler(AdobeSystemCompiler):
                     + os.path.join(flashGlobals, 'player', sets.flashVersion, 'playerglobal.swc'),
                 '-library-path+=' + flashGlobals,
                 '-library-path+=' + os.path.join(flashGlobals, 'mobile'),
-                '-library-path+=' + os.path.join(flashGlobals, 'automation')
-            ])
+                '-library-path+=' + os.path.join(flashGlobals, 'automation') ])
 
         cmd.extend([
             '-library-path+=' + os.path.join(sets.projectPath, 'lib'),
-            '-source-path+='  + os.path.join(sets.projectPath, 'src')
-        ])
+            '-source-path+='  + os.path.join(sets.projectPath, 'src') ])
 
         cmd.extend([
             self._getBooleanDefinition('LIVE', sets.live),
@@ -98,18 +96,16 @@ class FlexCompiler(AdobeSystemCompiler):
         if sets.swcIncludes:
             for swc in sets.swcIncludes:
                 cmd.append('-include-libraries+='
-                    + os.path.join(sets.projectPath, 'lib', swc + '.swc')
-                )
+                    + os.path.join(sets.projectPath, 'lib', swc + '.swc'))
 
         cmd.extend([
             '-output=' + FileUtils.createPath(sets.platformBinPath, sets.targetFilename + '.swf'),
             '-omit-trace-statements=' + self._getAsBooleanString(not sets.debug),
             '-verbose-stacktraces=' + self._getAsBooleanString(sets.debug),
             '-debug=' + self._getAsBooleanString(sets.debug),
-            '-target-player=' + sets.flashVersion,
-            '-swf-version=' + str(sets.swfVersion),
-            mainClass
-        ])
+            '-target-player=' + flashVersion,
+            '-swf-version=' + str(FlashUtils.convertFlashToSwfVersion(flashVersion)),
+            mainClass ])
 
         cmd.insert(0, os.path.join(airPath, sets.airVersion, 'bin', 'amxmlc.bat' if isAir else 'mxmlc.bat'))
 
@@ -121,3 +117,33 @@ class FlexCompiler(AdobeSystemCompiler):
         return True
 
 
+#___________________________________________________________________________________________________ _getFlashVersion
+    def _getFlashVersion(self):
+        sets = self._settings
+        if sets.currentPlatformID == FlexProjectData.FLASH_PLATFORM:
+            return sets.flashVersion
+
+        airPath     = self._owner.mainWindow.getRootAIRPath()
+        playersPath = FileUtils.createPath(
+            airPath, sets.airVersion, 'frameworks', 'libs', 'player', isDir=True)
+        print 'PLAYERS PATH:', playersPath
+
+        playerVersion = None
+        for item in os.listdir(playersPath):
+            itemPath = FileUtils.createPath(playersPath, item, isDir=True)
+            if not os.path.exists(itemPath) or not os.path.isdir(itemPath):
+                continue
+
+            try:
+                versionValue = float(item)
+            except Exception, err:
+                self._log.writeError('Unrecognized Flash player directory: ' + str(item), err)
+                continue
+
+            if playerVersion is None or versionValue > float(playerVersion):
+                playerVersion = item
+
+        if playerVersion is None:
+            return sets.flashVersion
+
+        return playerVersion

@@ -52,6 +52,15 @@ class AirDebugThread(RemoteExecutionThread):
 #___________________________________________________________________________________________________ _runAirDebug
     def _runAirDebug(self):
         sets = self._settings
+
+        if not AirUtils.updateDescriptorNamespace(sets.appDescriptorPath, sets.airVersion):
+            self._log.write([
+                'ERROR: Unable to update the application descriptor file namespace version',
+                'PATH: ' + sets.appDescriptorPath,
+                'VERSION: ' + sets.airVersion
+            ])
+            return 1
+
         cmd = [
             self.parent().mainWindow.getRootAIRPath(sets.airVersion, 'bin', 'adl.exe'),
             FileUtils.createPath(sets.projectPath, 'application.xml', isFile=True),

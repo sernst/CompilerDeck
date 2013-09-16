@@ -903,9 +903,6 @@ byte-compiling F:\Python\PyAid\src\pyaid\string\__init__.py to pyaid\string\__in
 byte-compiling F:\Python\PyAid\src\pyaid\system\SystemUtils.py to pyaid\system\SystemUtils.pyc
 creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyaid\system
 byte-compiling F:\Python\PyAid\src\pyaid\system\__init__.py to pyaid\system\__init__.pyc
-byte-compiling F:\Python\PyAid\src\pyaid\threading\ThreadUtils.py to pyaid\threading\ThreadUtils.pyc
-creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyaid\threading
-byte-compiling F:\Python\PyAid\src\pyaid\threading\__init__.py to pyaid\threading\__init__.pyc
 byte-compiling F:\Python\PyAid\src\pyaid\time\TimeUtils.py to pyaid\time\TimeUtils.pyc
 creating f:\python\compilerdeck\bin\build\bdist.win-amd64\winexe\collect-2.7\pyaid\time
 byte-compiling F:\Python\PyAid\src\pyaid\time\__init__.py to pyaid\time\__init__.pyc
