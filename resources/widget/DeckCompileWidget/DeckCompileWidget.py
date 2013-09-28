@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'F:\Python\CompilerDeck\resources\widget\DeckCompileWidget\DeckCompileWidget.ui'
 #
-# Created: Mon Sep 16 13:08:18 2013
+# Created: Sat Sep 28 11:12:21 2013
 #      by: pyside-uic 0.2.14 running on PySide 1.1.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -45,6 +45,9 @@ class PySideUiFileSetup(object):
         Form.verticalLayout_6.addWidget(Form.liveCheck)
         spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         Form.verticalLayout_6.addItem(spacerItem)
+        Form.telemetryCheck = QtGui.QCheckBox(Form.groupBox_3)
+        Form.telemetryCheck.setObjectName("telemetryCheck")
+        Form.verticalLayout_6.addWidget(Form.telemetryCheck)
         Form.horizontalLayout_2.addWidget(Form.groupBox_3)
         Form.platformBox = QtGui.QGroupBox(Form.widget_4)
         Form.platformBox.setObjectName("platformBox")
@@ -546,7 +549,7 @@ class PySideUiFileSetup(object):
         Form.horizontalLayout_5.addWidget(Form.mainTab)
 
         self.retranslateUi(Form)
-        Form.mainTab.setCurrentIndex(5)
+        Form.mainTab.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Form)
         Form.setTabOrder(Form.sendEmailCheck, Form.summaryText)
         Form.setTabOrder(Form.summaryText, Form.additionsText)
@@ -585,6 +588,7 @@ class PySideUiFileSetup(object):
         Form.groupBox_3.setTitle(QtGui.QApplication.translate("Form", "Compile Modes", None, QtGui.QApplication.UnicodeUTF8))
         Form.debugCheck.setText(QtGui.QApplication.translate("Form", "Debug", None, QtGui.QApplication.UnicodeUTF8))
         Form.liveCheck.setText(QtGui.QApplication.translate("Form", "Live", None, QtGui.QApplication.UnicodeUTF8))
+        Form.telemetryCheck.setText(QtGui.QApplication.translate("Form", "Advanced Telemetry", None, QtGui.QApplication.UnicodeUTF8))
         Form.platformBox.setTitle(QtGui.QApplication.translate("Form", "Platforms To Compile", None, QtGui.QApplication.UnicodeUTF8))
         Form.webPlatformCheck.setText(QtGui.QApplication.translate("Form", "Web (Flash)", None, QtGui.QApplication.UnicodeUTF8))
         Form.desktopPlatformCheck.setText(QtGui.QApplication.translate("Form", "Desktop (AIR/Native)", None, QtGui.QApplication.UnicodeUTF8))

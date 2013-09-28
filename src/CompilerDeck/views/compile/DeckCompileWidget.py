@@ -40,6 +40,7 @@ class DeckCompileWidget(PyGlassWidget):
     _COMPILE_ANDROID          = 'COMPILE_ANDROID'
     _COMPILE_IOS              = 'COMPILE_IOS'
     _IOS_INTERP               = 'IOS_INTERP'
+    _ADV_TELEMETRY            = 'ADV_TELEMETRY'
 
 #___________________________________________________________________________________________________ __init__
     def __init__(self, *args, **kwargs):
@@ -106,6 +107,7 @@ class DeckCompileWidget(PyGlassWidget):
         self._initializeCheck(self.desktopPlatformCheck, self._COMPILE_DESKTOP, True)
         self._initializeCheck(self.androidPlatformCheck, self._COMPILE_ANDROID, True)
         self._initializeCheck(self.iosPlatformCheck, self._COMPILE_IOS, True)
+        self._initializeCheck(self.telemetryCheck, self._ADV_TELEMETRY, False)
 
         self._settingsEditor = SettingsEditor()
         self._settingsEditor.populate()
@@ -222,6 +224,7 @@ class DeckCompileWidget(PyGlassWidget):
             versionInfo=self._settingsEditor.toDict(),
             projectPath=CompilerDeckEnvironment.getProjectPath(),
             debug=self.debugCheck.isChecked(),
+            telemetry=self.telemetryCheck.isChecked(),
             live=self.liveCheck.isChecked(),
             airVersion=str(self.airSDKComboBox.currentText()),
             flashVersion=str(self.flashPlayerComboBox.currentText()),
@@ -354,6 +357,8 @@ class DeckCompileWidget(PyGlassWidget):
             prop = self._COMPILE_ANDROID
         elif sender == self.iosPlatformCheck:
             prop = self._COMPILE_IOS
+        elif sender == self.telemetryCheck:
+            prop = self._ADV_TELEMETRY
 
         if prop:
             self.owner.appConfig.set(prop, sender.isChecked())

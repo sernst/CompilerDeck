@@ -29,7 +29,7 @@
    <item>
     <widget class="QTabWidget" name="mainTab">
      <property name="currentIndex">
-      <number>5</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="settingsTabPage">
       <attribute name="title">
@@ -74,6 +74,13 @@
                 </size>
                </property>
               </spacer>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="telemetryCheck">
+               <property name="text">
+                <string>Advanced Telemetry</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>

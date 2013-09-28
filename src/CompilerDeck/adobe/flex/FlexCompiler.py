@@ -98,6 +98,11 @@ class FlexCompiler(AdobeSystemCompiler):
                 cmd.append('-include-libraries+='
                     + os.path.join(sets.projectPath, 'lib', swc + '.swc'))
 
+        if sets.advancedTelemetry:
+            cmd.append('-advanced-telemetry=true')
+            if isIOS:
+                cmd.append('-sample=false')
+
         cmd.extend([
             '-output=' + FileUtils.createPath(sets.platformBinPath, sets.targetFilename + '.swf'),
             '-omit-trace-statements=' + self._getAsBooleanString(not sets.debug),
