@@ -309,6 +309,7 @@ class DeckCompileWidget(PyGlassWidget):
             )
             self._settingsEditor.reset()
             self._settingsEditor.populate()
+            self._updateSettings()
 
         self._handleRemoteThreadComplete(result)
         self._package = False

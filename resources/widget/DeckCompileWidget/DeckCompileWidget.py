@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'F:\Python\CompilerDeck\resources\widget\DeckCompileWidget\DeckCompileWidget.ui'
 #
-# Created: Sat Sep 28 11:12:21 2013
+# Created: Mon Sep 30 10:16:54 2013
 #      by: pyside-uic 0.2.14 running on PySide 1.1.2
 #
 # WARNING! All changes made in this file will be lost!
