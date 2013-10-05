@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'F:\Python\CompilerDeck\resources\widget\DeckCompileWidget\DeckCompileWidget.ui'
 #
-# Created: Mon Sep 30 10:16:54 2013
+# Created: Fri Oct 04 23:21:50 2013
 #      by: pyside-uic 0.2.14 running on PySide 1.1.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -439,6 +439,7 @@ class PySideUiFileSetup(object):
         Form.label_10.setObjectName("label_10")
         Form.formLayout_2.setWidget(0, QtGui.QFormLayout.LabelRole, Form.label_10)
         Form.majorSpin = QtGui.QSpinBox(Form.widget_3)
+        Form.majorSpin.setMaximum(1000)
         Form.majorSpin.setObjectName("majorSpin")
         Form.formLayout_2.setWidget(0, QtGui.QFormLayout.FieldRole, Form.majorSpin)
         Form.label_11 = QtGui.QLabel(Form.widget_3)
@@ -446,12 +447,14 @@ class PySideUiFileSetup(object):
         Form.label_11.setObjectName("label_11")
         Form.formLayout_2.setWidget(1, QtGui.QFormLayout.LabelRole, Form.label_11)
         Form.minorSpin = QtGui.QSpinBox(Form.widget_3)
+        Form.minorSpin.setMaximum(10000)
         Form.minorSpin.setObjectName("minorSpin")
         Form.formLayout_2.setWidget(1, QtGui.QFormLayout.FieldRole, Form.minorSpin)
         Form.label_12 = QtGui.QLabel(Form.widget_3)
         Form.label_12.setObjectName("label_12")
         Form.formLayout_2.setWidget(2, QtGui.QFormLayout.LabelRole, Form.label_12)
         Form.revisionSpin = QtGui.QSpinBox(Form.widget_3)
+        Form.revisionSpin.setMaximum(100000)
         Form.revisionSpin.setObjectName("revisionSpin")
         Form.formLayout_2.setWidget(2, QtGui.QFormLayout.FieldRole, Form.revisionSpin)
         Form.horizontalLayout_7.addWidget(Form.widget_3)
@@ -549,7 +552,7 @@ class PySideUiFileSetup(object):
         Form.horizontalLayout_5.addWidget(Form.mainTab)
 
         self.retranslateUi(Form)
-        Form.mainTab.setCurrentIndex(0)
+        Form.mainTab.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(Form)
         Form.setTabOrder(Form.sendEmailCheck, Form.summaryText)
         Form.setTabOrder(Form.summaryText, Form.additionsText)

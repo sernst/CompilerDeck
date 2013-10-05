@@ -29,7 +29,7 @@
    <item>
     <widget class="QTabWidget" name="mainTab">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="settingsTabPage">
       <attribute name="title">
@@ -846,7 +846,11 @@
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QSpinBox" name="majorSpin"/>
+              <widget class="QSpinBox" name="majorSpin">
+               <property name="maximum">
+                <number>1000</number>
+               </property>
+              </widget>
              </item>
              <item row="1" column="0">
               <widget class="QLabel" name="label_11">
@@ -859,7 +863,11 @@
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QSpinBox" name="minorSpin"/>
+              <widget class="QSpinBox" name="minorSpin">
+               <property name="maximum">
+                <number>10000</number>
+               </property>
+              </widget>
              </item>
              <item row="2" column="0">
               <widget class="QLabel" name="label_12">
@@ -869,7 +877,11 @@
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QSpinBox" name="revisionSpin"/>
+              <widget class="QSpinBox" name="revisionSpin">
+               <property name="maximum">
+                <number>100000</number>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>

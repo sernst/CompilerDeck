@@ -30,7 +30,7 @@ class FlexProjectData(ProjectData):
         """Creates a new instance of ClassTemplate."""
         ProjectData.__init__(self, projectPath=projectPath, **kwargs)
 
-        self.advancedTelemetry  = ArgsUtils.get('telemetry', kwargs, False)
+        self.advancedTelemetry  = ArgsUtils.get('telemetry', False, kwargs)
 
         self._currentPlatform   = None
         self._currentPlatformID = None

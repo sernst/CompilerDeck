@@ -100,8 +100,8 @@ class FlexCompiler(AdobeSystemCompiler):
 
         if sets.advancedTelemetry:
             cmd.append('-advanced-telemetry=true')
-            if isIOS:
-                cmd.append('-sample=false')
+            #if isIOS:
+            #    cmd.append('-sampler=false')
 
         cmd.extend([
             '-output=' + FileUtils.createPath(sets.platformBinPath, sets.targetFilename + '.swf'),
