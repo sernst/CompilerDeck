@@ -14,6 +14,8 @@ class AirUtils(object):
 #===================================================================================================
 #                                                                                       C L A S S
 
+    APP_ID_PATTERN = re.compile('(?P<prefix><id>)[^<]+(?P<suffix></id>)')
+
     DESCRIPTOR_VERSION_PATTERN = re.compile(
         '(?P<prefix><application xmlns="http://ns.adobe.com/air/application/)[0-9\.]+(?P<suffix>">)')
 
@@ -22,6 +24,13 @@ class AirUtils(object):
     def updateDescriptorNamespace(cls, descriptorPath, airVersion):
         data = FileUtils.getContents(descriptorPath)
         data = cls.DESCRIPTOR_VERSION_PATTERN.sub('\g<prefix>' + airVersion + '\g<suffix>', data)
+        return FileUtils.putContents(data, descriptorPath)
+
+#___________________________________________________________________________________________________ updateAppId
+    @classmethod
+    def updateAppId(cls, descriptorPath, appId):
+        data = FileUtils.getContents(descriptorPath)
+        data = cls.APP_ID_PATTERN.sub('\g<prefix>' + appId + '\g<suffix>', data)
         return FileUtils.putContents(data, descriptorPath)
 
 #___________________________________________________________________________________________________ deployExternalIncludes
@@ -37,7 +46,7 @@ class AirUtils(object):
         # Copy the icons for the platform deployment from the icons folder for that platform, or,
         # if not platform specific icons folder exists, from the main icons folder instead.
         iconPath = FileUtils.createPath(sets.platformProjectPath, 'icons', isDir=True)
-        print 'ICON PATH:', iconPath, os.path.exists(iconPath)
+
         if not os.path.exists(iconPath):
             iconPath = FileUtils.createPath(sets.projectPath, 'icons', isDir=True)
         if os.path.exists(iconPath):

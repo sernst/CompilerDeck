@@ -107,7 +107,28 @@ class ProjectData(object):
 #                                                                                     P U B L I C
 
 #___________________________________________________________________________________________________ getSetting
-    def getSetting(self, key, defaultValue =None, error =False):
+    def getSetting(self, key, defaultValue =None, error =False, debugOrRelease =True):
+        if not debugOrRelease:
+            return self._getProjectSetting(key, defaultValue, error)
+
+        deepKey = 'DEBUG' if self._debug else 'RELEASE'
+        if isinstance(key, basestring):
+            deepKey = [deepKey, key]
+        else:
+            deepKey = [deepKey] + key
+
+        out = self._getProjectSetting(deepKey, defaultValue=NullUtils.UNIVERSAL_NULL)
+
+        if out != NullUtils.UNIVERSAL_NULL:
+            return out
+
+        return self._getProjectSetting(key, defaultValue, error)
+
+#===================================================================================================
+#                                                                               P R O T E C T E D
+
+#___________________________________________________________________________________________________ _getSetting
+    def _getProjectSetting(self, key, defaultValue =None, error =False):
         if self._overrideSettings:
             res = self._overrideSettings.get(key, NullUtils.UNIVERSAL_NULL)
             if res != NullUtils.UNIVERSAL_NULL:

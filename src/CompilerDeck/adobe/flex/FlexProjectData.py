@@ -9,6 +9,7 @@ from pyaid.file.FileUtils import FileUtils
 
 from pyglass.app.PyGlassEnvironment import PyGlassEnvironment
 
+from CompilerDeck.adobe.air.AirUtils import AirUtils
 from CompilerDeck.adobe.shared.ProjectData import ProjectData
 
 #___________________________________________________________________________________________________ FlexProjectData
@@ -73,12 +74,28 @@ class FlexProjectData(ProjectData):
 #___________________________________________________________________________________________________ GS: platformBinPath
     @property
     def platformBinPath(self):
-        return FileUtils.createPath(self.platformProjectPath, 'bin', isDir=True)
+        ptype = 'debug' if self._debug else 'release'
+
+        if self.currentPlatformID == FlexProjectData.NATIVE_PLATFORM:
+            platform = 'win' if PyGlassEnvironment.isWindows else 'mac'
+            return FileUtils.createPath(
+                self.platformProjectPath,
+                'bin', 'native', platform, ptype, isDir=True)
+
+        return FileUtils.createPath(self.platformProjectPath, 'bin', ptype, isDir=True)
 
 #___________________________________________________________________________________________________ GS: platformDistributionPath
     @property
     def platformDistributionPath(self):
-        return FileUtils.createPath(self.platformProjectPath, 'dist', isDir=True)
+        ptype = 'debug' if self._debug else 'release'
+
+        if self.currentPlatformID == FlexProjectData.NATIVE_PLATFORM:
+            platform = 'win' if PyGlassEnvironment.isWindows else 'mac'
+            return FileUtils.createPath(
+                self.platformProjectPath,
+                'dist', 'native', platform, ptype, isDir=True)
+
+        return FileUtils.createPath(self.platformProjectPath, 'dist', ptype, isDir=True)
 
 #___________________________________________________________________________________________________ GS: externalIncludesPath
     @property
@@ -114,23 +131,42 @@ class FlexProjectData(ProjectData):
     def usbDebugPort(self):
         return FlexProjectData.USB_DEBUG_PORT if self._usbDebug else None
 
+#___________________________________________________________________________________________________ GS: appId
+    @property
+    def appId(self):
+        """The application identifier"""
+        return self.getSetting('APP_ID', None)
+
 #___________________________________________________________________________________________________ GS: certificate
     @property
     def certificate(self):
         """Returns the absolute path to the certificate file needed for packaging."""
-        certPath     = FileUtils.createPath(self.platformProjectPath, 'cert', isDir=True)
-        certFileName = self.getSetting('CERTIFICATE', None)
-        if certFileName is None:
-            for path in FileUtils.getFilesOnPath(certPath):
-                if path.endswith('.p12'):
-                    return path
-            return None
+        certPaths = [
+            FileUtils.createPath(
+                self.platformProjectPath, 'cert', 'debug' if self._debug else 'release', isDir=True),
+            FileUtils.createPath(self.platformProjectPath, 'cert', isDir=True) ]
 
-        certFileName = certFileName.replace('\\', '/').strip('/').split('/')
-        certPath = FileUtils.createPath(certPath, certFileName, isFile=True)
-        if not os.path.exists(certPath) and os.path.exists(certPath + '.p12'):
-            certPath += '.p12'
-        return certPath
+        for certPath in certPaths:
+            if not os.path.exists(certPath):
+                continue
+
+            certFileName = self.getSetting('CERTIFICATE', debugOrRelease=True)
+            if certFileName is None:
+                for path in FileUtils.getFilesOnPath(certPath):
+                    if path.endswith('.p12'):
+                        return path
+                continue
+
+            certFileName = certFileName.replace('\\', '/').strip('/').split('/')
+            certPath     = FileUtils.createPath(certPath, certFileName, isFile=True)
+
+            if not os.path.exists(certPath) and os.path.exists(certPath + '.p12'):
+                certPath += '.p12'
+
+            if os.path.exists(certPath):
+                return certPath
+
+        return None
 
 #___________________________________________________________________________________________________ GS: certificatePassword
     @property
@@ -143,19 +179,31 @@ class FlexProjectData(ProjectData):
         if self._currentPlatformID != self.IOS_PLATFORM:
             return None
 
-        certPath = FileUtils.createPath(self.platformProjectPath, 'cert', isDir=True)
-        filename = self.getSetting('PROVISIONING_PROFILE', None)
-        if filename is None:
-            for path in FileUtils.getFilesOnPath(certPath):
-                if path.endswith('.mobileprovision'):
-                    return path
-            return None
+        certPaths = [
+            FileUtils.createPath(
+                self.platformProjectPath, 'cert', 'debug' if self._debug else 'release', isDir=True),
+            FileUtils.createPath(self.platformProjectPath, 'cert', isDir=True) ]
 
-        filename = filename.replace('\\', '/').strip('/').split('/')
-        path     = FileUtils.createPath(certPath, filename, isFile=True)
-        if not os.path.exists(path) and os.path.exists(path + '.mobileprovision'):
-            path += '.mobileprovision'
-        return path
+        for certPath in certPaths:
+            if not os.path.exists(certPath):
+                continue
+
+            filename = self.getSetting('PROVISIONING_PROFILE', None)
+            if filename is None:
+                for path in FileUtils.getFilesOnPath(certPath):
+                    if path.endswith('.mobileprovision'):
+                        return path
+                continue
+
+            filename = filename.replace('\\', '/').strip('/').split('/')
+            path     = FileUtils.createPath(certPath, filename, isFile=True)
+            if not os.path.exists(path) and os.path.exists(path + '.mobileprovision'):
+                path += '.mobileprovision'
+
+            if os.path.exists(path):
+                return path
+
+        return None
 
 #___________________________________________________________________________________________________ GS: airExtension
     @property
@@ -172,10 +220,7 @@ class FlexProjectData(ProjectData):
 #___________________________________________________________________________________________________ GS: airIncludes
     @property
     def airIncludes(self):
-        out = self.getSetting('AIR_INCLUDES', [])
-        if isinstance(out, dict):
-            out = out['DEBUG' if self.debug else 'RELEASE']
-        return out
+        return self.getSetting('AIR_INCLUDES', [])
 
 #___________________________________________________________________________________________________ GS: airTargetType
     @property
@@ -246,6 +291,21 @@ class FlexProjectData(ProjectData):
 
 #===================================================================================================
 #                                                                                     P U B L I C
+
+#___________________________________________________________________________________________________ updateApplicationConfigFile
+    def updateApplicationConfigFile(self):
+        if not AirUtils.updateDescriptorNamespace(self.appDescriptorPath, self.airVersion):
+            return False
+
+        appId = self.appId
+        if appId is None:
+            return True
+
+        return AirUtils.updateAppId(self.appDescriptorPath, appId)
+
+#___________________________________________________________________________________________________ isPlatformActive
+    def isPlatformActive(self, platformId):
+        return self.hasPlatform(platformId) and self.platformSelection.get(platformId, False)
 
 #___________________________________________________________________________________________________ hasPlatform
     def hasPlatform(self, platformID):

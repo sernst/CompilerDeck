@@ -53,19 +53,18 @@ class AirDebugThread(RemoteExecutionThread):
     def _runAirDebug(self):
         sets = self._settings
 
-        if not AirUtils.updateDescriptorNamespace(sets.appDescriptorPath, sets.airVersion):
+        if not sets.updateApplicationConfigFile():
             self._log.write([
-                'ERROR: Unable to update the application descriptor file namespace version',
+                'ERROR: Unable to update the application descriptor file',
                 'PATH: ' + sets.appDescriptorPath,
-                'VERSION: ' + sets.airVersion
-            ])
+                'VERSION: ' + sets.airVersion,
+                'ID: ' + sets.appId ])
             return 1
 
         cmd = [
             self.parent().mainWindow.getRootAIRPath(sets.airVersion, 'bin', 'adl.exe'),
             FileUtils.createPath(sets.projectPath, 'application.xml', isFile=True),
-            FileUtils.createPath(sets.projectPath, 'bin', isDir=True)
-        ]
+            sets.platformBinPath ]
 
         deployment = AirUtils.deployExternalIncludes(self._settings)
         code       = 0
@@ -92,8 +91,7 @@ class AirDebugThread(RemoteExecutionThread):
 
         cmd = [
             'C:\\Program Files (x86)\\Internet Explorer\\iexplore.exe',
-            FileUtils.createPath(sets.projectPath, 'bin', sets.targetFilename + '.swf')
-        ]
+            FileUtils.createPath(sets.platformBinPath, sets.targetFilename + '.swf') ]
 
         result = SystemUtils.executeCommand(cmd)
         if result['code']:

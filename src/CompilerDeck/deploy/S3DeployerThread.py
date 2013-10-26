@@ -74,8 +74,8 @@ class S3DeployerThread(RemoteExecutionThread):
                 filename=data.targetFilePath,
                 policy=S3Bucket.PRIVATE if data.debug else S3Bucket.PUBLIC_READ)
 
-            expires          = TimeUtils.getNowDatetime()
-            expires         += datetime.timedelta(days=30)
+            expires  = TimeUtils.getNowDatetime()
+            expires += datetime.timedelta(days=30)
             if data.debug:
                 url = self._bucket.generateExpiresUrl(key, expires)
             else:
@@ -104,8 +104,8 @@ class S3DeployerThread(RemoteExecutionThread):
             owner=self.parent(),
             label=self._flexData.getSetting('LABEL', u'Application'),
             versionInfo=self._flexData.versionInfo,
-            **self._releaseNotes
-        )
+            **self._releaseNotes)
+
         path = FileUtils.createPath(
             self._flexData.projectPath, 'compiler', 'releaseNotes', isDir=True)
         if not os.path.exists(path):
@@ -138,8 +138,7 @@ class S3DeployerThread(RemoteExecutionThread):
             u'  * Build: ' + uid + u'\n\n',
             u'=== DOWNLOADS ===\n',
             u'Please update your application to the latest version by downloading and installing ' +
-            u'it from the URL listed below for your choice of platform(s).\n'
-        ]
+            u'it from the URL listed below for your choice of platform(s).\n' ]
 
         for key, url in deployUrls.iteritems():
             if key in [FlexProjectData.NATIVE_PLATFORM, FlexProjectData.AIR_PLATFORM]:
@@ -162,8 +161,7 @@ class S3DeployerThread(RemoteExecutionThread):
             result = self._sendEmail(
                 'New Build Available: ' + version,
                 body,
-                email
-            )
+                email)
             if not result:
                 return
 

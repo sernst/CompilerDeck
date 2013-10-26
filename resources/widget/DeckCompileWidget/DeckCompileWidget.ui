@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>640</width>
-    <height>555</height>
+    <height>504</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,7 +29,7 @@
    <item>
     <widget class="QTabWidget" name="mainTab">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="settingsTabPage">
       <attribute name="title">
@@ -58,7 +58,7 @@
              <item>
               <widget class="QCheckBox" name="liveCheck">
                <property name="text">
-                <string>Live</string>
+                <string>Live (Server)</string>
                </property>
               </widget>
              </item>
@@ -145,6 +145,13 @@
               <widget class="QCheckBox" name="iosInterpCheck">
                <property name="text">
                 <string>Interpreter (ios)</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="expandPackageChk">
+               <property name="text">
+                <string>Expand to Previous Package</string>
                </property>
               </widget>
              </item>

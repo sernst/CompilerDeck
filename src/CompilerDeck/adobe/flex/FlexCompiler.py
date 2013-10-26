@@ -103,6 +103,10 @@ class FlexCompiler(AdobeSystemCompiler):
             #if isIOS:
             #    cmd.append('-sampler=false')
 
+        # Create the bin path if it does not exist already
+        if not os.path.exists(sets.platformBinPath):
+            os.makedirs(sets.platformBinPath)
+
         cmd.extend([
             '-output=' + FileUtils.createPath(sets.platformBinPath, sets.targetFilename + '.swf'),
             '-omit-trace-statements=' + self._getAsBooleanString(not sets.debug),

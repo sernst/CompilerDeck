@@ -124,8 +124,11 @@ class SettingsEditor(object):
             'major':self._major.value,
             'date':self._date.value,
             'minor':self._minor.value,
-            'revision':self._revision.value
-        }
+            'revision':self._revision.value }
+
+#___________________________________________________________________________________________________ fromDict
+    def fromDict(self, data):
+        self.setTo(**data)
 
 #___________________________________________________________________________________________________ setTo
     def setTo(self, **kwargs):

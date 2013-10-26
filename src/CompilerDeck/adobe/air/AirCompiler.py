@@ -35,18 +35,17 @@ class AirCompiler(AdobeSystemCompiler):
             self._log.write('ERROR: No app file found at: ' + sets.appDescriptorPath)
             return False
 
-        if not AirUtils.updateDescriptorNamespace(sets.appDescriptorPath, sets.airVersion):
+        if not sets.updateApplicationConfigFile():
             self._log.write([
-                'ERROR: Unable to update the application descriptor file namespace version',
+                'ERROR: Unable to update the application descriptor file',
                 'PATH: ' + sets.appDescriptorPath,
-                'VERSION: ' + sets.airVersion
-            ])
+                'VERSION: ' + sets.airVersion,
+                'ID: ' + sets.appId ])
             return False
 
         cmd.extend([
             self._owner.mainWindow.getRootAIRPath(sets.airVersion, 'bin', 'adt.bat', isFile=True),
-            '-package'
-        ])
+            '-package' ])
 
         if sets.currentPlatformID in (sets.AIR_PLATFORM, sets.NATIVE_PLATFORM):
             self._addAIRSigningArguments(cmd)
@@ -69,8 +68,7 @@ class AirCompiler(AdobeSystemCompiler):
         cmd.extend([
             targetPath,
             FileUtils.createPath(sets.platformProjectPath, 'application.xml', isFile=True),
-            sets.targetFilename + '.swf'
-        ])
+            sets.targetFilename + '.swf' ])
 
         # Adds the launch display images for iOS compilation if they exist
         if sets.currentPlatformID == FlexProjectData.IOS_PLATFORM:
@@ -84,10 +82,10 @@ class AirCompiler(AdobeSystemCompiler):
         results = AirUtils.deployExternalIncludes(sets)
         self._copyMerges.extend(results['merges'])
         cmd.extend(results['itemNames'])
-
         self._addAIRNativeExtensionArguments(cmd)
 
         os.chdir(sets.platformBinPath)
+        print 'CMD:', cmd
         if self.executeCommand(cmd, 'PACKAGING AIR FILE: "%s"' % sets.currentPlatformID):
             self._log.write('FAILED: AIR PACKAGING')
             return False

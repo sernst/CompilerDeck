@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'F:\Python\CompilerDeck\resources\widget\DeckCompileWidget\DeckCompileWidget.ui'
 #
-# Created: Fri Oct 04 23:21:50 2013
+# Created: Sat Oct 26 15:46:26 2013
 #      by: pyside-uic 0.2.14 running on PySide 1.1.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,7 @@ from PySide import QtCore, QtGui
 class PySideUiFileSetup(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(640, 555)
+        Form.resize(640, 504)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -75,6 +75,9 @@ class PySideUiFileSetup(object):
         Form.iosInterpCheck = QtGui.QCheckBox(Form.groupBox)
         Form.iosInterpCheck.setObjectName("iosInterpCheck")
         Form.verticalLayout_13.addWidget(Form.iosInterpCheck)
+        Form.expandPackageChk = QtGui.QCheckBox(Form.groupBox)
+        Form.expandPackageChk.setObjectName("expandPackageChk")
+        Form.verticalLayout_13.addWidget(Form.expandPackageChk)
         spacerItem2 = QtGui.QSpacerItem(20, 78, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         Form.verticalLayout_13.addItem(spacerItem2)
         Form.horizontalLayout_2.addWidget(Form.groupBox)
@@ -552,7 +555,7 @@ class PySideUiFileSetup(object):
         Form.horizontalLayout_5.addWidget(Form.mainTab)
 
         self.retranslateUi(Form)
-        Form.mainTab.setCurrentIndex(2)
+        Form.mainTab.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Form)
         Form.setTabOrder(Form.sendEmailCheck, Form.summaryText)
         Form.setTabOrder(Form.summaryText, Form.additionsText)
@@ -590,7 +593,7 @@ class PySideUiFileSetup(object):
         Form.setWindowTitle(QtGui.QApplication.translate("Form", "ANE Compiler", None, QtGui.QApplication.UnicodeUTF8))
         Form.groupBox_3.setTitle(QtGui.QApplication.translate("Form", "Compile Modes", None, QtGui.QApplication.UnicodeUTF8))
         Form.debugCheck.setText(QtGui.QApplication.translate("Form", "Debug", None, QtGui.QApplication.UnicodeUTF8))
-        Form.liveCheck.setText(QtGui.QApplication.translate("Form", "Live", None, QtGui.QApplication.UnicodeUTF8))
+        Form.liveCheck.setText(QtGui.QApplication.translate("Form", "Live (Server)", None, QtGui.QApplication.UnicodeUTF8))
         Form.telemetryCheck.setText(QtGui.QApplication.translate("Form", "Advanced Telemetry", None, QtGui.QApplication.UnicodeUTF8))
         Form.platformBox.setTitle(QtGui.QApplication.translate("Form", "Platforms To Compile", None, QtGui.QApplication.UnicodeUTF8))
         Form.webPlatformCheck.setText(QtGui.QApplication.translate("Form", "Web (Flash)", None, QtGui.QApplication.UnicodeUTF8))
@@ -599,6 +602,7 @@ class PySideUiFileSetup(object):
         Form.iosPlatformCheck.setText(QtGui.QApplication.translate("Form", "iOS", None, QtGui.QApplication.UnicodeUTF8))
         Form.groupBox.setTitle(QtGui.QApplication.translate("Form", "Package Options", None, QtGui.QApplication.UnicodeUTF8))
         Form.iosInterpCheck.setText(QtGui.QApplication.translate("Form", "Interpreter (ios)", None, QtGui.QApplication.UnicodeUTF8))
+        Form.expandPackageChk.setText(QtGui.QApplication.translate("Form", "Expand to Previous Package", None, QtGui.QApplication.UnicodeUTF8))
         Form.label_3.setText(QtGui.QApplication.translate("Form", "Flash Player Version:", None, QtGui.QApplication.UnicodeUTF8))
         Form.label_4.setText(QtGui.QApplication.translate("Form", "AIR SDK Version:", None, QtGui.QApplication.UnicodeUTF8))
         Form.label_5.setText(QtGui.QApplication.translate("Form", "Remote Debugging:", None, QtGui.QApplication.UnicodeUTF8))

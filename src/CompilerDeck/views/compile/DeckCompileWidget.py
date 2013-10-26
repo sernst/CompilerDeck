@@ -41,6 +41,7 @@ class DeckCompileWidget(PyGlassWidget):
     _COMPILE_IOS              = 'COMPILE_IOS'
     _IOS_INTERP               = 'IOS_INTERP'
     _ADV_TELEMETRY            = 'ADV_TELEMETRY'
+    _APPEND_TO_PACKAGE        = 'APPEND_TO_PACKAGE'
 
 #___________________________________________________________________________________________________ __init__
     def __init__(self, *args, **kwargs):
@@ -108,6 +109,7 @@ class DeckCompileWidget(PyGlassWidget):
         self._initializeCheck(self.androidPlatformCheck, self._COMPILE_ANDROID, True)
         self._initializeCheck(self.iosPlatformCheck, self._COMPILE_IOS, True)
         self._initializeCheck(self.telemetryCheck, self._ADV_TELEMETRY, False)
+        self._initializeCheck(self.expandPackageChk, self._APPEND_TO_PACKAGE, False)
 
         self._settingsEditor = SettingsEditor()
         self._settingsEditor.populate()
@@ -161,7 +163,7 @@ class DeckCompileWidget(PyGlassWidget):
         target.setCheckState(QtCore.Qt.Checked if value else QtCore.Qt.Unchecked)
 
 #___________________________________________________________________________________________________ _executeRemoteThread
-    def _executeRemoteThread(self, thread, completeCallback = None):
+    def _executeRemoteThread(self, thread, completeCallback =None):
         self.resultsTextBrowser.clear()
         self.log.addPrintCallback(self._handleUpdateResults)
         self.resultsTextBrowser.setFocus()
@@ -196,14 +198,21 @@ class DeckCompileWidget(PyGlassWidget):
 
 #___________________________________________________________________________________________________ _executeCompilation
     def _executeCompilation(self, callback, buildSnapshot =None):
-        self._settingsEditor.setTo(
-            prefix=self.prefixLine.text(),
-            suffix=self.suffixSpin.value(),
-            major=self.majorSpin.value(),
-            minor=self.minorSpin.value(),
-            revision=self.revisionSpin.value()
-        )
-        self._settingsEditor.write()
+        if self._package and self.expandPackageChk.isChecked():
+            snap = buildSnapshot
+            if snap is None:
+                if self._buildSnapshot is None:
+                    self._loadBuildSnapshot()
+                snap = self._buildSnapshot
+            self._settingsEditor.fromDict(snap['versionInfo'])
+        else:
+            self._settingsEditor.setTo(
+                prefix=self.prefixLine.text(),
+                suffix=self.suffixSpin.value(),
+                major=self.majorSpin.value(),
+                minor=self.minorSpin.value(),
+                revision=self.revisionSpin.value() )
+            self._settingsEditor.write()
 
         if buildSnapshot is None:
             self._buildSnapshot = self._createBuildSnapshot()
@@ -236,9 +245,7 @@ class DeckCompileWidget(PyGlassWidget):
                 FlexProjectData.AIR_PLATFORM:self.desktopPlatformCheck.isChecked(),
                 FlexProjectData.FLASH_PLATFORM:self.webPlatformCheck.isChecked(),
                 FlexProjectData.ANDROID_PLATFORM:self.androidPlatformCheck.isChecked(),
-                FlexProjectData.IOS_PLATFORM:self.iosPlatformCheck.isChecked()
-            }
-        )
+                FlexProjectData.IOS_PLATFORM:self.iosPlatformCheck.isChecked() })
 
 #___________________________________________________________________________________________________ _storeBuildSnapshot
     def _storeBuildSnapshot(self):
@@ -273,12 +280,13 @@ class DeckCompileWidget(PyGlassWidget):
 #___________________________________________________________________________________________________ _handleCompileDebugClick
     def _handleCompileDebugClick(self):
         self._package = False
-        snap = self._createBuildSnapshot()
-        snap['platforms'][FlexProjectData.IOS_PLATFORM]     = False
-        snap['platforms'][FlexProjectData.ANDROID_PLATFORM] = False
-        snap['platforms'][FlexProjectData.FLASH_PLATFORM]   = True
-        snap['platforms'][FlexProjectData.AIR_PLATFORM]     = True
-        snap['platforms'][FlexProjectData.NATIVE_PLATFORM]  = True
+        snap      = self._createBuildSnapshot()
+        platforms = snap['platforms']
+        platforms[FlexProjectData.IOS_PLATFORM]     = False
+        platforms[FlexProjectData.ANDROID_PLATFORM] = False
+        platforms[FlexProjectData.AIR_PLATFORM]     = False
+        platforms[FlexProjectData.FLASH_PLATFORM]   = False
+        platforms[FlexProjectData.NATIVE_PLATFORM]  = False
         self._executeCompilation(self._handleDebugCompilation, snap)
 
 #___________________________________________________________________________________________________ _handleDebugCompilation
@@ -305,8 +313,7 @@ class DeckCompileWidget(PyGlassWidget):
             self._settingsEditor.logBuild(
                 self.desktopPlatformCheck.isChecked(),
                 self.androidPlatformCheck.isChecked(),
-                self.iosPlatformCheck.isChecked(),
-            )
+                self.iosPlatformCheck.isChecked() )
             self._settingsEditor.reset()
             self._settingsEditor.populate()
             self._updateSettings()
@@ -330,15 +337,13 @@ class DeckCompileWidget(PyGlassWidget):
     def _handleFlashVersionChanged(self):
         self.mainWindow.appConfig.set(
             self._FLASH_PLAYER_VERSION_CFG,
-            self.flashPlayerComboBox.currentText()
-        )
+            self.flashPlayerComboBox.currentText() )
 
 #___________________________________________________________________________________________________ _handleAirVersionChanged
     def _handleAirVersionChanged(self):
         self.mainWindow.appConfig.set(
             self._AIR_SDK_VERSION_CFG,
-            self.airSDKComboBox.currentText()
-        )
+            self.airSDKComboBox.currentText() )
 
 #___________________________________________________________________________________________________ _handlePackageAirStateChange
     def _handleCheckStateChange(self):
@@ -360,6 +365,8 @@ class DeckCompileWidget(PyGlassWidget):
             prop = self._COMPILE_IOS
         elif sender == self.telemetryCheck:
             prop = self._ADV_TELEMETRY
+        elif sender == self.expandPackageChk:
+            prop = self._APPEND_TO_PACKAGE
 
         if prop:
             self.owner.appConfig.set(prop, sender.isChecked())
@@ -372,30 +379,26 @@ class DeckCompileWidget(PyGlassWidget):
     def _handleInstallApk(self):
         self._executeRemoteThread(InstallApkThread(
             parent=self,
-            projectPath=CompilerDeckEnvironment.getProjectPath(),
-        ))
+            projectPath=CompilerDeckEnvironment.getProjectPath() ))
 
 #___________________________________________________________________________________________________ _handleInstallIpa
     def _handleInstallIpa(self):
         self._executeRemoteThread(InstallIpaThread(
             parent=self,
             airVersion=str(self.airSDKComboBox.currentText()),
-            projectPath=CompilerDeckEnvironment.getProjectPath()
-        ))
+            projectPath=CompilerDeckEnvironment.getProjectPath() ))
 
 #___________________________________________________________________________________________________ _handleGetLogcatDump
     def _handleGetLogcatDump(self):
         self._executeRemoteThread(AndroidLogcatThread(
             parent=self,
-            mode=AndroidLogcatThread.DUMP_MODE
-        ))
+            mode=AndroidLogcatThread.DUMP_MODE ))
 
 #___________________________________________________________________________________________________ _handleClearLogcat
     def _handleClearLogcat(self):
         self._executeRemoteThread(AndroidLogcatThread(
             parent=self,
-            mode=AndroidLogcatThread.CLEAR_MODE
-        ))
+            mode=AndroidLogcatThread.CLEAR_MODE ))
 
 #___________________________________________________________________________________________________ _handleFlexDebugSession
     def _handleFlexDebugSession(self):

@@ -25,52 +25,72 @@ class ANECompileThread(RemoteExecutionThread):
 
 #___________________________________________________________________________________________________ _runImpl
     def _runImpl(self):
-        pd = self._flexData
+        pd          = self._flexData
+        useFlash    = pd.isPlatformActive(FlexProjectData.FLASH_PLATFORM)
+        useAir      = pd.isPlatformActive(FlexProjectData.AIR_PLATFORM)
+        useNative   = pd.isPlatformActive(FlexProjectData.NATIVE_PLATFORM)
+        useAndroid  = pd.isPlatformActive(FlexProjectData.ANDROID_PLATFORM)
+        useIOS      = pd.isPlatformActive(FlexProjectData.IOS_PLATFORM)
 
-        # FLASH
-        usePlatform = pd.platformSelection.get(FlexProjectData.FLASH_PLATFORM, False)
-        if usePlatform and pd.hasPlatform(FlexProjectData.FLASH_PLATFORM):
+        # In cases where nothing was set (usual because debugging will be run on the default
+        # platform) pick the platform to compile if such a platform exists
+        useAny = useFlash or useAir or useNative or useAndroid or useIOS
+        if not useAny:
+            if pd.hasPlatform(FlexProjectData.AIR_PLATFORM):
+                useAir = True
+            elif pd.hasPlatform(FlexProjectData.NATIVE_PLATFORM):
+                useNative = True
+            elif pd.hasPlatform(FlexProjectData.FLASH_PLATFORM):
+                useFlash = True
+            elif pd.hasPlatform(FlexProjectData.ANDROID_PLATFORM):
+                useAndroid = True
+            elif pd.hasPlatform(FlexProjectData.IOS_PLATFORM):
+                useIOS = True
+            else:
+                return 1
+
+        if useFlash:
             pd.setPlatform(FlexProjectData.FLASH_PLATFORM)
             if not FlexCompiler(self.parent(), pd, logger=self._log).compile():
                 return 1
 
-        # AIR
-        usePlatform = pd.platformSelection.get(FlexProjectData.AIR_PLATFORM, False)
-        if usePlatform and pd.hasPlatform(FlexProjectData.AIR_PLATFORM):
+        if useAir:
             pd.setPlatform(FlexProjectData.AIR_PLATFORM)
             if not FlexCompiler(self.parent(), pd, logger=self._log).compile():
                 return 1
 
-            if not AirCompiler(self.parent(), pd, logger=self._log).compile():
-                return 1
-
-        # NATIVE
-        usePlatform = pd.platformSelection.get(FlexProjectData.NATIVE_PLATFORM, False)
-        if usePlatform and pd.hasPlatform(FlexProjectData.NATIVE_PLATFORM):
+        if useNative:
             pd.setPlatform(FlexProjectData.NATIVE_PLATFORM)
             if not FlexCompiler(self.parent(), pd, logger=self._log).compile():
                 return 1
 
-            if not AirCompiler(self.parent(), pd, logger=self._log).compile():
-                return 1
-
-        # ANDROID
-        usePlatform = pd.platformSelection.get(FlexProjectData.ANDROID_PLATFORM, False)
-        if usePlatform and pd.hasPlatform(FlexProjectData.ANDROID_PLATFORM):
+        if useAndroid:
             pd.setPlatform(FlexProjectData.ANDROID_PLATFORM)
             if not FlexCompiler(self.parent(), pd, logger=self._log).compile():
                 return 1
 
-            if not AirCompiler(self.parent(), pd, logger=self._log).compile():
-                return 1
-
-        # IOS
-        usePlatform = pd.platformSelection.get(FlexProjectData.IOS_PLATFORM, False)
-        if usePlatform and pd.hasPlatform(FlexProjectData.IOS_PLATFORM):
+        if useIOS:
             pd.setPlatform(FlexProjectData.IOS_PLATFORM)
             if not FlexCompiler(self.parent(), pd, logger=self._log).compile():
                 return 1
 
+        if useAir:
+            pd.setPlatform(FlexProjectData.AIR_PLATFORM)
+            if not AirCompiler(self.parent(), pd, logger=self._log).compile():
+                return 1
+
+        if useNative:
+            pd.setPlatform(FlexProjectData.NATIVE_PLATFORM)
+            if not AirCompiler(self.parent(), pd, logger=self._log).compile():
+                return 1
+
+        if useAndroid:
+            pd.setPlatform(FlexProjectData.ANDROID_PLATFORM)
+            if not AirCompiler(self.parent(), pd, logger=self._log).compile():
+                return 1
+
+        if useIOS:
+            pd.setPlatform(FlexProjectData.IOS_PLATFORM)
             if not AirCompiler(self.parent(), pd, logger=self._log).compile():
                 return 1
 
