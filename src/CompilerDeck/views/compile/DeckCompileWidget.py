@@ -274,6 +274,15 @@ class DeckCompileWidget(PyGlassWidget):
         except Exception, err:
             pass
 
+#___________________________________________________________________________________________________ _getLatestBuildSnapshot
+    def _getLatestBuildSnapshot(self, override =None):
+        if override is not None:
+            return override
+
+        if self._buildSnapshot is None:
+            self._loadBuildSnapshot()
+        return self._buildSnapshot
+
 #===================================================================================================
 #                                                                                 H A N D L E R S
 
@@ -379,14 +388,13 @@ class DeckCompileWidget(PyGlassWidget):
     def _handleInstallApk(self):
         self._executeRemoteThread(InstallApkThread(
             parent=self,
-            projectPath=CompilerDeckEnvironment.getProjectPath() ))
+            **self._getLatestBuildSnapshot() ))
 
 #___________________________________________________________________________________________________ _handleInstallIpa
     def _handleInstallIpa(self):
         self._executeRemoteThread(InstallIpaThread(
             parent=self,
-            airVersion=str(self.airSDKComboBox.currentText()),
-            projectPath=CompilerDeckEnvironment.getProjectPath() ))
+            **self._getLatestBuildSnapshot() ))
 
 #___________________________________________________________________________________________________ _handleGetLogcatDump
     def _handleGetLogcatDump(self):
@@ -429,6 +437,7 @@ class DeckCompileWidget(PyGlassWidget):
 
 #___________________________________________________________________________________________________ _handleDeployBuild
     def _handleDeployBuild(self):
+        self._getLatestBuildSnapshot()
         if not self._buildSnapshot:
             print 'No build snapshot to deploy:', self._buildSnapshot
             return

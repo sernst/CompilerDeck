@@ -21,7 +21,7 @@ class InstallApkThread(RemoteExecutionThread):
     def __init__(self, parent, **kwargs):
         """Creates a new instance of InstallAPKThread."""
         RemoteExecutionThread.__init__(self, parent, **kwargs)
-        self._settings = FlexProjectData(ArgsUtils.get('projectPath', None, kwargs))
+        self._settings = FlexProjectData(**kwargs)
 
 #___________________________________________________________________________________________________ _internalMethod
     def _runImpl(self):
