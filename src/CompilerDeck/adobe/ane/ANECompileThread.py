@@ -59,9 +59,15 @@ class ANECompileThread(RemoteExecutionThread):
             if not FlexCompiler(self.parent(), pd, logger=self._log).compile():
                 return 1
 
+            if not AirCompiler(self.parent(), pd, logger=self._log).compile():
+                return 1
+
         if useNative:
             pd.setPlatform(FlexProjectData.NATIVE_PLATFORM)
             if not FlexCompiler(self.parent(), pd, logger=self._log).compile():
+                return 1
+
+            if not AirCompiler(self.parent(), pd, logger=self._log).compile():
                 return 1
 
         if useAndroid:
@@ -69,28 +75,14 @@ class ANECompileThread(RemoteExecutionThread):
             if not FlexCompiler(self.parent(), pd, logger=self._log).compile():
                 return 1
 
+            if not AirCompiler(self.parent(), pd, logger=self._log).compile():
+                return 1
+
         if useIOS:
             pd.setPlatform(FlexProjectData.IOS_PLATFORM)
             if not FlexCompiler(self.parent(), pd, logger=self._log).compile():
                 return 1
 
-        if useAir:
-            pd.setPlatform(FlexProjectData.AIR_PLATFORM)
-            if not AirCompiler(self.parent(), pd, logger=self._log).compile():
-                return 1
-
-        if useNative:
-            pd.setPlatform(FlexProjectData.NATIVE_PLATFORM)
-            if not AirCompiler(self.parent(), pd, logger=self._log).compile():
-                return 1
-
-        if useAndroid:
-            pd.setPlatform(FlexProjectData.ANDROID_PLATFORM)
-            if not AirCompiler(self.parent(), pd, logger=self._log).compile():
-                return 1
-
-        if useIOS:
-            pd.setPlatform(FlexProjectData.IOS_PLATFORM)
             if not AirCompiler(self.parent(), pd, logger=self._log).compile():
                 return 1
 

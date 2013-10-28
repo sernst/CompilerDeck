@@ -43,7 +43,7 @@ class InstallApkThread(RemoteExecutionThread):
             'install',
             '-r',
             FileUtils.createPath(
-                sets.platformDistributionPath, sets.targetFilename + '.' + sets.airExtension)
+                sets.platformDistributionPath, sets.contentTargetFilename + '.' + sets.airExtension)
         ]
 
         result = SystemUtils.executeCommand(cmd)

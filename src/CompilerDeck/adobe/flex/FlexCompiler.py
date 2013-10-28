@@ -44,37 +44,39 @@ class FlexCompiler(AdobeSystemCompiler):
         if isAir:
             cmd.append('+configname=air')
 
-        cmd.append('-load-config+=' + FileUtils.createPath(
-            sets.projectPath, 'compiler', 'shared-targets-asc2.xml', isFile=True))
+        cmd.append('-load-config+="%s"' % FileUtils.createPath(
+            sets.projectPath, 'compiler', 'shared-targets-asc2.xml', isFile=True, noTail=True))
+
+        cmd.append('-default-background-color=0x000000')
 
         flashGlobals = FileUtils.createPath(airPath, sets.airVersion, 'frameworks', isDir=True)
 
         if sets.aneIncludes:
             aneType = 'android' if isAndroid else ('ios' if isIOS else 'default')
             for ane in sets.aneIncludes:
-                cmd.append('-external-library-path+=' + FileUtils.createPath(
-                    sets.projectPath, 'air', 'ane', ane, 'bin', aneType, isDir=True))
+                cmd.append('-external-library-path+="%s"' % FileUtils.createPath(
+                    sets.projectPath, 'air', 'ane', ane, 'bin', aneType, isDir=True, noTail=True))
 
         if isAir:
             airRoot    = FileUtils.createPath(airPath, sets.airVersion, 'frameworks', isDir=True)
             airGlobals = FileUtils.createPath(airRoot, 'libs', 'air', isDir=True)
             cmd.extend([
-                '-external-library-path+=' + os.path.join(airGlobals, 'airglobal.swc'),
-                '-library-path+=' + FileUtils.createPath(airRoot, 'libs', isDir=True),
-                '-library-path+=' + FileUtils.createPath(airRoot, 'libs', 'air', isDir=True),
-                '-library-path+=' + FileUtils.createPath(flashGlobals, 'locale', 'en_US', isDir=True) ])
+                '-external-library-path+="%s"' % os.path.join(airGlobals, 'airglobal.swc'),
+                '-library-path+="%s"' % FileUtils.createPath(airRoot, 'libs', isDir=True, noTail=True),
+                '-library-path+="%s"' % FileUtils.createPath(airRoot, 'libs', 'air', isDir=True, noTail=True),
+                '-library-path+="%s"' % FileUtils.createPath(flashGlobals, 'locale', 'en_US', isDir=True, noTail=True) ])
         else:
             flashGlobals += 'libs'
             cmd.extend([
-                '-external-library-path+='
-                    + os.path.join(flashGlobals, 'player', sets.flashVersion, 'playerglobal.swc'),
-                '-library-path+=' + flashGlobals,
-                '-library-path+=' + os.path.join(flashGlobals, 'mobile'),
-                '-library-path+=' + os.path.join(flashGlobals, 'automation') ])
+                '-external-library-path+="%s"'
+                    % os.path.join(flashGlobals, 'player', sets.flashVersion, 'playerglobal.swc'),
+                '-library-path+="%s"' % flashGlobals,
+                '-library-path+="%s"' % os.path.join(flashGlobals, 'mobile'),
+                '-library-path+="%s"' % os.path.join(flashGlobals, 'automation') ])
 
         cmd.extend([
-            '-library-path+=' + os.path.join(sets.projectPath, 'lib'),
-            '-source-path+='  + os.path.join(sets.projectPath, 'src') ])
+            '-library-path+="%s"' % os.path.join(sets.projectPath, 'lib'),
+            '-source-path+="%s"'  % os.path.join(sets.projectPath, 'src') ])
 
         cmd.extend([
             self._getBooleanDefinition('LIVE', sets.live),
@@ -95,8 +97,8 @@ class FlexCompiler(AdobeSystemCompiler):
 
         if sets.swcIncludes:
             for swc in sets.swcIncludes:
-                cmd.append('-include-libraries+='
-                    + os.path.join(sets.projectPath, 'lib', swc + '.swc'))
+                cmd.append('-include-libraries+="%s"'
+                    % os.path.join(sets.projectPath, 'lib', swc + '.swc'))
 
         if sets.advancedTelemetry:
             cmd.append('-advanced-telemetry=true')
@@ -108,7 +110,7 @@ class FlexCompiler(AdobeSystemCompiler):
             os.makedirs(sets.platformBinPath)
 
         cmd.extend([
-            '-output=' + FileUtils.createPath(sets.platformBinPath, sets.targetFilename + '.swf'),
+            '-output="%s"' % (FileUtils.createPath(sets.platformBinPath, sets.contentTargetFilename + '.swf')),
             '-omit-trace-statements=' + self._getAsBooleanString(not sets.debug),
             '-verbose-stacktraces=' + self._getAsBooleanString(sets.debug),
             '-debug=' + self._getAsBooleanString(sets.debug),

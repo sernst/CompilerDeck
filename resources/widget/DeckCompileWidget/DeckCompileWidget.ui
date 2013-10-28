@@ -99,9 +99,16 @@
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="desktopPlatformCheck">
+              <widget class="QCheckBox" name="airPlatformCheck">
                <property name="text">
-                <string>Desktop (AIR/Native)</string>
+                <string>AIR</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="nativePlatformCheck">
+               <property name="text">
+                <string>Native</string>
                </property>
               </widget>
              </item>
@@ -144,14 +151,14 @@
              <item>
               <widget class="QCheckBox" name="iosInterpCheck">
                <property name="text">
-                <string>Interpreter (ios)</string>
+                <string>Interpreter (iOS Only)</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QCheckBox" name="expandPackageChk">
                <property name="text">
-                <string>Expand to Previous Package</string>
+                <string>Append to Previous Package</string>
                </property>
               </widget>
              </item>
@@ -1223,7 +1230,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>flexDebugBtn</tabstop>
   <tabstop>installIpaBtn</tabstop>
   <tabstop>resultsTextBrowser</tabstop>
-  <tabstop>desktopPlatformCheck</tabstop>
+  <tabstop>airPlatformCheck</tabstop>
   <tabstop>androidPlatformCheck</tabstop>
   <tabstop>remoteDebugComboBox</tabstop>
   <tabstop>liveCheck</tabstop>

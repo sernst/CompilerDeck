@@ -33,7 +33,6 @@ class FlexProjectData(ProjectData):
 
         self.advancedTelemetry  = ArgsUtils.get('telemetry', False, kwargs)
 
-        self._currentPlatform   = None
         self._currentPlatformID = None
         self._iosInterpreter    = ArgsUtils.get('iosInterpreter', False, kwargs)
         self._live              = ArgsUtils.get('live', False, kwargs)
@@ -46,6 +45,31 @@ class FlexProjectData(ProjectData):
 
 #===================================================================================================
 #                                                                                   G E T / S E T
+
+#___________________________________________________________________________________________________ GS: isIOS
+    @property
+    def isIOS(self):
+        return self._currentPlatformID == self.IOS_PLATFORM
+
+#___________________________________________________________________________________________________ GS: isAndroid
+    @property
+    def isAndroid(self):
+        return self._currentPlatformID == self.ANDROID_PLATFORM
+
+#___________________________________________________________________________________________________ GS: isNative
+    @property
+    def isNative(self):
+        return self.isDesktop and self._currentPlatformID == self.NATIVE_PLATFORM
+
+#___________________________________________________________________________________________________ GS: isDesktop
+    @property
+    def isDesktop(self):
+        return not self.isIOS and not self.isAndroid
+
+#___________________________________________________________________________________________________ GS: buildTypeFolderName
+    @property
+    def buildTypeFolderName(self):
+        return 'debug' if self._debug else 'release'
 
 #___________________________________________________________________________________________________ GS: platformSelection
     @property
@@ -74,7 +98,7 @@ class FlexProjectData(ProjectData):
 #___________________________________________________________________________________________________ GS: platformBinPath
     @property
     def platformBinPath(self):
-        ptype = 'debug' if self._debug else 'release'
+        ptype = self.buildTypeFolderName
 
         if self.currentPlatformID == FlexProjectData.NATIVE_PLATFORM:
             platform = 'win' if PyGlassEnvironment.isWindows else 'mac'
@@ -87,7 +111,7 @@ class FlexProjectData(ProjectData):
 #___________________________________________________________________________________________________ GS: platformDistributionPath
     @property
     def platformDistributionPath(self):
-        ptype = 'debug' if self._debug else 'release'
+        ptype = self.buildTypeFolderName
 
         if self.currentPlatformID == FlexProjectData.NATIVE_PLATFORM:
             platform = 'win' if PyGlassEnvironment.isWindows else 'mac'
@@ -143,14 +167,14 @@ class FlexProjectData(ProjectData):
         """Returns the absolute path to the certificate file needed for packaging."""
         certPaths = [
             FileUtils.createPath(
-                self.platformProjectPath, 'cert', 'debug' if self._debug else 'release', isDir=True),
+                self.platformProjectPath, 'cert', self.buildTypeFolderName, isDir=True),
             FileUtils.createPath(self.platformProjectPath, 'cert', isDir=True) ]
 
         for certPath in certPaths:
             if not os.path.exists(certPath):
                 continue
 
-            certFileName = self.getSetting('CERTIFICATE', debugOrRelease=True)
+            certFileName = self.getSetting('CERTIFICATE')
             if certFileName is None:
                 for path in FileUtils.getFilesOnPath(certPath):
                     if path.endswith('.p12'):
@@ -181,7 +205,7 @@ class FlexProjectData(ProjectData):
 
         certPaths = [
             FileUtils.createPath(
-                self.platformProjectPath, 'cert', 'debug' if self._debug else 'release', isDir=True),
+                self.platformProjectPath, 'cert', self.buildTypeFolderName, isDir=True),
             FileUtils.createPath(self.platformProjectPath, 'cert', isDir=True) ]
 
         for certPath in certPaths:
@@ -253,26 +277,26 @@ class FlexProjectData(ProjectData):
     def aneIncludes(self):
         return self.getSetting('ANE_INCLUDES', [])
 
+#___________________________________________________________________________________________________ GS: contentTargetFilename
+    @property
+    def contentTargetFilename(self):
+        return self.getSetting('FILENAME', 'application').replace(' ', '_')
+
 #___________________________________________________________________________________________________ GS: targetFilename
     @property
     def targetFilename(self):
-        return self.getSetting('FILENAME', '')
+        return self.getSetting('FILENAME')
 
 #___________________________________________________________________________________________________ GS: targetFilePath
     @property
     def targetFilePath(self):
         return FileUtils.createPath(
-            self.platformDistributionPath, self.targetFilename + '.' + self.airExtension)
+            self.platformDistributionPath, self.contentTargetFilename + '.' + self.airExtension)
 
 #___________________________________________________________________________________________________ GS: platforms
     @property
     def platforms(self):
         return self.getSetting('PLATFORMS', [])
-
-#___________________________________________________________________________________________________ GS: currentPlatform
-    @property
-    def currentPlatform(self):
-        return self._currentPlatform
 
 #___________________________________________________________________________________________________ GS: currentPlatformID
     @property
@@ -293,15 +317,23 @@ class FlexProjectData(ProjectData):
 #                                                                                     P U B L I C
 
 #___________________________________________________________________________________________________ updateApplicationConfigFile
-    def updateApplicationConfigFile(self):
+    def updateApplicationConfigFile(self, iconDefs =None):
         if not AirUtils.updateDescriptorNamespace(self.appDescriptorPath, self.airVersion):
             return False
 
-        appId = self.appId
-        if appId is None:
-            return True
+        appFilename     = self.targetFilename
+        contentFilename = self.contentTargetFilename
+        if appFilename and not AirUtils.updateAppFilename(self.appDescriptorPath, appFilename, contentFilename):
+            return False
 
-        return AirUtils.updateAppId(self.appDescriptorPath, appId)
+        appId = self.appId
+        if appId and not AirUtils.updateAppId(self.appDescriptorPath, appId):
+            return False
+
+        if iconDefs and not AirUtils.updateAppIconList(self.appDescriptorPath, iconDefs):
+            return False
+
+        return True
 
 #___________________________________________________________________________________________________ isPlatformActive
     def isPlatformActive(self, platformId):

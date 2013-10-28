@@ -14,6 +14,13 @@ class AirUtils(object):
 #===================================================================================================
 #                                                                                       C L A S S
 
+    FILENAME_PATTERN = re.compile('(?P<prefix><filename>)[^<]+(?P<suffix></filename>)')
+
+    CONTENT_FILENAME_PATTERN = re.compile('(?P<prefix><content>)[^<]+(?P<suffix></content>)')
+
+    APP_ICON_PATTERN = re.compile(
+        '(?P<prefix><icon>).*?(?P<suffix></icon>)', re.MULTILINE | re.DOTALL)
+
     APP_ID_PATTERN = re.compile('(?P<prefix><id>)[^<]+(?P<suffix></id>)')
 
     DESCRIPTOR_VERSION_PATTERN = re.compile(
@@ -33,52 +40,125 @@ class AirUtils(object):
         data = cls.APP_ID_PATTERN.sub('\g<prefix>' + appId + '\g<suffix>', data)
         return FileUtils.putContents(data, descriptorPath)
 
+#___________________________________________________________________________________________________ updateAppFilename
+    @classmethod
+    def updateAppFilename(cls, descriptorPath, filename, contentFilename):
+        data = FileUtils.getContents(descriptorPath)
+        data = cls.FILENAME_PATTERN.sub('\g<prefix>' + filename + '\g<suffix>', data)
+        data = cls.CONTENT_FILENAME_PATTERN.sub('\g<prefix>' + contentFilename + '.swf\g<suffix>', data)
+        return FileUtils.putContents(data, descriptorPath)
+
+#___________________________________________________________________________________________________ updateAppIconList
+    @classmethod
+    def updateAppIconList(cls, descriptorPath, iconDefs):
+        s = []
+        offset = '\n        '
+        for icon in iconDefs:
+            size = icon['size']
+            name = icon['name']
+            s.append('<image%sx%s>icons/%s</image%sx%s>' % (size, size, name, size, size))
+
+        data = FileUtils.getContents(descriptorPath)
+        data = cls.APP_ICON_PATTERN.sub(
+            '\g<prefix>' + offset + offset.join(s) + '\n    \g<suffix>', data)
+
+        return FileUtils.putContents(data, descriptorPath)
+
 #___________________________________________________________________________________________________ deployExternalIncludes
     @classmethod
     def deployExternalIncludes(cls, flexProjectData):
         """ Deploys all of the external includes file and folders to the platform-specific project
             bin folder for use in packaging or debugging. Returns a list of FileLists for each
-            copy operation that occurred so that the deploy operation can be undone later."""
+            copy operation that occurred so that the deploy operation can be undone later. """
 
-        out = {'dirs':[], 'files':[], 'merges':[], 'itemNames':[]}
+        dirs      = []
+        files     = []
+        merges    = []
+        itemNames = []
+
+        out = {'dirs':dirs, 'files':files, 'merges':merges, 'itemNames':itemNames, 'icons':[]}
         sets = flexProjectData
 
-        # Copy the icons for the platform deployment from the icons folder for that platform, or,
-        # if not platform specific icons folder exists, from the main icons folder instead.
-        iconPath = FileUtils.createPath(sets.platformProjectPath, 'icons', isDir=True)
+        #-------------------------------------------------------------------------------------------
+        # ICONS
+        #       Cascade through the various locations where icons may reside for a given platform
+        #       and copy the preferred location to the bin for compilation.
 
+        iconTargetPath = FileUtils.createPath(sets.platformBinPath, 'icons', isDir=True)
+
+        #--- Platform[Specific] | Build-Type[Specific] ---#
+        iconPath = FileUtils.createPath(
+            sets.platformProjectPath, 'icons', sets.buildTypeFolderName, isDir=True)
+
+        #--- Platform[Specific] | Build-Type[Generic] ---#
+        if not os.path.exists(iconPath):
+            iconPath = FileUtils.createPath(sets.platformProjectPath, 'icons', isDir=True)
+
+        #--- Platform[Generic] | Build-Type[Specific] ---#
+        if not os.path.exists(iconPath):
+            iconPath = FileUtils.createPath(
+                sets.projectPath, 'icons', sets.buildTypeFolderName, isDir=True)
+
+        #--- Platform[Generic] | Build-Type[Generic] ---#
         if not os.path.exists(iconPath):
             iconPath = FileUtils.createPath(sets.projectPath, 'icons', isDir=True)
-        if os.path.exists(iconPath):
-            out['merges'].append(FileUtils.mergeCopy(
-                iconPath, FileUtils.createPath(sets.platformBinPath, 'icons', isDir=True)))
-            out['dirs'].append(iconPath)
-            out['itemNames'].append('icons')
 
-        # Copy everything in the includes directory
+        # If an icon path exists, copy those files to the target path for inclusion
+        if os.path.exists(iconPath):
+            cls._deployIcons(iconPath, iconTargetPath, out)
+        cls.updateAppIconList(sets.appDescriptorPath, out['icons'])
+
+        #-------------------------------------------------------------------------------------------
+        # INCLUDES FOLDER
+        #       Copy everything in the includes directory with the generic includes first and then
+        #       the platform-specific includes merged in (potentially overwriting general files
+        #       in the process if there is a naming collision. This allows for platform specific
+        #       file overrides when desirable.
+
+        #--- Generic Includes ---#
         includesPath = sets.externalIncludesPath
         if os.path.exists(includesPath):
             for item in os.listdir(includesPath):
                 source = FileUtils.createPath(includesPath, item)
-                out['merges'].append(FileUtils.mergeCopy(
+                merges.append(FileUtils.mergeCopy(
                     source, FileUtils.createPath(sets.platformBinPath, item)))
                 if os.path.isdir(source):
-                    out['dirs'].append(source)
+                    dirs.append(source)
                 else:
-                    out['files'].append(source)
-                out['itemNames'].append(item)
+                    files.append(source)
+                itemNames.append(item)
 
+        #--- Specific Includes ---#
         includesPath = sets.platformExternalIncludesPath
         if not includesPath or not os.path.exists(includesPath):
             return out
 
         for item in os.listdir(includesPath):
             source = FileUtils.createPath(includesPath, item)
-            out['merges'].append(FileUtils.mergeCopy(
+            merges.append(FileUtils.mergeCopy(
                 source, FileUtils.createPath(sets.platformBinPath, item)))
             if os.path.isdir(source):
-                out['dirs'].append(source)
+                dirs.append(source)
             else:
-                out['files'].append(source)
-            out['itemNames'].append(item)
+                files.append(source)
+            itemNames.append(item)
         return out
+
+#===================================================================================================
+#                                                                               P R O T E C T E D
+
+#___________________________________________________________________________________________________ _deployIcons
+    @classmethod
+    def _deployIcons(cls, sourcePath, targetPath, record):
+        merges    = record['merges']
+        dirs      = record['dirs']
+        itemNames = record['itemNames']
+        icons     = record['icons']
+
+        merges.append(FileUtils.mergeCopy(sourcePath, targetPath))
+        dirs.append(sourcePath)
+        itemNames.append('icons')
+
+        for item in os.listdir(targetPath):
+            size = item.split('_')[-1].split('.')[0]
+            icons.append({'size':size, 'name':item})

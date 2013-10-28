@@ -91,7 +91,7 @@ class AirDebugThread(RemoteExecutionThread):
 
         cmd = [
             'C:\\Program Files (x86)\\Internet Explorer\\iexplore.exe',
-            FileUtils.createPath(sets.platformBinPath, sets.targetFilename + '.swf') ]
+            FileUtils.createPath(sets.platformBinPath, sets.contentTargetFilename + '.swf') ]
 
         result = SystemUtils.executeCommand(cmd)
         if result['code']:

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'F:\Python\CompilerDeck\resources\widget\DeckCompileWidget\DeckCompileWidget.ui'
 #
-# Created: Sat Oct 26 20:35:02 2013
+# Created: Sun Oct 27 19:13:24 2013
 #      by: pyside-uic 0.2.14 running on PySide 1.1.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -56,9 +56,12 @@ class PySideUiFileSetup(object):
         Form.webPlatformCheck = QtGui.QCheckBox(Form.platformBox)
         Form.webPlatformCheck.setObjectName("webPlatformCheck")
         Form.verticalLayout_4.addWidget(Form.webPlatformCheck)
-        Form.desktopPlatformCheck = QtGui.QCheckBox(Form.platformBox)
-        Form.desktopPlatformCheck.setObjectName("desktopPlatformCheck")
-        Form.verticalLayout_4.addWidget(Form.desktopPlatformCheck)
+        Form.airPlatformCheck = QtGui.QCheckBox(Form.platformBox)
+        Form.airPlatformCheck.setObjectName("airPlatformCheck")
+        Form.verticalLayout_4.addWidget(Form.airPlatformCheck)
+        Form.nativePlatformCheck = QtGui.QCheckBox(Form.platformBox)
+        Form.nativePlatformCheck.setObjectName("nativePlatformCheck")
+        Form.verticalLayout_4.addWidget(Form.nativePlatformCheck)
         Form.androidPlatformCheck = QtGui.QCheckBox(Form.platformBox)
         Form.androidPlatformCheck.setObjectName("androidPlatformCheck")
         Form.verticalLayout_4.addWidget(Form.androidPlatformCheck)
@@ -582,8 +585,8 @@ class PySideUiFileSetup(object):
         Form.setTabOrder(Form.clearLogcatBtn, Form.flexDebugBtn)
         Form.setTabOrder(Form.flexDebugBtn, Form.installIpaBtn)
         Form.setTabOrder(Form.installIpaBtn, Form.resultsTextBrowser)
-        Form.setTabOrder(Form.resultsTextBrowser, Form.desktopPlatformCheck)
-        Form.setTabOrder(Form.desktopPlatformCheck, Form.androidPlatformCheck)
+        Form.setTabOrder(Form.resultsTextBrowser, Form.airPlatformCheck)
+        Form.setTabOrder(Form.airPlatformCheck, Form.androidPlatformCheck)
         Form.setTabOrder(Form.androidPlatformCheck, Form.remoteDebugComboBox)
         Form.setTabOrder(Form.remoteDebugComboBox, Form.liveCheck)
         Form.setTabOrder(Form.liveCheck, Form.debugCheck)
@@ -597,12 +600,13 @@ class PySideUiFileSetup(object):
         Form.telemetryCheck.setText(QtGui.QApplication.translate("Form", "Advanced Telemetry", None, QtGui.QApplication.UnicodeUTF8))
         Form.platformBox.setTitle(QtGui.QApplication.translate("Form", "Platforms To Compile", None, QtGui.QApplication.UnicodeUTF8))
         Form.webPlatformCheck.setText(QtGui.QApplication.translate("Form", "Web (Flash)", None, QtGui.QApplication.UnicodeUTF8))
-        Form.desktopPlatformCheck.setText(QtGui.QApplication.translate("Form", "Desktop (AIR/Native)", None, QtGui.QApplication.UnicodeUTF8))
+        Form.airPlatformCheck.setText(QtGui.QApplication.translate("Form", "AIR", None, QtGui.QApplication.UnicodeUTF8))
+        Form.nativePlatformCheck.setText(QtGui.QApplication.translate("Form", "Native", None, QtGui.QApplication.UnicodeUTF8))
         Form.androidPlatformCheck.setText(QtGui.QApplication.translate("Form", "Android", None, QtGui.QApplication.UnicodeUTF8))
         Form.iosPlatformCheck.setText(QtGui.QApplication.translate("Form", "iOS", None, QtGui.QApplication.UnicodeUTF8))
         Form.groupBox.setTitle(QtGui.QApplication.translate("Form", "Package Options", None, QtGui.QApplication.UnicodeUTF8))
-        Form.iosInterpCheck.setText(QtGui.QApplication.translate("Form", "Interpreter (ios)", None, QtGui.QApplication.UnicodeUTF8))
-        Form.expandPackageChk.setText(QtGui.QApplication.translate("Form", "Expand to Previous Package", None, QtGui.QApplication.UnicodeUTF8))
+        Form.iosInterpCheck.setText(QtGui.QApplication.translate("Form", "Interpreter (iOS Only)", None, QtGui.QApplication.UnicodeUTF8))
+        Form.expandPackageChk.setText(QtGui.QApplication.translate("Form", "Append to Previous Package", None, QtGui.QApplication.UnicodeUTF8))
         Form.label_3.setText(QtGui.QApplication.translate("Form", "Flash Player Version:", None, QtGui.QApplication.UnicodeUTF8))
         Form.label_4.setText(QtGui.QApplication.translate("Form", "AIR SDK Version:", None, QtGui.QApplication.UnicodeUTF8))
         Form.label_5.setText(QtGui.QApplication.translate("Form", "Remote Debugging:", None, QtGui.QApplication.UnicodeUTF8))

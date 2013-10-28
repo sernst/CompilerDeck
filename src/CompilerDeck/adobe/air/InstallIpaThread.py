@@ -46,7 +46,7 @@ class InstallIpaThread(RemoteExecutionThread):
             'ios',
             '-package',
             FileUtils.createPath(
-                sets.platformDistributionPath, sets.targetFilename + '.' + sets.airExtension)
+                sets.platformDistributionPath, sets.contentTargetFilename + '.' + sets.airExtension)
         ]
 
         self.log.write('<div style="color:#9999CC">' + '\n'.join(cmd) + '</div>')

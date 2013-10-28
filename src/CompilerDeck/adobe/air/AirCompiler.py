@@ -31,23 +31,21 @@ class AirCompiler(AdobeSystemCompiler):
         cmd  = []
         sets = self._settings
 
+        # Check to see if the app descriptor file exists. If no descriptor exists the target
+        # cannot be compiled and the process should be aborted in failure.
         if not os.path.exists(sets.appDescriptorPath):
             self._log.write('ERROR: No app file found at: ' + sets.appDescriptorPath)
             return False
 
-        if not sets.updateApplicationConfigFile():
-            self._log.write([
-                'ERROR: Unable to update the application descriptor file',
-                'PATH: ' + sets.appDescriptorPath,
-                'VERSION: ' + sets.airVersion,
-                'ID: ' + sets.appId ])
-            return False
-
+        # Adobe packager adt command path
         cmd.extend([
             self._owner.mainWindow.getRootAIRPath(sets.airVersion, 'bin', 'adt.bat', isFile=True),
             '-package' ])
 
-        if sets.currentPlatformID in (sets.AIR_PLATFORM, sets.NATIVE_PLATFORM):
+        print sets.currentPlatformID, '|', sets.isDesktop, sets.isNative, sets.isAndroid, sets.isIOS
+
+        # Add platform specific command flags
+        if sets.isDesktop:
             self._addAIRSigningArguments(cmd)
             self._addAIRTargetArguments(cmd)
         else:
@@ -55,37 +53,52 @@ class AirCompiler(AdobeSystemCompiler):
             self._addAirConnectionArguments(cmd)
             self._addAIRSigningArguments(cmd)
 
+        # Create the distribution path where the packaged output will reside
         distPath = sets.platformDistributionPath
         if not os.path.exists(distPath):
             os.makedirs(distPath)
 
+        # The absolute path to the packaging target file
         targetPath = FileUtils.createPath(
-            distPath, sets.targetFilename + '.' + sets.airExtension, isFile=True)
-        # Remove previous builds
+            distPath, sets.contentTargetFilename + '.' + sets.airExtension, isFile=True, noTail=True)
+
+        # Remove previous packaging target files
         if os.path.exists(targetPath):
             os.remove(targetPath)
 
         cmd.extend([
-            targetPath,
-            FileUtils.createPath(sets.platformProjectPath, 'application.xml', isFile=True),
-            sets.targetFilename + '.swf' ])
+            '"%s"' % targetPath,
+            '"%s"' % FileUtils.createPath(sets.platformProjectPath, 'application.xml', isFile=True),
+            '"%s"' % (sets.contentTargetFilename + '.swf') ])
 
-        # Adds the launch display images for iOS compilation if they exist
+        # Deploy external includes
+        deployResults = AirUtils.deployExternalIncludes(sets)
+        self._copyMerges.extend(deployResults['merges'])
+        cmd.extend(deployResults['itemNames'])
+
+        self._addAIRNativeExtensionArguments(cmd)
+
+        # Deploy iOS launch images
         if sets.currentPlatformID == FlexProjectData.IOS_PLATFORM:
-            launchPath = FileUtils.createPath(sets.platformProjectPath, 'launch')
+            launchPath = FileUtils.createPath(sets.platformProjectPath, 'launch', isDir=True, noTail=True)
             if os.path.exists(launchPath) and os.path.isdir(launchPath):
                 for item in os.listdir(launchPath):
                     itemPath = FileUtils.createPath(launchPath, item, isFile=True)
                     if os.path.isfile(itemPath) and item.endswith('.png'):
-                        cmd.extend(['-C', '"' + launchPath + '"', itemPath])
+                        cmd.extend(['-C', '"%s"' % launchPath, '"%s"' % itemPath])
 
-        results = AirUtils.deployExternalIncludes(sets)
-        self._copyMerges.extend(results['merges'])
-        cmd.extend(results['itemNames'])
-        self._addAIRNativeExtensionArguments(cmd)
+        # Update the application descriptor file with all settings specific to this build
+        if not sets.updateApplicationConfigFile(deployResults['icons']):
+            self._log.write([
+                'ERROR: Unable to update the application descriptor file',
+                'PATH: ' + sets.appDescriptorPath,
+                'VERSION: ' + sets.airVersion,
+                'ID: ' + sets.appId ])
+            return False
 
+        # Execute packaging process
         os.chdir(sets.platformBinPath)
-        print 'CMD:', cmd
+        print 'AIR COMPILE COMMAND:\n', cmd
         if self.executeCommand(cmd, 'PACKAGING AIR FILE: "%s"' % sets.currentPlatformID):
             self._log.write('FAILED: AIR PACKAGING')
             return False
@@ -102,8 +115,7 @@ class AirCompiler(AdobeSystemCompiler):
         sets = self._settings
         cmd.extend([
             '-storetype', 'pkcs12', '-keystore', sets.certificate,
-            '-storepass', sets.certificatePassword
-        ])
+            '-storepass', sets.certificatePassword ])
 
         # Add Apple provisioning profile target
         if sets.currentPlatformID == FlexProjectData.IOS_PLATFORM:

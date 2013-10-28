@@ -36,7 +36,8 @@ class DeckCompileWidget(PyGlassWidget):
     _LIVE_CFG                 = 'LIVE'
     _DEBUG_CFG                = 'DEBUG'
     _COMPILE_WEB              = 'COMPILE_WEB'
-    _COMPILE_DESKTOP          = 'COMPILE_DESKTOP'
+    _COMPILE_AIR              = 'COMPILE_AIR'
+    _COMPILE_NATIVE           = 'COMPILE_NATIVE'
     _COMPILE_ANDROID          = 'COMPILE_ANDROID'
     _COMPILE_IOS              = 'COMPILE_IOS'
     _IOS_INTERP               = 'IOS_INTERP'
@@ -105,7 +106,8 @@ class DeckCompileWidget(PyGlassWidget):
         self._initializeCheck(self.debugCheck, self._DEBUG_CFG, True)
         self._initializeCheck(self.liveCheck, self._LIVE_CFG, False)
         self._initializeCheck(self.webPlatformCheck, self._COMPILE_WEB, True)
-        self._initializeCheck(self.desktopPlatformCheck, self._COMPILE_DESKTOP, True)
+        self._initializeCheck(self.airPlatformCheck, self._COMPILE_AIR, True)
+        self._initializeCheck(self.nativePlatformCheck, self._COMPILE_NATIVE, True)
         self._initializeCheck(self.androidPlatformCheck, self._COMPILE_ANDROID, True)
         self._initializeCheck(self.iosPlatformCheck, self._COMPILE_IOS, True)
         self._initializeCheck(self.telemetryCheck, self._ADV_TELEMETRY, False)
@@ -219,16 +221,15 @@ class DeckCompileWidget(PyGlassWidget):
         else:
             self._buildSnapshot = buildSnapshot
 
-        self._executeRemoteThread(ANECompileThread(**self._buildSnapshot), callback)
+        self._executeRemoteThread(ANECompileThread(parent=self, **self._buildSnapshot), callback)
 
 #___________________________________________________________________________________________________ _executeDebugProcess
     def _executeDebugProcess(self):
-        self._executeRemoteThread(AirDebugThread(**self._createBuildSnapshot()))
+        self._executeRemoteThread(AirDebugThread(parent=self, **self._createBuildSnapshot()))
 
 #___________________________________________________________________________________________________ _createBuildSnapshot
     def _createBuildSnapshot(self):
         return dict(
-            parent=self,
             iosInterpreter=self.iosInterpCheck.isChecked(),
             versionInfo=self._settingsEditor.toDict(),
             projectPath=CompilerDeckEnvironment.getProjectPath(),
@@ -241,8 +242,8 @@ class DeckCompileWidget(PyGlassWidget):
             remoteDebug=(not self.remoteDebugComboBox.currentText().lower().startswith('none')),
             usbDebug=(self.remoteDebugComboBox.currentText().lower().startswith('usb')),
             platforms={
-                FlexProjectData.NATIVE_PLATFORM:self.desktopPlatformCheck.isChecked(),
-                FlexProjectData.AIR_PLATFORM:self.desktopPlatformCheck.isChecked(),
+                FlexProjectData.NATIVE_PLATFORM:self.nativePlatformCheck.isChecked(),
+                FlexProjectData.AIR_PLATFORM:self.airPlatformCheck.isChecked(),
                 FlexProjectData.FLASH_PLATFORM:self.webPlatformCheck.isChecked(),
                 FlexProjectData.ANDROID_PLATFORM:self.androidPlatformCheck.isChecked(),
                 FlexProjectData.IOS_PLATFORM:self.iosPlatformCheck.isChecked() })
@@ -320,7 +321,8 @@ class DeckCompileWidget(PyGlassWidget):
         if self._package and result['response'] == 0:
             self._storeBuildSnapshot()
             self._settingsEditor.logBuild(
-                self.desktopPlatformCheck.isChecked(),
+                self.airPlatformCheck.isChecked(),
+                self.nativePlatformCheck.isChecked(),
                 self.androidPlatformCheck.isChecked(),
                 self.iosPlatformCheck.isChecked() )
             self._settingsEditor.reset()
@@ -366,8 +368,10 @@ class DeckCompileWidget(PyGlassWidget):
             prop = self._DEBUG_CFG
         elif sender == self.webPlatformCheck:
             prop = self._COMPILE_WEB
-        elif sender == self.desktopPlatformCheck:
-            prop = self._COMPILE_DESKTOP
+        elif sender == self.airPlatformCheck:
+            prop = self._COMPILE_AIR
+        elif sender == self.nativePlatformCheck:
+            prop = self._COMPILE_NATIVE
         elif sender == self.androidPlatformCheck:
             prop = self._COMPILE_ANDROID
         elif sender == self.iosPlatformCheck:

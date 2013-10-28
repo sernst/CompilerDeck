@@ -107,11 +107,16 @@ class ProjectData(object):
 #                                                                                     P U B L I C
 
 #___________________________________________________________________________________________________ getSetting
-    def getSetting(self, key, defaultValue =None, error =False, debugOrRelease =True):
-        if not debugOrRelease:
-            return self._getProjectSetting(key, defaultValue, error)
+    def getSetting(
+            self, key, defaultValue =None, error =False, forceRelease =False, forceDebug =False
+    ):
+        if forceRelease:
+            deepKey = 'RELEASE'
+        elif forceDebug:
+            deepKey = 'DEBUG'
+        else:
+            deepKey = 'DEBUG' if self._debug else 'RELEASE'
 
-        deepKey = 'DEBUG' if self._debug else 'RELEASE'
         if isinstance(key, basestring):
             deepKey = [deepKey, key]
         else:

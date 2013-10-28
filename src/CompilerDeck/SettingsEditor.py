@@ -144,13 +144,14 @@ class SettingsEditor(object):
             self.revision = kwargs['revision']
 
 #___________________________________________________________________________________________________ logBuild
-    def logBuild(self, builtDesktop =False, builtAndroid =False, builtIOS =False):
+    def logBuild(self, builtDesktop =False, builtNative =False, builtAndroid =False, builtIOS =False):
         if not builtDesktop and not builtAndroid and not builtIOS:
             return
 
         out = '\t'.join([
             TimeUtils.getNowDatetime().strftime('[%a %m-%d %H:%M]'),
             'DSK' if builtDesktop else '---',
+            'NAT' if builtNative else '---',
             'AND' if builtAndroid else '---',
             'IOS' if builtIOS else '---',
             '<<' + self.versionNumber + '>>',

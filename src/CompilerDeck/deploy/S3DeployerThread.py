@@ -61,7 +61,7 @@ class S3DeployerThread(RemoteExecutionThread):
             if not os.path.exists(data.targetFilePath):
                 continue
 
-            name = data.targetFilename + '-' + \
+            name = data.contentTargetFilename + '-' + \
                    data.versionInfo['major'] + '-' + \
                    data.versionInfo['minor'] + '-' + \
                    data.versionInfo['revision'] + '.' + \
@@ -111,7 +111,7 @@ class S3DeployerThread(RemoteExecutionThread):
         if not os.path.exists(path):
             os.makedirs(path)
 
-        filename = self._flexData.targetFilename + \
+        filename = self._flexData.contentTargetFilename + \
                 self._flexData.versionInfoNumber.replace(u'.', u'-') + u'.txt'
         path += filename
 
@@ -135,18 +135,19 @@ class S3DeployerThread(RemoteExecutionThread):
         body = [
             u'A new build of %s is available.\n' % label,
             u'  * Version: ' + version,
-            u'  * Build: ' + uid + u'\n\n',
+            u'  * Build: ' + uid,
+            u'  * Type: %s' % (u'Beta' if self._flexData.debug else u'Release') + u'\n\n',
             u'=== DOWNLOADS ===\n',
             u'Please update your application to the latest version by downloading and installing ' +
             u'it from the URL listed below for your choice of platform(s).\n' ]
 
         for key, url in deployUrls.iteritems():
-            if key in [FlexProjectData.NATIVE_PLATFORM, FlexProjectData.AIR_PLATFORM]:
+            if key in FlexProjectData.AIR_PLATFORM:
                 key = u'Desktop (Mac/PC)'
             elif key == FlexProjectData.IOS_PLATFORM:
-                key = u'iOS (iPad 3/4)'
+                key = u'iOS (iPad 3+)'
             elif key == FlexProjectData.AIR_PLATFORM:
-                key = u'Android'
+                key = u'Android (2.3+)'
 
             body.append(u'--- ' + key + u' Download ---\n' + url + u'\n')
 
