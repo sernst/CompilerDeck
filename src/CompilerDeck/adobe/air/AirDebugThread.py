@@ -9,6 +9,7 @@ from pyaid.file.FileList import FileList
 from pyaid.file.FileUtils import FileUtils
 from pyaid.system.SystemUtils import SystemUtils
 
+from pyglass.app.PyGlassEnvironment import PyGlassEnvironment
 from pyglass.threading.RemoteExecutionThread import RemoteExecutionThread
 
 from CompilerDeck.adobe.air.AirUtils import AirUtils
@@ -61,16 +62,22 @@ class AirDebugThread(RemoteExecutionThread):
                 'ID: ' + sets.appId ])
             return 1
 
+
+        adlCommand    = 'adl.exe' if PyGlassEnvironment.isWindows else 'adl'
+        appDescriptor = FileUtils.createPath(sets.projectPath, 'application.xml', isFile=True)
+
         cmd = [
-            self.parent().mainWindow.getRootAIRPath(sets.airVersion, 'bin', 'adl.exe'),
-            FileUtils.createPath(sets.projectPath, 'application.xml', isFile=True),
+            self.parent().mainWindow.getRootAIRPath(sets.airVersion, 'bin', adlCommand),
+            appDescriptor,
             sets.platformBinPath ]
 
         deployment = AirUtils.deployExternalIncludes(self._settings)
         code       = 0
         try:
             os.chdir(FileUtils.createPath(sets.projectPath, isDir=True))
+            print 'LOCATION:', os.path.abspath(os.curdir)
             print 'COMMAND:', cmd
+
             result = SystemUtils.executeCommand(cmd)
             if result['code']:
                 self._log.write('RESULT ERROR CODE: ' + str(result['code']) + '\n' + result['out'])

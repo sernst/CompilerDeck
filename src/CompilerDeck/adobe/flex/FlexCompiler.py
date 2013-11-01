@@ -6,6 +6,8 @@ import os
 
 from pyaid.file.FileUtils import FileUtils
 
+from pyglass.app.PyGlassEnvironment import PyGlassEnvironment
+
 from CompilerDeck.adobe.AdobeSystemCompiler import AdobeSystemCompiler
 from CompilerDeck.adobe.flex.FlexProjectData import FlexProjectData
 from CompilerDeck.adobe.shared.FlashUtils import FlashUtils
@@ -118,7 +120,13 @@ class FlexCompiler(AdobeSystemCompiler):
             '-swf-version=' + str(FlashUtils.convertFlashToSwfVersion(flashVersion)),
             mainClass ])
 
-        cmd.insert(0, os.path.join(airPath, sets.airVersion, 'bin', 'amxmlc.bat' if isAir else 'mxmlc.bat'))
+
+        if PyGlassEnvironment.isWindows:
+            commandFile = 'amxmlc.bat' if isAir else 'mxmlc.bat'
+        else:
+            commandFile = 'amxmlc' if isAir else 'mxmlc'
+
+        cmd.insert(0, os.path.join(airPath, sets.airVersion, 'bin', commandFile))
 
         if self.executeCommand(cmd, 'COMPILING SWF: "%s"' % sets.currentPlatformID):
             self._log.write('FAILED: SWF COMPILATION')

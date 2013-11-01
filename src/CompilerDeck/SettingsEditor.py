@@ -119,6 +119,8 @@ class SettingsEditor(object):
 #___________________________________________________________________________________________________ toDict
     def toDict(self):
         return {
+            'label':self.versionLabel,
+            'number':self.versionNumber,
             'prefix':self._prefix.value,
             'suffix':self._suffix.value,
             'major':self._major.value,
@@ -142,23 +144,6 @@ class SettingsEditor(object):
             self.minor = kwargs['minor']
         if kwargs.has_key('revision'):
             self.revision = kwargs['revision']
-
-#___________________________________________________________________________________________________ logBuild
-    def logBuild(self, builtDesktop =False, builtNative =False, builtAndroid =False, builtIOS =False):
-        if not builtDesktop and not builtAndroid and not builtIOS:
-            return
-
-        out = '\t'.join([
-            TimeUtils.getNowDatetime().strftime('[%a %m-%d %H:%M]'),
-            'DSK' if builtDesktop else '---',
-            'NAT' if builtNative else '---',
-            'AND' if builtAndroid else '---',
-            'IOS' if builtIOS else '---',
-            '<<' + self.versionNumber + '>>',
-            '<<' + self.versionLabel + '>>'
-        ]) + '\n'
-        FileUtils.putContents(out, self.buildLogFilePath, True)
-        return out
 
 #___________________________________________________________________________________________________ makeUnique
     def makeUnique(self):

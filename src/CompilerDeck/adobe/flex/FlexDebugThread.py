@@ -4,6 +4,7 @@
 
 from pyaid.system.SystemUtils import SystemUtils
 
+from pyglass.app.PyGlassEnvironment import PyGlassEnvironment
 from pyglass.threading.RemoteExecutionThread import RemoteExecutionThread
 
 from CompilerDeck.adobe.flex.FlexProjectData import FlexProjectData
@@ -43,11 +44,13 @@ class FlexDebugThread(RemoteExecutionThread):
             return result['code']
         self._log.write('SUCCESS: ADB port management update.')
 
+        fdbCommand = 'fdb.exe' if PyGlassEnvironment.isWindows else 'fdb'
+
         self._log.write('Launching FDB session...')
         cmd = [
             'start',
             'cmd', '/c',
-            self._owner.mainWindow.getFlexSDKPath('bin', 'fdb.exe', isFile=True),
+            self._owner.mainWindow.getFlexSDKPath('bin', fdbCommand, isFile=True),
             '-p',
             str(FlexProjectData.USB_DEBUG_PORT)
         ]

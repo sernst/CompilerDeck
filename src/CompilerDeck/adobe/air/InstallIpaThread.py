@@ -6,6 +6,7 @@ from pyaid.ArgsUtils import ArgsUtils
 from pyaid.file.FileUtils import FileUtils
 from pyaid.system.SystemUtils import SystemUtils
 
+from pyglass.app.PyGlassEnvironment import PyGlassEnvironment
 from pyglass.threading.RemoteExecutionThread import RemoteExecutionThread
 
 from CompilerDeck.adobe.flex.FlexProjectData import FlexProjectData
@@ -38,9 +39,14 @@ class InstallIpaThread(RemoteExecutionThread):
             + '(This can take a few minutes. Please stand by)'
         )
 
+        if PyGlassEnvironment.isWindows:
+            adtCommand = 'adt.bat'
+        else:
+            adtCommand = 'adt'
+
         cmd = [
             '"%s"' % self.parent().mainWindow.getRootAIRPath(
-                sets.airVersion, 'bin', 'adt.bat', isFile=True),
+                sets.airVersion, 'bin', adtCommand, isFile=True),
             '-installApp',
             '-platform',
             'ios',

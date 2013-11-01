@@ -5,8 +5,11 @@
 from PySide import QtGui
 from PySide import QtCore
 
+from pyaid.ArgsUtils import ArgsUtils
 from pyaid.config.SettingsConfig import SettingsConfig
+from pyaid.file.FileUtils import FileUtils
 from pyaid.json.JSON import JSON
+from pyaid.time.TimeUtils import TimeUtils
 
 from pyglass.widgets.PyGlassWidget import PyGlassWidget
 
@@ -201,12 +204,13 @@ class DeckCompileWidget(PyGlassWidget):
 #___________________________________________________________________________________________________ _executeCompilation
     def _executeCompilation(self, callback, buildSnapshot =None):
         if self._package and self.expandPackageChk.isChecked():
-            snap = buildSnapshot
-            if snap is None:
+            if buildSnapshot is None:
                 if self._buildSnapshot is None:
                     self._loadBuildSnapshot()
-                snap = self._buildSnapshot
-            self._settingsEditor.fromDict(snap['versionInfo'])
+            buildSnapshot = self._buildSnapshot
+            buildSnapshot['combinedPlatforms'] \
+                = self._createPlatformsSnapshot(buildSnapshot['platforms'])
+            buildSnapshot['platforms'] = self._createPlatformsSnapshot()
         else:
             self._settingsEditor.setTo(
                 prefix=self.prefixLine.text(),
@@ -216,16 +220,27 @@ class DeckCompileWidget(PyGlassWidget):
                 revision=self.revisionSpin.value() )
             self._settingsEditor.write()
 
-        if buildSnapshot is None:
-            self._buildSnapshot = self._createBuildSnapshot()
-        else:
-            self._buildSnapshot = buildSnapshot
+        self._buildSnapshot = self._createBuildSnapshot() if buildSnapshot is None else buildSnapshot
 
         self._executeRemoteThread(ANECompileThread(parent=self, **self._buildSnapshot), callback)
 
 #___________________________________________________________________________________________________ _executeDebugProcess
     def _executeDebugProcess(self):
         self._executeRemoteThread(AirDebugThread(parent=self, **self._createBuildSnapshot()))
+
+
+#___________________________________________________________________________________________________ _createPackageSnapshot
+    def _createPlatformsSnapshot(self, overrides =None):
+        out = dict()
+        platforms = {
+            FlexProjectData.NATIVE_PLATFORM:self.nativePlatformCheck,
+            FlexProjectData.AIR_PLATFORM:self.airPlatformCheck,
+            FlexProjectData.FLASH_PLATFORM:self.webPlatformCheck,
+            FlexProjectData.ANDROID_PLATFORM:self.androidPlatformCheck,
+            FlexProjectData.IOS_PLATFORM:self.iosPlatformCheck }
+        for pid, check in platforms.iteritems():
+            out[pid] = check.isChecked() or ArgsUtils.get(pid, False, overrides)
+        return out
 
 #___________________________________________________________________________________________________ _createBuildSnapshot
     def _createBuildSnapshot(self):
@@ -241,12 +256,7 @@ class DeckCompileWidget(PyGlassWidget):
             packageAir=self._package,
             remoteDebug=(not self.remoteDebugComboBox.currentText().lower().startswith('none')),
             usbDebug=(self.remoteDebugComboBox.currentText().lower().startswith('usb')),
-            platforms={
-                FlexProjectData.NATIVE_PLATFORM:self.nativePlatformCheck.isChecked(),
-                FlexProjectData.AIR_PLATFORM:self.airPlatformCheck.isChecked(),
-                FlexProjectData.FLASH_PLATFORM:self.webPlatformCheck.isChecked(),
-                FlexProjectData.ANDROID_PLATFORM:self.androidPlatformCheck.isChecked(),
-                FlexProjectData.IOS_PLATFORM:self.iosPlatformCheck.isChecked() })
+            platforms=self._createPlatformsSnapshot() )
 
 #___________________________________________________________________________________________________ _storeBuildSnapshot
     def _storeBuildSnapshot(self):
@@ -318,13 +328,32 @@ class DeckCompileWidget(PyGlassWidget):
 
 #___________________________________________________________________________________________________ _handleCompilationComplete
     def _handleCompilationComplete(self, result):
+        snap = self._buildSnapshot
+
         if self._package and result['response'] == 0:
+
+            # If this was an appended package then prior to storing the snapshot the combined
+            # platforms should be stored as the result instead of the platforms stored in this
+            # particular case
+            if 'combinedPlatforms' in snap:
+                platforms = snap['combinedPlatforms']
+                snap['platforms'] = platforms
+                del snap['combinedPlatforms']
+            else:
+                platforms = snap['platforms']
             self._storeBuildSnapshot()
-            self._settingsEditor.logBuild(
-                self.airPlatformCheck.isChecked(),
-                self.nativePlatformCheck.isChecked(),
-                self.androidPlatformCheck.isChecked(),
-                self.iosPlatformCheck.isChecked() )
+
+            FileUtils.putContents('\t'.join([
+                    TimeUtils.getNowDatetime().strftime('[%a %m-%d %H:%M]'),
+                    'DSK' if platforms.get(FlexProjectData.AIR_PLATFORM, False) else '---',
+                    'NAT' if platforms.get(FlexProjectData.NATIVE_PLATFORM, False) else '---',
+                    'AND' if platforms.get(FlexProjectData.ANDROID_PLATFORM, False) else '---',
+                    'IOS' if platforms.get(FlexProjectData.IOS_PLATFORM, False) else '---',
+                    '<<' + snap['versionInfo']['number'] + '>>',
+                    '<<' + snap['versionInfo']['label'] + '>>' ]) + '\n',
+                self._settingsEditor.buildLogFilePath,
+                True )
+
             self._settingsEditor.reset()
             self._settingsEditor.populate()
             self._updateSettings()

@@ -6,6 +6,8 @@ import os
 
 from pyaid.file.FileUtils import FileUtils
 
+from pyglass.app.PyGlassEnvironment import PyGlassEnvironment
+
 from CompilerDeck.adobe.AdobeSystemCompiler import AdobeSystemCompiler
 from CompilerDeck.adobe.air.AirUtils import AirUtils
 from CompilerDeck.adobe.flex.FlexProjectData import FlexProjectData
@@ -37,9 +39,14 @@ class AirCompiler(AdobeSystemCompiler):
             self._log.write('ERROR: No app file found at: ' + sets.appDescriptorPath)
             return False
 
+        if PyGlassEnvironment.isWindows:
+            adtCommand = 'adt.bat'
+        else:
+            adtCommand = 'adt'
+
         # Adobe packager adt command path
         cmd.extend([
-            self._owner.mainWindow.getRootAIRPath(sets.airVersion, 'bin', 'adt.bat', isFile=True),
+            self._owner.mainWindow.getRootAIRPath(sets.airVersion, 'bin', adtCommand, isFile=True),
             '-package' ])
 
         print sets.currentPlatformID, '|', sets.isDesktop, sets.isNative, sets.isAndroid, sets.isIOS
