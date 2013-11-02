@@ -42,7 +42,7 @@ class CompilerDeckCompiler(PyGlassApplicationCompiler):
 #___________________________________________________________________________________________________ GS: iconPath
     @property
     def iconPath(self):
-        return ['apps', 'CompilerDeckApplication', 'icons']
+        return ['apps', 'CompilerDeckApplication']
 
 ####################################################################################################
 ####################################################################################################
