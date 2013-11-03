@@ -31,20 +31,29 @@ class FlexProjectData(ProjectData):
         """Creates a new instance of ClassTemplate."""
         ProjectData.__init__(self, projectPath=projectPath, **kwargs)
 
+        self.iosSimulatorSdkPath = '/Applications/Xcode.app/Contents/Developer/Platforms/' \
+            + 'iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk'
+
         self.advancedTelemetry  = ArgsUtils.get('telemetry', False, kwargs)
 
         self._currentPlatformID = None
         self._iosInterpreter    = ArgsUtils.get('iosInterpreter', False, kwargs)
+        self._iosSimulator      = ArgsUtils.get('iosSimulator', False, kwargs)
         self._live              = ArgsUtils.get('live', False, kwargs)
         self._packageAir        = ArgsUtils.get('packageAir', False, kwargs)
         self._quickCompile      = ArgsUtils.get('quickCompile', False, kwargs)
         self._usbDebug          = ArgsUtils.get('usbDebug', False, kwargs)
-        self.remoteDebug        = ArgsUtils.get('remoteDebug', self._usbDebug, kwargs)
         self._versionInfo       = ArgsUtils.getAsDict('versionInfo', kwargs)
         self._platforms         = ArgsUtils.getAsDict('platforms', kwargs)
+        self.remoteDebug        = ArgsUtils.get('remoteDebug', self._usbDebug, kwargs)
 
 #===================================================================================================
 #                                                                                   G E T / S E T
+
+#___________________________________________________________________________________________________ GS: useSimulator
+    @property
+    def useSimulator(self):
+        return self._iosSimulator
 
 #___________________________________________________________________________________________________ GS: isIOS
     @property
@@ -256,12 +265,14 @@ class FlexProjectData(ProjectData):
                 return 'apk-captive-runtime'
         elif self.currentPlatformID == FlexProjectData.IOS_PLATFORM:
             if self.debug:
-                if self.remoteDebug:
+                if self._iosSimulator:
+                    return 'ipa-debug-interpreter-simulator'
+                elif self.remoteDebug:
                     return 'ipa-debug-interpreter' if self._iosInterpreter else 'ipa-debug'
                 else:
                     return 'ipa-test-interpreter' if self._iosInterpreter else 'ipa-test'
             else:
-                return 'ipa-app-store'
+                return 'ipa-test-interpreter-simulator' if self._iosSimulator else 'ipa-app-store'
         elif self.currentPlatformID == FlexProjectData.NATIVE_PLATFORM:
             return 'native'
 

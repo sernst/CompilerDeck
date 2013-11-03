@@ -78,6 +78,9 @@ class AirCompiler(AdobeSystemCompiler):
             '"%s"' % FileUtils.createPath(sets.platformProjectPath, 'application.xml', isFile=True),
             '"%s"' % (sets.contentTargetFilename + '.swf') ])
 
+        if sets.isIOS and sets.useSimulator:
+            cmd.extend(['-platformsdk', '"%s"' % sets.iosSimulatorSdkPath])
+
         # Deploy external includes
         deployResults = AirUtils.deployExternalIncludes(sets)
         self._copyMerges.extend(deployResults['merges'])

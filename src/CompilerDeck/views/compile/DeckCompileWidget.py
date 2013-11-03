@@ -23,6 +23,7 @@ from CompilerDeck.adobe.flex.FlexDebugThread import FlexDebugThread
 from CompilerDeck.adobe.flex.FlexProjectData import FlexProjectData
 from CompilerDeck.android.AndroidLogcatThread import AndroidLogcatThread
 from CompilerDeck.deploy.S3DeployerThread import S3DeployerThread
+from CompilerDeck.ios.IosSimulatorThread import IosSimulatorThread
 
 #___________________________________________________________________________________________________ DeckCompileWidget
 class DeckCompileWidget(PyGlassWidget):
@@ -46,6 +47,7 @@ class DeckCompileWidget(PyGlassWidget):
     _IOS_INTERP               = 'IOS_INTERP'
     _ADV_TELEMETRY            = 'ADV_TELEMETRY'
     _APPEND_TO_PACKAGE        = 'APPEND_TO_PACKAGE'
+    _IOS_SIMULATOR            = 'IOS_SIMULATOR'
 
 #___________________________________________________________________________________________________ __init__
     def __init__(self, *args, **kwargs):
@@ -103,8 +105,10 @@ class DeckCompileWidget(PyGlassWidget):
         self.deployBuildBtn.clicked.connect(self._handleDeployBuild)
         self.saveDeployBtn.clicked.connect(self._handleSaveDeployInfo)
         self.reloadDeployBtn.clicked.connect(self._handleReloadDeployInfo)
+        self.simulateBtn.clicked.connect(self._handleSimulateApp)
         self.mainTab.setCurrentIndex(0)
 
+        self._initializeCheck(self.simulatorCheck, self._IOS_SIMULATOR, False)
         self._initializeCheck(self.iosInterpCheck, self._IOS_INTERP, False)
         self._initializeCheck(self.debugCheck, self._DEBUG_CFG, True)
         self._initializeCheck(self.liveCheck, self._LIVE_CFG, False)
@@ -245,6 +249,7 @@ class DeckCompileWidget(PyGlassWidget):
 #___________________________________________________________________________________________________ _createBuildSnapshot
     def _createBuildSnapshot(self):
         return dict(
+            iosSimulator=self.simulatorCheck.isChecked(),
             iosInterpreter=self.iosInterpCheck.isChecked(),
             versionInfo=self._settingsEditor.toDict(),
             projectPath=CompilerDeckEnvironment.getProjectPath(),
@@ -393,6 +398,8 @@ class DeckCompileWidget(PyGlassWidget):
             prop = self._LIVE_CFG
         elif sender == self.iosInterpCheck:
             prop = self._IOS_INTERP
+        elif sender == self.simulatorCheck:
+            prop = self._IOS_SIMULATOR
         elif sender == self.debugCheck:
             prop = self._DEBUG_CFG
         elif sender == self.webPlatformCheck:
@@ -530,3 +537,15 @@ class DeckCompileWidget(PyGlassWidget):
 #___________________________________________________________________________________________________ _handleReloadDeployInfo
     def _handleReloadDeployInfo(self):
         self._reloadDeployText()
+
+#___________________________________________________________________________________________________ _handleSimulateApp
+    def _handleSimulateApp(self):
+        self._executeRemoteThread(
+            IosSimulatorThread(
+                parent=self,
+                snapshot=self._getLatestBuildSnapshot()),
+            self._handleSimulatorComplete)
+
+#___________________________________________________________________________________________________ _handleSimulateComplete
+    def _handleSimulatorComplete(self):
+        self._toggleInteractivity(True)

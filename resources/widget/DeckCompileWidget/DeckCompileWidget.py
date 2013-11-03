@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'F:\Python\CompilerDeck\resources\widget\DeckCompileWidget\DeckCompileWidget.ui'
+# Form implementation generated from reading ui file '/Users/scott/Python/CompilerDeck/resources/widget/DeckCompileWidget/DeckCompileWidget.ui'
 #
-# Created: Sun Oct 27 19:13:24 2013
-#      by: pyside-uic 0.2.14 running on PySide 1.1.2
+# Created: Sat Nov  2 20:01:08 2013
+#      by: pyside-uic 0.2.13 running on PySide 1.1.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -78,6 +78,9 @@ class PySideUiFileSetup(object):
         Form.iosInterpCheck = QtGui.QCheckBox(Form.groupBox)
         Form.iosInterpCheck.setObjectName("iosInterpCheck")
         Form.verticalLayout_13.addWidget(Form.iosInterpCheck)
+        Form.simulatorCheck = QtGui.QCheckBox(Form.groupBox)
+        Form.simulatorCheck.setObjectName("simulatorCheck")
+        Form.verticalLayout_13.addWidget(Form.simulatorCheck)
         Form.expandPackageChk = QtGui.QCheckBox(Form.groupBox)
         Form.expandPackageChk.setObjectName("expandPackageChk")
         Form.verticalLayout_13.addWidget(Form.expandPackageChk)
@@ -489,51 +492,100 @@ class PySideUiFileSetup(object):
         Form.mainTab.addTab(Form.descriptorTabPage, "")
         Form.utilsTabPage = QtGui.QWidget()
         Form.utilsTabPage.setObjectName("utilsTabPage")
-        Form.installApkBtn = QtGui.QPushButton(Form.utilsTabPage)
-        Form.installApkBtn.setGeometry(QtCore.QRect(10, 180, 101, 23))
-        Form.installApkBtn.setObjectName("installApkBtn")
-        Form.runDebugBtn = QtGui.QPushButton(Form.utilsTabPage)
-        Form.runDebugBtn.setGeometry(QtCore.QRect(10, 70, 101, 23))
-        Form.runDebugBtn.setObjectName("runDebugBtn")
-        Form.label_6 = QtGui.QLabel(Form.utilsTabPage)
-        Form.label_6.setGeometry(QtCore.QRect(10, 130, 111, 31))
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        Form.label_6.setFont(font)
-        Form.label_6.setObjectName("label_6")
-        Form.label_7 = QtGui.QLabel(Form.utilsTabPage)
-        Form.label_7.setGeometry(QtCore.QRect(10, 160, 211, 16))
-        Form.label_7.setObjectName("label_7")
+        Form.verticalLayout_15 = QtGui.QVBoxLayout(Form.utilsTabPage)
+        Form.verticalLayout_15.setObjectName("verticalLayout_15")
         Form.label_8 = QtGui.QLabel(Form.utilsTabPage)
-        Form.label_8.setGeometry(QtCore.QRect(10, 10, 111, 31))
         font = QtGui.QFont()
         font.setPointSize(16)
         Form.label_8.setFont(font)
         Form.label_8.setObjectName("label_8")
+        Form.verticalLayout_15.addWidget(Form.label_8)
         Form.label_9 = QtGui.QLabel(Form.utilsTabPage)
-        Form.label_9.setGeometry(QtCore.QRect(10, 40, 211, 16))
         Form.label_9.setObjectName("label_9")
-        Form.logcatDumpBtn = QtGui.QPushButton(Form.utilsTabPage)
-        Form.logcatDumpBtn.setGeometry(QtCore.QRect(120, 180, 121, 23))
+        Form.verticalLayout_15.addWidget(Form.label_9)
+        Form.widget_31 = QtGui.QWidget(Form.utilsTabPage)
+        Form.widget_31.setObjectName("widget_31")
+        Form.horizontalLayout_20 = QtGui.QHBoxLayout(Form.widget_31)
+        Form.horizontalLayout_20.setContentsMargins(0, 0, 0, 0)
+        Form.horizontalLayout_20.setObjectName("horizontalLayout_20")
+        Form.widget_28 = QtGui.QWidget(Form.widget_31)
+        Form.widget_28.setObjectName("widget_28")
+        Form.gridLayout_3 = QtGui.QGridLayout(Form.widget_28)
+        Form.gridLayout_3.setContentsMargins(0, 0, 0, 0)
+        Form.gridLayout_3.setObjectName("gridLayout_3")
+        Form.runDebugBtn = QtGui.QPushButton(Form.widget_28)
+        Form.runDebugBtn.setObjectName("runDebugBtn")
+        Form.gridLayout_3.addWidget(Form.runDebugBtn, 0, 0, 1, 1)
+        Form.horizontalLayout_20.addWidget(Form.widget_28)
+        spacerItem19 = QtGui.QSpacerItem(413, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        Form.horizontalLayout_20.addItem(spacerItem19)
+        Form.verticalLayout_15.addWidget(Form.widget_31)
+        Form.label_6 = QtGui.QLabel(Form.utilsTabPage)
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        Form.label_6.setFont(font)
+        Form.label_6.setObjectName("label_6")
+        Form.verticalLayout_15.addWidget(Form.label_6)
+        Form.label_7 = QtGui.QLabel(Form.utilsTabPage)
+        Form.label_7.setObjectName("label_7")
+        Form.verticalLayout_15.addWidget(Form.label_7)
+        Form.widget_30 = QtGui.QWidget(Form.utilsTabPage)
+        Form.widget_30.setObjectName("widget_30")
+        Form.horizontalLayout_19 = QtGui.QHBoxLayout(Form.widget_30)
+        Form.horizontalLayout_19.setContentsMargins(0, 0, 0, 0)
+        Form.horizontalLayout_19.setObjectName("horizontalLayout_19")
+        Form.widget_26 = QtGui.QWidget(Form.widget_30)
+        Form.widget_26.setObjectName("widget_26")
+        Form.gridLayout = QtGui.QGridLayout(Form.widget_26)
+        Form.gridLayout.setContentsMargins(0, 0, 0, 0)
+        Form.gridLayout.setObjectName("gridLayout")
+        Form.installApkBtn = QtGui.QPushButton(Form.widget_26)
+        Form.installApkBtn.setObjectName("installApkBtn")
+        Form.gridLayout.addWidget(Form.installApkBtn, 0, 0, 1, 1)
+        Form.logcatDumpBtn = QtGui.QPushButton(Form.widget_26)
         Form.logcatDumpBtn.setObjectName("logcatDumpBtn")
-        Form.clearLogcatBtn = QtGui.QPushButton(Form.utilsTabPage)
-        Form.clearLogcatBtn.setGeometry(QtCore.QRect(120, 210, 121, 23))
-        Form.clearLogcatBtn.setObjectName("clearLogcatBtn")
-        Form.flexDebugBtn = QtGui.QPushButton(Form.utilsTabPage)
-        Form.flexDebugBtn.setGeometry(QtCore.QRect(250, 180, 131, 23))
+        Form.gridLayout.addWidget(Form.logcatDumpBtn, 0, 1, 1, 1)
+        Form.flexDebugBtn = QtGui.QPushButton(Form.widget_26)
         Form.flexDebugBtn.setObjectName("flexDebugBtn")
+        Form.gridLayout.addWidget(Form.flexDebugBtn, 0, 2, 1, 1)
+        Form.clearLogcatBtn = QtGui.QPushButton(Form.widget_26)
+        Form.clearLogcatBtn.setObjectName("clearLogcatBtn")
+        Form.gridLayout.addWidget(Form.clearLogcatBtn, 1, 1, 1, 1)
+        Form.horizontalLayout_19.addWidget(Form.widget_26)
+        spacerItem20 = QtGui.QSpacerItem(99, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        Form.horizontalLayout_19.addItem(spacerItem20)
+        Form.verticalLayout_15.addWidget(Form.widget_30)
         Form.label_15 = QtGui.QLabel(Form.utilsTabPage)
-        Form.label_15.setGeometry(QtCore.QRect(10, 260, 111, 31))
         font = QtGui.QFont()
         font.setPointSize(16)
         Form.label_15.setFont(font)
         Form.label_15.setObjectName("label_15")
+        Form.verticalLayout_15.addWidget(Form.label_15)
         Form.label_16 = QtGui.QLabel(Form.utilsTabPage)
-        Form.label_16.setGeometry(QtCore.QRect(10, 290, 211, 16))
         Form.label_16.setObjectName("label_16")
-        Form.installIpaBtn = QtGui.QPushButton(Form.utilsTabPage)
-        Form.installIpaBtn.setGeometry(QtCore.QRect(10, 310, 101, 23))
+        Form.verticalLayout_15.addWidget(Form.label_16)
+        Form.widget_29 = QtGui.QWidget(Form.utilsTabPage)
+        Form.widget_29.setObjectName("widget_29")
+        Form.horizontalLayout_18 = QtGui.QHBoxLayout(Form.widget_29)
+        Form.horizontalLayout_18.setContentsMargins(0, 0, 0, 0)
+        Form.horizontalLayout_18.setObjectName("horizontalLayout_18")
+        Form.widget_27 = QtGui.QWidget(Form.widget_29)
+        Form.widget_27.setObjectName("widget_27")
+        Form.gridLayout_2 = QtGui.QGridLayout(Form.widget_27)
+        Form.gridLayout_2.setContentsMargins(0, 0, 0, 0)
+        Form.gridLayout_2.setObjectName("gridLayout_2")
+        Form.installIpaBtn = QtGui.QPushButton(Form.widget_27)
         Form.installIpaBtn.setObjectName("installIpaBtn")
+        Form.gridLayout_2.addWidget(Form.installIpaBtn, 0, 0, 1, 1)
+        Form.simulateBtn = QtGui.QPushButton(Form.widget_27)
+        Form.simulateBtn.setObjectName("simulateBtn")
+        Form.gridLayout_2.addWidget(Form.simulateBtn, 0, 1, 1, 1)
+        Form.horizontalLayout_18.addWidget(Form.widget_27)
+        spacerItem21 = QtGui.QSpacerItem(300, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        Form.horizontalLayout_18.addItem(spacerItem21)
+        Form.verticalLayout_15.addWidget(Form.widget_29)
+        spacerItem22 = QtGui.QSpacerItem(20, 19, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        Form.verticalLayout_15.addItem(spacerItem22)
         Form.mainTab.addTab(Form.utilsTabPage, "")
         Form.resultsTabPage = QtGui.QWidget()
         Form.resultsTabPage.setObjectName("resultsTabPage")
@@ -558,7 +610,7 @@ class PySideUiFileSetup(object):
         Form.horizontalLayout_5.addWidget(Form.mainTab)
 
         self.retranslateUi(Form)
-        Form.mainTab.setCurrentIndex(0)
+        Form.mainTab.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(Form)
         Form.setTabOrder(Form.sendEmailCheck, Form.summaryText)
         Form.setTabOrder(Form.summaryText, Form.additionsText)
@@ -606,6 +658,7 @@ class PySideUiFileSetup(object):
         Form.iosPlatformCheck.setText(QtGui.QApplication.translate("Form", "iOS", None, QtGui.QApplication.UnicodeUTF8))
         Form.groupBox.setTitle(QtGui.QApplication.translate("Form", "Package Options", None, QtGui.QApplication.UnicodeUTF8))
         Form.iosInterpCheck.setText(QtGui.QApplication.translate("Form", "Interpreter (iOS Only)", None, QtGui.QApplication.UnicodeUTF8))
+        Form.simulatorCheck.setText(QtGui.QApplication.translate("Form", "Simulator (iOS Only)", None, QtGui.QApplication.UnicodeUTF8))
         Form.expandPackageChk.setText(QtGui.QApplication.translate("Form", "Append to Previous Package", None, QtGui.QApplication.UnicodeUTF8))
         Form.label_3.setText(QtGui.QApplication.translate("Form", "Flash Player Version:", None, QtGui.QApplication.UnicodeUTF8))
         Form.label_4.setText(QtGui.QApplication.translate("Form", "AIR SDK Version:", None, QtGui.QApplication.UnicodeUTF8))
@@ -640,35 +693,36 @@ class PySideUiFileSetup(object):
         Form.incrementSettingsBtn.setText(QtGui.QApplication.translate("Form", "Increment", None, QtGui.QApplication.UnicodeUTF8))
         Form.writeSettingsBtn.setText(QtGui.QApplication.translate("Form", "Write", None, QtGui.QApplication.UnicodeUTF8))
         Form.mainTab.setTabText(Form.mainTab.indexOf(Form.descriptorTabPage), QtGui.QApplication.translate("Form", "Version", None, QtGui.QApplication.UnicodeUTF8))
-        Form.installApkBtn.setText(QtGui.QApplication.translate("Form", "Install APK", None, QtGui.QApplication.UnicodeUTF8))
+        Form.label_8.setText(QtGui.QApplication.translate("Form", "Desktop", None, QtGui.QApplication.UnicodeUTF8))
+        Form.label_9.setText(QtGui.QApplication.translate("Form", "Desktop Device Utilities", None, QtGui.QApplication.UnicodeUTF8))
         Form.runDebugBtn.setText(QtGui.QApplication.translate("Form", "Run Debug", None, QtGui.QApplication.UnicodeUTF8))
         Form.label_6.setText(QtGui.QApplication.translate("Form", "Android", None, QtGui.QApplication.UnicodeUTF8))
         Form.label_7.setText(QtGui.QApplication.translate("Form", "Android Device Utilities", None, QtGui.QApplication.UnicodeUTF8))
-        Form.label_8.setText(QtGui.QApplication.translate("Form", "Desktop", None, QtGui.QApplication.UnicodeUTF8))
-        Form.label_9.setText(QtGui.QApplication.translate("Form", "Desktop Device Utilities", None, QtGui.QApplication.UnicodeUTF8))
+        Form.installApkBtn.setText(QtGui.QApplication.translate("Form", "Install APK", None, QtGui.QApplication.UnicodeUTF8))
         Form.logcatDumpBtn.setText(QtGui.QApplication.translate("Form", "Echo Logcat Dump", None, QtGui.QApplication.UnicodeUTF8))
-        Form.clearLogcatBtn.setText(QtGui.QApplication.translate("Form", "Clear Logcat", None, QtGui.QApplication.UnicodeUTF8))
         Form.flexDebugBtn.setText(QtGui.QApplication.translate("Form", "FDB Debug Session", None, QtGui.QApplication.UnicodeUTF8))
+        Form.clearLogcatBtn.setText(QtGui.QApplication.translate("Form", "Clear Logcat", None, QtGui.QApplication.UnicodeUTF8))
         Form.label_15.setText(QtGui.QApplication.translate("Form", "iOS", None, QtGui.QApplication.UnicodeUTF8))
         Form.label_16.setText(QtGui.QApplication.translate("Form", "iOS Device Utilities", None, QtGui.QApplication.UnicodeUTF8))
         Form.installIpaBtn.setText(QtGui.QApplication.translate("Form", "Install IPA", None, QtGui.QApplication.UnicodeUTF8))
+        Form.simulateBtn.setText(QtGui.QApplication.translate("Form", "Simulate App", None, QtGui.QApplication.UnicodeUTF8))
         Form.mainTab.setTabText(Form.mainTab.indexOf(Form.utilsTabPage), QtGui.QApplication.translate("Form", "Utilities", None, QtGui.QApplication.UnicodeUTF8))
         Form.mainTab.setTabText(Form.mainTab.indexOf(Form.resultsTabPage), QtGui.QApplication.translate("Form", "Results", None, QtGui.QApplication.UnicodeUTF8))
         Form.textEdit.setHtml(QtGui.QApplication.translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; color:#000000;\">1) You first need to start the application on the iOS device</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\"><br /></span><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-size:12pt; text-decoration: underline; color:#000000;\">2) Get the decide Handle from idb.exe:</span></a></p>\n"
+"</style></head><body style=\" font-family:\'.Lucida Grande UI\'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:12pt; color:#000000;\">1) You first need to start the application on the iOS device</span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></span><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:12pt; text-decoration: underline; color:#000000;\">2) Get the decide Handle from idb.exe:</span></a></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'monospace\'; font-size:10pt; color:#5555ff;\">AIR/3.8/lib/aot/bin/iOSBin/idb</span><span style=\" font-family:\'Courier New,courier\'; font-size:10pt; color:#5555ff;\">/idb -devices </span><span style=\" font-family:\'Courier New,courier\'; font-size:10pt; color:#005500;\">(probably going to be 1)</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-size:12pt; text-decoration: underline; color:#000000;\">3) Forward desktop debugging port to remote iOS debugging port:</span></a></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:12pt; text-decoration: underline; color:#000000;\">3) Forward desktop debugging port to remote iOS debugging port:</span></a></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Courier New,courier\'; font-size:10pt; color:#333333;\">idb -forward 7936 16000 1</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-size:12pt; text-decoration: underline; color:#000000;\">4) Run FDB using the desktop port:</span></a></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">fdb -p 7936</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-size:12pt; text-decoration: underline; color:#000000;\">5) Inside FDB run the debugging instance:</span></a></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-size:10pt; text-decoration: underline; color:#000000;\">(fdb) run</span></a></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\"><br /></span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-size:8pt; text-decoration: underline; color:#000000;\">For details see:</span></a></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-size:8pt; text-decoration: underline; color:#0000ff;\">http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html</span></a></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:12pt; text-decoration: underline; color:#000000;\">4) Run FDB using the desktop port:</span></a></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:8pt;\">fdb -p 7936</span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:12pt; text-decoration: underline; color:#000000;\">5) Inside FDB run the debugging instance:</span></a></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:10pt; text-decoration: underline; color:#000000;\">(fdb) run</span></a></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:8pt; text-decoration: underline; color:#000000;\">For details see:</span></a></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:8pt; text-decoration: underline; color:#0000ff;\">http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html</span></a></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         Form.mainTab.setTabText(Form.mainTab.indexOf(Form.tab), QtGui.QApplication.translate("Form", "Debug Info", None, QtGui.QApplication.UnicodeUTF8))
 
