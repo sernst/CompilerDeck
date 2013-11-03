@@ -4,3 +4,5 @@
 /bin/dist
 /bin/resources
 /bin/build
+/bin/*.log
+/bin/setup.py

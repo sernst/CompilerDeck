@@ -11,7 +11,6 @@ from pyaid.ArgsUtils import ArgsUtils
 from pyaid.file.FileUtils import FileUtils
 from pyaid.json.JSON import JSON
 from pyaid.radix.Base36 import Base36
-from pyaid.time.TimeUtils import TimeUtils
 
 from CompilerDeck.CompilerDeckEnvironment import CompilerDeckEnvironment
 
@@ -26,6 +25,7 @@ class SettingsEditor(object):
     DEF_SUFFIX   = u'1'
     DEF_MAJOR    = u'0'
     DEF_MINOR    = u'0'
+    DEF_MICRO    = u'0'
     DEF_REVISION = u'0'
 
     _UNSET    = 0
@@ -85,6 +85,14 @@ class SettingsEditor(object):
     def minor(self, value):
         self._minor = self._putSetting(self._minor, unicode(value), self._UNSET)
 
+#___________________________________________________________________________________________________ GS: micro
+    @property
+    def micro(self):
+        return self._micro.value
+    @micro.setter
+    def micro(self, value):
+        self._micro = self._putSetting(self._micro, unicode(value), self._UNSET)
+
 #___________________________________________________________________________________________________ GS: revision
     @property
     def revision(self):
@@ -101,7 +109,12 @@ class SettingsEditor(object):
 #___________________________________________________________________________________________________ GS: versionNumber
     @property
     def versionNumber(self):
-        return self._major.value + u'.' + self._minor.value + u'.' + self._revision.value
+        return self.publicVersionNumber + u'.' + self._revision.value
+
+#___________________________________________________________________________________________________ GS: publicVersionNumber
+    @property
+    def publicVersionNumber(self):
+        return self._major.value + u'.' + self._minor.value + u'.' + self._micro.value
 
 #___________________________________________________________________________________________________ GS: dateValue
     @property
@@ -121,11 +134,13 @@ class SettingsEditor(object):
         return {
             'label':self.versionLabel,
             'number':self.versionNumber,
+            'publicNumber':self.publicVersionNumber,
             'prefix':self._prefix.value,
             'suffix':self._suffix.value,
             'major':self._major.value,
             'date':self._date.value,
             'minor':self._minor.value,
+            'micro':self._micro.value,
             'revision':self._revision.value }
 
 #___________________________________________________________________________________________________ fromDict
@@ -142,6 +157,8 @@ class SettingsEditor(object):
             self.major = kwargs['major']
         if kwargs.has_key('minor'):
             self.minor = kwargs['minor']
+        if kwargs.has_key('micro'):
+            self.micro = kwargs['micro']
         if kwargs.has_key('revision'):
             self.revision = kwargs['revision']
 
@@ -165,6 +182,7 @@ class SettingsEditor(object):
         self._suffix        = self._getSetting('suffix', self.DEF_SUFFIX, kwargs)
         self._major         = self._getSetting('major', self.DEF_MAJOR, kwargs)
         self._minor         = self._getSetting('minor', self.DEF_MINOR, kwargs)
+        self._micro         = self._getSetting('micro', self.DEF_MICRO, kwargs)
         self._revision      = self._getSetting('revision', self.DEF_REVISION, kwargs)
         self._dateValue     = datetime.datetime.utcnow().strftime('%b.%d.%y')
         self._date          = self._getSetting('date', self._dateValue, kwargs)
@@ -178,12 +196,13 @@ class SettingsEditor(object):
 
         self._major     = self._updateSetting(self._major, settings)
         self._minor     = self._updateSetting(self._minor, settings)
+        self._micro     = self._updateSetting(self._micro, settings)
         self._prefix    = self._updateSetting(self._prefix, settings)
         self._revision  = self._updateSetting(self._revision, settings)
 
         # Only load the suffix value from file if the last date and the current date match.
         # Otherwise, the suffix should reset for the new day builds.
-        lastDate        = self._updateSetting(self._date, settings)
+        lastDate = self._updateSetting(self._date, settings)
         if lastDate.value == self._dateValue:
             self._suffix    = self._updateSetting(self._suffix, settings)
         else:
@@ -202,11 +221,11 @@ class SettingsEditor(object):
         settings['VERSION'] = {
             'major':self._major.value,
             'minor':self._minor.value,
+            'micro':self._micro.value,
             'revision':self._revision.value,
             'prefix':self._prefix.value,
             'suffix':self._suffix.value,
-            'date':self._date.value
-        }
+            'date':self._date.value }
         JSON.toFile(CompilerDeckEnvironment.projectSettingsPath, settings, True)
 
         desktopAppXml = FileUtils.getContents(
@@ -223,7 +242,7 @@ class SettingsEditor(object):
         androidAppXml = self._setAppXmlValue(androidAppXml, tagName, value)
 
         tagName       = 'versionNumber'
-        value         = self.versionNumber
+        value         = self.publicVersionNumber
         desktopAppXml = self._setAppXmlValue(desktopAppXml, tagName, value)
         iosAppXml     = self._setAppXmlValue(iosAppXml, tagName, value)
         androidAppXml = self._setAppXmlValue(androidAppXml, tagName, value)

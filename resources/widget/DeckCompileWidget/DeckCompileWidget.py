@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/scott/Python/CompilerDeck/resources/widget/DeckCompileWidget/DeckCompileWidget.ui'
+# Form implementation generated from reading ui file 'F:\Python\CompilerDeck\resources\widget\DeckCompileWidget\DeckCompileWidget.ui'
 #
-# Created: Sat Nov  2 20:51:20 2013
-#      by: pyside-uic 0.2.13 running on PySide 1.1.1
+# Created: Sun Nov 03 14:48:44 2013
+#      by: pyside-uic 0.2.14 running on PySide 1.1.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -461,11 +461,18 @@ class PySideUiFileSetup(object):
         Form.formLayout_2.setWidget(1, QtGui.QFormLayout.FieldRole, Form.minorSpin)
         Form.label_12 = QtGui.QLabel(Form.widget_3)
         Form.label_12.setObjectName("label_12")
-        Form.formLayout_2.setWidget(2, QtGui.QFormLayout.LabelRole, Form.label_12)
+        Form.formLayout_2.setWidget(3, QtGui.QFormLayout.LabelRole, Form.label_12)
         Form.revisionSpin = QtGui.QSpinBox(Form.widget_3)
         Form.revisionSpin.setMaximum(100000)
         Form.revisionSpin.setObjectName("revisionSpin")
-        Form.formLayout_2.setWidget(2, QtGui.QFormLayout.FieldRole, Form.revisionSpin)
+        Form.formLayout_2.setWidget(3, QtGui.QFormLayout.FieldRole, Form.revisionSpin)
+        Form.microSpin = QtGui.QSpinBox(Form.widget_3)
+        Form.microSpin.setMaximum(100000)
+        Form.microSpin.setObjectName("microSpin")
+        Form.formLayout_2.setWidget(2, QtGui.QFormLayout.FieldRole, Form.microSpin)
+        Form.label_22 = QtGui.QLabel(Form.widget_3)
+        Form.label_22.setObjectName("label_22")
+        Form.formLayout_2.setWidget(2, QtGui.QFormLayout.LabelRole, Form.label_22)
         Form.horizontalLayout_7.addWidget(Form.widget_3)
         spacerItem16 = QtGui.QSpacerItem(483, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         Form.horizontalLayout_7.addItem(spacerItem16)
@@ -613,7 +620,7 @@ class PySideUiFileSetup(object):
         Form.horizontalLayout_5.addWidget(Form.mainTab)
 
         self.retranslateUi(Form)
-        Form.mainTab.setCurrentIndex(3)
+        Form.mainTab.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(Form)
         Form.setTabOrder(Form.sendEmailCheck, Form.summaryText)
         Form.setTabOrder(Form.summaryText, Form.additionsText)
@@ -692,6 +699,7 @@ class PySideUiFileSetup(object):
         Form.label_10.setText(QtGui.QApplication.translate("Form", "Major", None, QtGui.QApplication.UnicodeUTF8))
         Form.label_11.setText(QtGui.QApplication.translate("Form", "Minor", None, QtGui.QApplication.UnicodeUTF8))
         Form.label_12.setText(QtGui.QApplication.translate("Form", "Revision", None, QtGui.QApplication.UnicodeUTF8))
+        Form.label_22.setText(QtGui.QApplication.translate("Form", "Micro", None, QtGui.QApplication.UnicodeUTF8))
         Form.reloadSettingsBtn.setText(QtGui.QApplication.translate("Form", "Reload", None, QtGui.QApplication.UnicodeUTF8))
         Form.incrementSettingsBtn.setText(QtGui.QApplication.translate("Form", "Increment", None, QtGui.QApplication.UnicodeUTF8))
         Form.writeSettingsBtn.setText(QtGui.QApplication.translate("Form", "Write", None, QtGui.QApplication.UnicodeUTF8))
@@ -715,18 +723,18 @@ class PySideUiFileSetup(object):
         Form.textEdit.setHtml(QtGui.QApplication.translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'.Lucida Grande UI\'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:12pt; color:#000000;\">1) You first need to start the application on the iOS device</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></span><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:12pt; text-decoration: underline; color:#000000;\">2) Get the decide Handle from idb.exe:</span></a></p>\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; color:#000000;\">1) You first need to start the application on the iOS device</span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\"><br /></span><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-size:12pt; text-decoration: underline; color:#000000;\">2) Get the decide Handle from idb.exe:</span></a></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'monospace\'; font-size:10pt; color:#5555ff;\">AIR/3.8/lib/aot/bin/iOSBin/idb</span><span style=\" font-family:\'Courier New,courier\'; font-size:10pt; color:#5555ff;\">/idb -devices </span><span style=\" font-family:\'Courier New,courier\'; font-size:10pt; color:#005500;\">(probably going to be 1)</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:12pt; text-decoration: underline; color:#000000;\">3) Forward desktop debugging port to remote iOS debugging port:</span></a></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-size:12pt; text-decoration: underline; color:#000000;\">3) Forward desktop debugging port to remote iOS debugging port:</span></a></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Courier New,courier\'; font-size:10pt; color:#333333;\">idb -forward 7936 16000 1</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:12pt; text-decoration: underline; color:#000000;\">4) Run FDB using the desktop port:</span></a></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:8pt;\">fdb -p 7936</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:12pt; text-decoration: underline; color:#000000;\">5) Inside FDB run the debugging instance:</span></a></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:10pt; text-decoration: underline; color:#000000;\">(fdb) run</span></a></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:8pt; text-decoration: underline; color:#000000;\">For details see:</span></a></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:8pt; text-decoration: underline; color:#0000ff;\">http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html</span></a></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-size:12pt; text-decoration: underline; color:#000000;\">4) Run FDB using the desktop port:</span></a></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">fdb -p 7936</span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-size:12pt; text-decoration: underline; color:#000000;\">5) Inside FDB run the debugging instance:</span></a></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-size:10pt; text-decoration: underline; color:#000000;\">(fdb) run</span></a></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\"><br /></span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-size:8pt; text-decoration: underline; color:#000000;\">For details see:</span></a></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html\"><span style=\" font-size:8pt; text-decoration: underline; color:#0000ff;\">http://help.adobe.com/en_US/air/build/WS901d38e593cd1bac7b2281cc12cd6bced97-8000.html</span></a></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         Form.mainTab.setTabText(Form.mainTab.indexOf(Form.tab), QtGui.QApplication.translate("Form", "Debug Info", None, QtGui.QApplication.UnicodeUTF8))
 

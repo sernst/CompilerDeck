@@ -94,8 +94,8 @@ class FlexCompiler(AdobeSystemCompiler):
             self._getStringVarDefinition('VERSION_LABEL_SUFFIX', sets.versionInfo.get('suffix', '1')),
             self._getStringVarDefinition('VERSION_NUMBER_MAJOR', sets.versionInfo.get('major', '0')),
             self._getStringVarDefinition('VERSION_NUMBER_MINOR', sets.versionInfo.get('minor', '0')),
-            self._getStringVarDefinition('VERSION_NUMBER_REVISION', sets.versionInfo.get('revision', '0'))
-        ])
+            self._getStringVarDefinition('VERSION_NUMBER_MICRO', sets.versionInfo.get('micro', '0')),
+            self._getStringVarDefinition('VERSION_NUMBER_REVISION', sets.versionInfo.get('revision', '0')) ])
 
         if sets.swcIncludes:
             for swc in sets.swcIncludes:
