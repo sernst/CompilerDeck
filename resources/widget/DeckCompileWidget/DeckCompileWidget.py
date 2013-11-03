@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/Users/scott/Python/CompilerDeck/resources/widget/DeckCompileWidget/DeckCompileWidget.ui'
 #
-# Created: Sat Nov  2 20:01:08 2013
+# Created: Sat Nov  2 20:51:20 2013
 #      by: pyside-uic 0.2.13 running on PySide 1.1.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -580,6 +580,9 @@ class PySideUiFileSetup(object):
         Form.simulateBtn = QtGui.QPushButton(Form.widget_27)
         Form.simulateBtn.setObjectName("simulateBtn")
         Form.gridLayout_2.addWidget(Form.simulateBtn, 0, 1, 1, 1)
+        Form.openSimDocsBtn = QtGui.QPushButton(Form.widget_27)
+        Form.openSimDocsBtn.setObjectName("openSimDocsBtn")
+        Form.gridLayout_2.addWidget(Form.openSimDocsBtn, 1, 1, 1, 1)
         Form.horizontalLayout_18.addWidget(Form.widget_27)
         spacerItem21 = QtGui.QSpacerItem(300, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         Form.horizontalLayout_18.addItem(spacerItem21)
@@ -706,6 +709,7 @@ class PySideUiFileSetup(object):
         Form.label_16.setText(QtGui.QApplication.translate("Form", "iOS Device Utilities", None, QtGui.QApplication.UnicodeUTF8))
         Form.installIpaBtn.setText(QtGui.QApplication.translate("Form", "Install IPA", None, QtGui.QApplication.UnicodeUTF8))
         Form.simulateBtn.setText(QtGui.QApplication.translate("Form", "Simulate App", None, QtGui.QApplication.UnicodeUTF8))
+        Form.openSimDocsBtn.setText(QtGui.QApplication.translate("Form", "Finder Documents", None, QtGui.QApplication.UnicodeUTF8))
         Form.mainTab.setTabText(Form.mainTab.indexOf(Form.utilsTabPage), QtGui.QApplication.translate("Form", "Utilities", None, QtGui.QApplication.UnicodeUTF8))
         Form.mainTab.setTabText(Form.mainTab.indexOf(Form.resultsTabPage), QtGui.QApplication.translate("Form", "Results", None, QtGui.QApplication.UnicodeUTF8))
         Form.textEdit.setHtml(QtGui.QApplication.translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"

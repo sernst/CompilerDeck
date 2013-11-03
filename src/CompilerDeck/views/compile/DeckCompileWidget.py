@@ -2,6 +2,8 @@
 # (C)2013
 # Scott Ernst
 
+import os
+
 from PySide import QtGui
 from PySide import QtCore
 
@@ -9,6 +11,7 @@ from pyaid.ArgsUtils import ArgsUtils
 from pyaid.config.SettingsConfig import SettingsConfig
 from pyaid.file.FileUtils import FileUtils
 from pyaid.json.JSON import JSON
+from pyaid.system.SystemUtils import SystemUtils
 from pyaid.time.TimeUtils import TimeUtils
 
 from pyglass.widgets.PyGlassWidget import PyGlassWidget
@@ -106,6 +109,7 @@ class DeckCompileWidget(PyGlassWidget):
         self.saveDeployBtn.clicked.connect(self._handleSaveDeployInfo)
         self.reloadDeployBtn.clicked.connect(self._handleReloadDeployInfo)
         self.simulateBtn.clicked.connect(self._handleSimulateApp)
+        self.openSimDocsBtn.clicked.connect(self._handleOpenDocumentsInFinder)
         self.mainTab.setCurrentIndex(0)
 
         self._initializeCheck(self.simulatorCheck, self._IOS_SIMULATOR, False)
@@ -549,3 +553,16 @@ class DeckCompileWidget(PyGlassWidget):
 #___________________________________________________________________________________________________ _handleSimulateComplete
     def _handleSimulatorComplete(self):
         self._toggleInteractivity(True)
+
+#___________________________________________________________________________________________________ _handleOpenDocumentsInFinder
+    def _handleOpenDocumentsInFinder(self):
+        snap = self._getLatestBuildSnapshot()
+        data = FlexProjectData(**snap)
+        path = FileUtils.createPath(
+            os.path.expanduser('~'), 'Library', 'Application Support',
+            'iPhone Simulator', '7.0.3', 'Applications', data.appId, isDir=True)
+
+        cmd = ['open', '"%s"' % path]
+
+        print 'COMMAND:', cmd
+        SystemUtils.executeCommand(cmd)
