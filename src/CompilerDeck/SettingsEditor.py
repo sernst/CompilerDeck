@@ -236,7 +236,7 @@ class SettingsEditor(object):
             CompilerDeckEnvironment.androidAppXmlFilePath, raiseErrors=True)
 
         tagName       = 'versionLabel'
-        value         = self.versionLabel
+        value         = self.versionNumber
         desktopAppXml = self._setAppXmlValue(desktopAppXml, tagName, value)
         iosAppXml     = self._setAppXmlValue(iosAppXml, tagName, value)
         androidAppXml = self._setAppXmlValue(androidAppXml, tagName, value)
