@@ -207,6 +207,7 @@ class DeckCompileWidget(PyGlassWidget):
         self.suffixSpin.setValue(int(self._settingsEditor.suffixInteger))
         self.majorSpin.setValue(int(self._settingsEditor.major))
         self.minorSpin.setValue(int(self._settingsEditor.minor))
+        self.microSpin.setValue(int(self._settingsEditor.micro))
         self.revisionSpin.setValue(int(self._settingsEditor.revision))
 
 #___________________________________________________________________________________________________ _executeCompilation
@@ -225,6 +226,7 @@ class DeckCompileWidget(PyGlassWidget):
                 suffix=self.suffixSpin.value(),
                 major=self.majorSpin.value(),
                 minor=self.minorSpin.value(),
+                micro=self.microSpin.value(),
                 revision=self.revisionSpin.value() )
             self._settingsEditor.write()
 
@@ -463,6 +465,7 @@ class DeckCompileWidget(PyGlassWidget):
         sets.suffixInteger  = self.suffixSpin.value()
         sets.major          = self.majorSpin.value()
         sets.minor          = self.minorSpin.value()
+        sets.micro          = self.microSping.value()
         sets.revision       = self.revisionSpin.value()
         sets.write()
         sets.reset()
