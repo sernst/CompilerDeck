@@ -13,13 +13,17 @@ class FlashUtils(object):
     @classmethod
     def convertFlashToSwfVersion(cls, flashVersion):
         """Creates a new instance of FlashUtils."""
-        out = 0
-        v   = str(flashVersion).split('.')
+        v     = str(flashVersion).split('.')
+        major = int(v[0])
 
-        if v[0] == '10':
+        if major == 10:
             out = 10 + max(0, int(v[-1]) - 1)
-        elif v[0] == '11':
+        elif major == 11:
             out = 13 + int(v[-1])
+        else:
+            # Starting with flash player 12, consecutive releases are produced at the major level,
+            # i.e. 13 follows 12 instead of 12.1.
+            out = 23 + (major - 12)
 
         return out
 
