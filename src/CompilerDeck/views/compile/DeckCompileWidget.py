@@ -51,6 +51,7 @@ class DeckCompileWidget(PyGlassWidget):
     _ADV_TELEMETRY            = 'ADV_TELEMETRY'
     _APPEND_TO_PACKAGE        = 'APPEND_TO_PACKAGE'
     _IOS_SIMULATOR            = 'IOS_SIMULATOR'
+    _NATIVE_CAPTIVE_RUNTIME   = 'NATIVE_CAPTIVE_RUNTIME'
 
 #___________________________________________________________________________________________________ __init__
     def __init__(self, *args, **kwargs):
@@ -123,6 +124,7 @@ class DeckCompileWidget(PyGlassWidget):
         self._initializeCheck(self.iosPlatformCheck, self._COMPILE_IOS, True)
         self._initializeCheck(self.telemetryCheck, self._ADV_TELEMETRY, False)
         self._initializeCheck(self.expandPackageChk, self._APPEND_TO_PACKAGE, False)
+        self._initializeCheck(self.nativeCaptiveChk, self._NATIVE_CAPTIVE_RUNTIME, False)
 
         self._settingsEditor = SettingsEditor()
         self._settingsEditor.populate()
@@ -255,6 +257,7 @@ class DeckCompileWidget(PyGlassWidget):
 #___________________________________________________________________________________________________ _createBuildSnapshot
     def _createBuildSnapshot(self):
         return dict(
+            nativeCaptive=self.nativeCaptiveChk.isChecked(),
             iosSimulator=self.simulatorCheck.isChecked(),
             iosInterpreter=self.iosInterpCheck.isChecked(),
             versionInfo=self._settingsEditor.toDict(),
@@ -422,6 +425,8 @@ class DeckCompileWidget(PyGlassWidget):
             prop = self._ADV_TELEMETRY
         elif sender == self.expandPackageChk:
             prop = self._APPEND_TO_PACKAGE
+        elif sender == self.nativeCaptiveChk:
+            prop = self._NATIVE_CAPTIVE_RUNTIME
 
         if prop:
             self.owner.appConfig.set(prop, sender.isChecked())

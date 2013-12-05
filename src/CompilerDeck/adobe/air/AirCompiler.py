@@ -49,8 +49,6 @@ class AirCompiler(AdobeSystemCompiler):
             self._owner.mainWindow.getRootAIRPath(sets.airVersion, 'bin', adtCommand, isFile=True),
             '-package' ])
 
-        print sets.currentPlatformID, '|', sets.isDesktop, sets.isNative, sets.isAndroid, sets.isIOS
-
         # Add platform specific command flags
         if sets.isDesktop:
             self._addAIRSigningArguments(cmd)

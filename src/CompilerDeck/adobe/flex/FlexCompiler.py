@@ -43,9 +43,6 @@ class FlexCompiler(AdobeSystemCompiler):
         mainClass = FileUtils.createPath(
             sets.projectPath, 'src', fileParts[:-1], fileParts[-1] + '.as', isFile=True)
 
-        if isAir:
-            cmd.append('+configname=air')
-
         cmd.append('-load-config+="%s"' % FileUtils.createPath(
             sets.projectPath, 'compiler', 'shared-targets-asc2.xml', isFile=True, noTail=True))
 
@@ -59,26 +56,36 @@ class FlexCompiler(AdobeSystemCompiler):
                 cmd.append('-external-library-path+="%s"' % FileUtils.createPath(
                     sets.projectPath, 'air', 'ane', ane, 'bin', aneType, isDir=True, noTail=True))
 
-        if isAir:
-            airRoot    = FileUtils.createPath(airPath, sets.airVersion, 'frameworks', isDir=True)
-            airGlobals = FileUtils.createPath(airRoot, 'libs', 'air', isDir=True)
-            cmd.extend([
-                '-external-library-path+="%s"' % os.path.join(airGlobals, 'airglobal.swc'),
-                '-library-path+="%s"' % FileUtils.createPath(airRoot, 'libs', isDir=True, noTail=True),
-                '-library-path+="%s"' % FileUtils.createPath(airRoot, 'libs', 'air', isDir=True, noTail=True),
-                '-library-path+="%s"' % FileUtils.createPath(flashGlobals, 'locale', 'en_US', isDir=True, noTail=True) ])
-        else:
-            flashGlobals += 'libs'
-            cmd.extend([
-                '-external-library-path+="%s"'
-                    % os.path.join(flashGlobals, 'player', sets.flashVersion, 'playerglobal.swc'),
-                '-library-path+="%s"' % flashGlobals,
-                '-library-path+="%s"' % os.path.join(flashGlobals, 'mobile'),
-                '-library-path+="%s"' % os.path.join(flashGlobals, 'automation') ])
+        # if isAir:
+        #     airRoot    = FileUtils.createPath(airPath, sets.airVersion, 'frameworks', isDir=True)
+        #     airGlobals = FileUtils.createPath(airRoot, 'libs', 'air', isDir=True)
+        #     cmd.extend([
+        #         '-external-library-path+="%s"' % os.path.join(airGlobals, 'airglobal.swc'),
+        #         '-library-path+="%s"' % FileUtils.createPath(airRoot, 'libs', isDir=True, noTail=True),
+        #         '-library-path+="%s"' % FileUtils.createPath(airRoot, 'libs', 'air', isDir=True, noTail=True),
+        #         '-library-path+="%s"' % FileUtils.createPath(flashGlobals, 'locale', 'en_US', isDir=True, noTail=True) ])
+        # else:
+        #     flashGlobals += 'libs'
+        #     cmd.extend([
+        #         '-external-library-path+="%s"'
+        #             % os.path.join(flashGlobals, 'player', sets.flashVersion, 'playerglobal.swc'),
+        #         '-library-path+="%s"' % flashGlobals,
+        #         '-library-path+="%s"' % os.path.join(flashGlobals, 'mobile'),
+        #         '-library-path+="%s"' % os.path.join(flashGlobals, 'automation') ])
 
         cmd.extend([
             '-library-path+="%s"' % os.path.join(sets.projectPath, 'lib'),
             '-source-path+="%s"'  % os.path.join(sets.projectPath, 'src') ])
+
+        if sets.swcIncludes:
+            for swc in sets.swcIncludes:
+                cmd.append('-include-libraries+="%s"'
+                    % os.path.join(sets.projectPath, 'lib', swc + '.swc'))
+
+        if sets.advancedTelemetry:
+            cmd.append('-advanced-telemetry=true')
+            #if isIOS:
+            #    cmd.append('-sampler=false')
 
         cmd.extend([
             self._getBooleanDefinition('LIVE', sets.live),
@@ -97,16 +104,6 @@ class FlexCompiler(AdobeSystemCompiler):
             self._getStringVarDefinition('VERSION_NUMBER_MICRO', sets.versionInfo.get('micro', '0')),
             self._getStringVarDefinition('VERSION_NUMBER_REVISION', sets.versionInfo.get('revision', '0')) ])
 
-        if sets.swcIncludes:
-            for swc in sets.swcIncludes:
-                cmd.append('-include-libraries+="%s"'
-                    % os.path.join(sets.projectPath, 'lib', swc + '.swc'))
-
-        if sets.advancedTelemetry:
-            cmd.append('-advanced-telemetry=true')
-            #if isIOS:
-            #    cmd.append('-sampler=false')
-
         # Create the bin path if it does not exist already
         if not os.path.exists(sets.platformBinPath):
             os.makedirs(sets.platformBinPath)
@@ -120,13 +117,13 @@ class FlexCompiler(AdobeSystemCompiler):
             '-swf-version=' + str(FlashUtils.convertFlashToSwfVersion(flashVersion)),
             mainClass ])
 
-
         if PyGlassEnvironment.isWindows:
             commandFile = 'amxmlc.bat' if isAir else 'mxmlc.bat'
         else:
             commandFile = 'amxmlc' if isAir else 'mxmlc'
 
-        cmd.insert(0, os.path.join(airPath, sets.airVersion, 'bin', commandFile))
+        cmd.insert(
+            0, FileUtils.createPath(airPath, sets.airVersion, 'bin', commandFile, isFile=True))
 
         if self.executeCommand(cmd, 'COMPILING SWF: "%s"' % sets.currentPlatformID):
             self._log.write('FAILED: SWF COMPILATION')

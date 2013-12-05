@@ -34,7 +34,8 @@ class FlexProjectData(ProjectData):
         self.iosSimulatorSdkPath = '/Applications/Xcode.app/Contents/Developer/Platforms/' \
             + 'iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk'
 
-        self.advancedTelemetry  = ArgsUtils.get('telemetry', False, kwargs)
+        self.nativeCaptiveRuntime = ArgsUtils.get('nativeCaptive', False, kwargs)
+        self.advancedTelemetry    = ArgsUtils.get('telemetry', False, kwargs)
 
         self._currentPlatformID = None
         self._iosInterpreter    = ArgsUtils.get('iosInterpreter', False, kwargs)
@@ -274,7 +275,7 @@ class FlexProjectData(ProjectData):
             else:
                 return 'ipa-test-interpreter-simulator' if self._iosSimulator else 'ipa-app-store'
         elif self.currentPlatformID == FlexProjectData.NATIVE_PLATFORM:
-            return 'native'
+            return 'bundle' if self.nativeCaptiveRuntime else 'native'
 
         return 'air'
 
