@@ -36,6 +36,7 @@ class FlexProjectData(ProjectData):
 
         self.nativeCaptiveRuntime = ArgsUtils.get('nativeCaptive', False, kwargs)
         self.advancedTelemetry    = ArgsUtils.get('telemetry', False, kwargs)
+        self.iosAdHoc             = ArgsUtils.get('iosAdHoc', False, kwargs)
 
         self._currentPlatformID = None
         self._iosInterpreter    = ArgsUtils.get('iosInterpreter', False, kwargs)
@@ -217,6 +218,10 @@ class FlexProjectData(ProjectData):
             FileUtils.createPath(
                 self.platformProjectPath, 'cert', self.buildTypeFolderName, isDir=True),
             FileUtils.createPath(self.platformProjectPath, 'cert', isDir=True) ]
+
+        if self.iosAdHoc:
+            certPaths.insert(0, FileUtils.createPath(
+                self.platformProjectPath, 'cert', 'adhoc', isDir=True))
 
         for certPath in certPaths:
             if not os.path.exists(certPath):

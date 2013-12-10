@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/Users/scott/Python/CompilerDeck/resources/widget/DeckCompileWidget/DeckCompileWidget.ui'
 #
-# Created: Thu Dec  5 14:49:21 2013
+# Created: Mon Dec  9 23:10:27 2013
 #      by: pyside-uic 0.2.13 running on PySide 1.1.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -83,6 +83,9 @@ class PySideUiFileSetup(object):
         Form.simulatorCheck = QtGui.QCheckBox(Form.widget_34)
         Form.simulatorCheck.setObjectName("simulatorCheck")
         Form.verticalLayout_18.addWidget(Form.simulatorCheck)
+        Form.iosAdHocChk = QtGui.QCheckBox(Form.widget_34)
+        Form.iosAdHocChk.setObjectName("iosAdHocChk")
+        Form.verticalLayout_18.addWidget(Form.iosAdHocChk)
         Form.verticalLayout_13.addWidget(Form.widget_34)
         spacerItem2 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         Form.verticalLayout_13.addItem(spacerItem2)
@@ -705,6 +708,7 @@ class PySideUiFileSetup(object):
         Form.iosPlatformCheck.setText(QtGui.QApplication.translate("Form", "iOS", None, QtGui.QApplication.UnicodeUTF8))
         Form.iosInterpCheck.setText(QtGui.QApplication.translate("Form", "Interpreter", None, QtGui.QApplication.UnicodeUTF8))
         Form.simulatorCheck.setText(QtGui.QApplication.translate("Form", "Simulator", None, QtGui.QApplication.UnicodeUTF8))
+        Form.iosAdHocChk.setText(QtGui.QApplication.translate("Form", "Ad Hoc", None, QtGui.QApplication.UnicodeUTF8))
         Form.groupBox_2.setTitle(QtGui.QApplication.translate("Form", "Native", None, QtGui.QApplication.UnicodeUTF8))
         Form.nativePlatformCheck.setText(QtGui.QApplication.translate("Form", "Native", None, QtGui.QApplication.UnicodeUTF8))
         Form.nativeCaptiveChk.setText(QtGui.QApplication.translate("Form", "Captive", None, QtGui.QApplication.UnicodeUTF8))

@@ -43,10 +43,12 @@ class ReleaseNotesGenerator(object):
         if kwargs:
             self.populate(**kwargs)
 
-        self._output = (u"""%s Release\nVersion: %s.%s.%s\nID: %s-%s-%s\n%s%s%s%s%s""" % (
+        self._output = (u"""%s Release\nType: %s\nVersion: %s.%s.%s.%s\nID: %s-%s-%s\n%s%s%s%s%s""" % (
             self._label if self._label else u'Application',
+            u'',
             self._versionInfo.get('major', u'0'),
             self._versionInfo.get('minor', u'0'),
+            self._versionInfo.get('micro', u'0'),
             self._versionInfo.get('revision', u'0'),
             self._versionInfo.get('prefix', u''),
             self._versionInfo.get('date', u'???'),
@@ -55,8 +57,7 @@ class ReleaseNotesGenerator(object):
             self._getTextList(self._additions, u'+', u'New Additions'),
             self._getTextList(self._fixes, u'*', u'Changes & Fixes'),
             self._getTextList(self._removals, u'-', u'Removals'),
-            self._getSection(self._additionalInfo, u'Build Information')
-        )).strip()
+            self._getSection(self._additionalInfo, u'Build Information') )).strip()
 
         return self._output
 

@@ -158,6 +158,13 @@
                   </property>
                  </widget>
                 </item>
+                <item>
+                 <widget class="QCheckBox" name="iosAdHocChk">
+                  <property name="text">
+                   <string>Ad Hoc</string>
+                  </property>
+                 </widget>
+                </item>
                </layout>
               </widget>
              </item>

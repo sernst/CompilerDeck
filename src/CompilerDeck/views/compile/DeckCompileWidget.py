@@ -51,6 +51,7 @@ class DeckCompileWidget(PyGlassWidget):
     _ADV_TELEMETRY            = 'ADV_TELEMETRY'
     _APPEND_TO_PACKAGE        = 'APPEND_TO_PACKAGE'
     _IOS_SIMULATOR            = 'IOS_SIMULATOR'
+    _IOS_AD_HOC               = 'IOS_AD_HOC'
     _NATIVE_CAPTIVE_RUNTIME   = 'NATIVE_CAPTIVE_RUNTIME'
 
 #___________________________________________________________________________________________________ __init__
@@ -115,6 +116,7 @@ class DeckCompileWidget(PyGlassWidget):
 
         self._initializeCheck(self.simulatorCheck, self._IOS_SIMULATOR, False)
         self._initializeCheck(self.iosInterpCheck, self._IOS_INTERP, False)
+        self._initializeCheck(self.iosAdHocChk, self._IOS_AD_HOC, False)
         self._initializeCheck(self.debugCheck, self._DEBUG_CFG, True)
         self._initializeCheck(self.liveCheck, self._LIVE_CFG, False)
         self._initializeCheck(self.webPlatformCheck, self._COMPILE_WEB, True)
@@ -259,6 +261,7 @@ class DeckCompileWidget(PyGlassWidget):
         return dict(
             nativeCaptive=self.nativeCaptiveChk.isChecked(),
             iosSimulator=self.simulatorCheck.isChecked(),
+            iosAdHoc=self.iosAdHocChk.isChecked(),
             iosInterpreter=self.iosInterpCheck.isChecked(),
             versionInfo=self._settingsEditor.toDict(),
             projectPath=CompilerDeckEnvironment.getProjectPath(),
@@ -409,6 +412,8 @@ class DeckCompileWidget(PyGlassWidget):
             prop = self._IOS_INTERP
         elif sender == self.simulatorCheck:
             prop = self._IOS_SIMULATOR
+        elif sender == self.iosAdHocChk:
+            prop = self._IOS_AD_HOC
         elif sender == self.debugCheck:
             prop = self._DEBUG_CFG
         elif sender == self.webPlatformCheck:
