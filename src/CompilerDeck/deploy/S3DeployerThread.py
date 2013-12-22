@@ -64,6 +64,7 @@ class S3DeployerThread(RemoteExecutionThread):
             name = data.contentTargetFilename + '-' + \
                    data.versionInfo['major'] + '-' + \
                    data.versionInfo['minor'] + '-' + \
+                   data.versionInfo['micro'] + '-' + \
                    data.versionInfo['revision'] + '.' + \
                    data.airExtension
 
@@ -132,11 +133,18 @@ class S3DeployerThread(RemoteExecutionThread):
         uid        = self._flexData.versionInfoLabel
         label      = self._flexData.getSetting('LABEL', u'Application')
 
+        if self._flexData.debug:
+            buildType = u'Beta (Private Testing)'
+        elif self._flexData.iosAdHoc:
+            buildType = u'Release Candidate (Public Pre-Release)'
+        else:
+            buildType = u'Official Release (Public Distribution)'
+
         body = [
             u'A new build of %s is available.\n' % label,
             u'  * Version: ' + version,
             u'  * Build: ' + uid,
-            u'  * Type: %s' % (u'Beta' if self._flexData.debug else u'Release') + u'\n\n',
+            u'  * Type: %s\n\n' % buildType,
             u'=== DOWNLOADS ===\n',
             u'Please update your application to the latest version by downloading and installing ' +
             u'it from the URL listed below for your choice of platform(s).\n' ]
@@ -161,8 +169,7 @@ class S3DeployerThread(RemoteExecutionThread):
                 'Sending email notification to: <span style="font-weight:bold">%s</span>' % email)
             result = self._sendEmail(
                 'New Build Available: ' + version,
-                body,
-                email)
+                body, email)
             if not result:
                 return
 

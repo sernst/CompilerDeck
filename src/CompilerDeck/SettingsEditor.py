@@ -114,7 +114,18 @@ class SettingsEditor(object):
 #___________________________________________________________________________________________________ GS: publicVersionNumber
     @property
     def publicVersionNumber(self):
-        return self._major.value + u'.' + self._minor.value + u'.' + self._micro.value
+        return u'.'.join([
+            self._cleanNumberString(self._major.value),
+            self._cleanNumberString(self._minor.value),
+            self._cleanNumberString(self._micro.value) ])
+
+#___________________________________________________________________________________________________ GS: developmentVersionNumber
+    @property
+    def developmentVersionNumber(self):
+        return u'.'.join([
+            self._cleanNumberString(self._minor.value),
+            self._cleanNumberString(self._micro.value),
+            self._cleanNumberString(self._revision.value) ])
 
 #___________________________________________________________________________________________________ GS: dateValue
     @property
@@ -216,7 +227,7 @@ class SettingsEditor(object):
         print 'VERSION NUMBER:', self.versionNumber
 
 #___________________________________________________________________________________________________ write
-    def write(self):
+    def write(self, isDebug =False):
         settings = JSON.fromFile(CompilerDeckEnvironment.projectSettingsPath)
         settings['VERSION'] = {
             'major':self._major.value,
@@ -242,7 +253,7 @@ class SettingsEditor(object):
         androidAppXml = self._setAppXmlValue(androidAppXml, tagName, value)
 
         tagName       = 'versionNumber'
-        value         = self.publicVersionNumber
+        value         = self.developmentVersionNumber if isDebug else self.publicVersionNumber
         desktopAppXml = self._setAppXmlValue(desktopAppXml, tagName, value)
         iosAppXml     = self._setAppXmlValue(iosAppXml, tagName, value)
         androidAppXml = self._setAppXmlValue(androidAppXml, tagName, value)
@@ -296,6 +307,14 @@ class SettingsEditor(object):
             setting.key,
             ArgsUtils.get(setting.key, setting.value, kwargs),
             self._UNSET)
+
+#___________________________________________________________________________________________________ _cleanNumberString
+    @classmethod
+    def _cleanNumberString(cls, value):
+        value = unicode(value)
+        if value == u'0':
+            return value
+        return value.lstrip(u'0')
 
 #===================================================================================================
 #                                                                               I N T R I N S I C

@@ -42,6 +42,7 @@ class FlexProjectData(ProjectData):
         self._iosInterpreter    = ArgsUtils.get('iosInterpreter', False, kwargs)
         self._iosSimulator      = ArgsUtils.get('iosSimulator', False, kwargs)
         self._live              = ArgsUtils.get('live', False, kwargs)
+        self._compileSwf        = ArgsUtils.get('compileSwf', True, kwargs)
         self._packageAir        = ArgsUtils.get('packageAir', False, kwargs)
         self._quickCompile      = ArgsUtils.get('quickCompile', False, kwargs)
         self._usbDebug          = ArgsUtils.get('usbDebug', False, kwargs)
@@ -51,6 +52,16 @@ class FlexProjectData(ProjectData):
 
 #===================================================================================================
 #                                                                                   G E T / S E T
+
+#___________________________________________________________________________________________________ GS: compileSwf
+    @property
+    def compileSwf(self):
+        return self._compileSwf or not self._packageAir
+
+#___________________________________________________________________________________________________ GS: isBeta
+    @property
+    def isBeta(self):
+        return self.iosAdHoc and not self.debug
 
 #___________________________________________________________________________________________________ GS: useSimulator
     @property
@@ -104,6 +115,7 @@ class FlexProjectData(ProjectData):
     def versionInfoNumber(self):
         return self._versionInfo.get('major', u'0') + u'.' + \
                self._versionInfo.get('minor', u'0') + u'.' + \
+               self._versionInfo.get('micro', u'0') + u'.' + \
                self._versionInfo.get('revision', u'0')
 
 #___________________________________________________________________________________________________ GS: platformBinPath
@@ -170,7 +182,10 @@ class FlexProjectData(ProjectData):
     @property
     def appId(self):
         """The application identifier"""
-        return self.getSetting('APP_ID', None)
+        out = self.getSetting('APP_ID', None)
+        if out is None:
+            return out
+        return out + self.getSetting('APP_SUFFIX', u'')
 
 #___________________________________________________________________________________________________ GS: certificate
     @property
