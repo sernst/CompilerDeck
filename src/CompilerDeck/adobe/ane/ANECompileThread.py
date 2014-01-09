@@ -184,6 +184,7 @@ class ANECompileThread(RemoteExecutionThread):
 
         module = imp.new_module('postBuildScriptModule')
         setattr(module, '__file__', targetPath)
+        setattr(module, 'logger', self._log)
         setattr(module, 'flexProjectData', self._flexData)
         exec script in module.__dict__
         self._log.write('Post build script execution complete')
