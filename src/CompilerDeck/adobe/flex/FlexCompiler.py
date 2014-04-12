@@ -37,7 +37,7 @@ class FlexCompiler(AdobeSystemCompiler):
         isAir        = sets.currentPlatformID != FlexProjectData.FLASH_PLATFORM
         isAndroid    = sets.currentPlatformID == FlexProjectData.ANDROID_PLATFORM
         isIOS        = sets.currentPlatformID == FlexProjectData.IOS_PLATFORM
-        flashVersion = self._getFlashVersion()
+        flashVersion = sets.getFlashVersion(self._owner.mainWindow.getRootAIRPath())
 
         fileParts = sets.targetClass.split('.')
         mainClass = FileUtils.createPath(
@@ -48,30 +48,16 @@ class FlexCompiler(AdobeSystemCompiler):
 
         cmd.append('-default-background-color=0x000000')
 
-        flashGlobals = FileUtils.createPath(airPath, sets.airVersion, 'frameworks', isDir=True)
-
         if sets.aneIncludes:
-            aneType = 'android' if isAndroid else ('ios' if isIOS else 'default')
             for ane in sets.aneIncludes:
-                cmd.append('-external-library-path+="%s"' % FileUtils.createPath(
-                    sets.projectPath, 'air', 'ane', ane, 'bin', aneType, isDir=True, noTail=True))
+                anePath = FileUtils.createPath(sets.projectPath, 'NativeExtensions', ane, isDir=True)
+                aneSets = FlexProjectData(anePath)
 
-        # if isAir:
-        #     airRoot    = FileUtils.createPath(airPath, sets.airVersion, 'frameworks', isDir=True)
-        #     airGlobals = FileUtils.createPath(airRoot, 'libs', 'air', isDir=True)
-        #     cmd.extend([
-        #         '-external-library-path+="%s"' % os.path.join(airGlobals, 'airglobal.swc'),
-        #         '-library-path+="%s"' % FileUtils.createPath(airRoot, 'libs', isDir=True, noTail=True),
-        #         '-library-path+="%s"' % FileUtils.createPath(airRoot, 'libs', 'air', isDir=True, noTail=True),
-        #         '-library-path+="%s"' % FileUtils.createPath(flashGlobals, 'locale', 'en_US', isDir=True, noTail=True) ])
-        # else:
-        #     flashGlobals += 'libs'
-        #     cmd.extend([
-        #         '-external-library-path+="%s"'
-        #             % os.path.join(flashGlobals, 'player', sets.flashVersion, 'playerglobal.swc'),
-        #         '-library-path+="%s"' % flashGlobals,
-        #         '-library-path+="%s"' % os.path.join(flashGlobals, 'mobile'),
-        #         '-library-path+="%s"' % os.path.join(flashGlobals, 'automation') ])
+                if not aneSets.setPlatform(sets.currentPlatformID):
+                    aneSets.setPlatform(FlexProjectData.DEFAULT_PLATFORM)
+
+                cmd.append('-external-library-path+="%s"' % FileUtils.createPath(
+                    aneSets.projectPath, 'swc', aneSets.getSetting('FOLDER'), isDir=True, noTail=True))
 
         cmd.extend([
             '-library-path+="%s"' % os.path.join(sets.projectPath, 'lib'),
@@ -131,35 +117,3 @@ class FlexCompiler(AdobeSystemCompiler):
 
         self._log.write('SUCCESS: SWF COMPILED')
         return True
-
-
-#___________________________________________________________________________________________________ _getFlashVersion
-    def _getFlashVersion(self):
-        sets = self._settings
-        if sets.currentPlatformID == FlexProjectData.FLASH_PLATFORM:
-            return sets.flashVersion
-
-        airPath     = self._owner.mainWindow.getRootAIRPath()
-        playersPath = FileUtils.createPath(
-            airPath, sets.airVersion, 'frameworks', 'libs', 'player', isDir=True)
-        print 'PLAYERS PATH:', playersPath
-
-        playerVersion = None
-        for item in os.listdir(playersPath):
-            itemPath = FileUtils.createPath(playersPath, item, isDir=True)
-            if not os.path.exists(itemPath) or not os.path.isdir(itemPath):
-                continue
-
-            try:
-                versionValue = float(item)
-            except Exception, err:
-                self._log.writeError('Unrecognized Flash player directory: ' + str(item), err)
-                continue
-
-            if playerVersion is None or versionValue > float(playerVersion):
-                playerVersion = item
-
-        if playerVersion is None:
-            return sets.flashVersion
-
-        return playerVersion

@@ -6,6 +6,7 @@ import re
 from collections import namedtuple
 
 from pyaid.ArgsUtils import ArgsUtils
+from pyaid.OsUtils import OsUtils
 from pyaid.system.SystemUtils import SystemUtils
 
 from pyglass.threading.RemoteExecutionThread import RemoteExecutionThread
@@ -81,16 +82,14 @@ class AndroidLogcatThread(RemoteExecutionThread):
 
 #___________________________________________________________________________________________________ _runDump
     def _runDump(self):
-        self._log.write(
-            '<div style="font-size:24px">Retrieving Android Logcat...</div>\n'
-        )
+        self._log.write(u'<div style="font-size:24px">Retrieving Android Logcat...</div>\n')
 
+        command = 'adb.exe' if OsUtils.isWindows() else 'adb'
         cmd = [
-            '"%s"' % self.parent().mainWindow.getAndroidSDKPath('platform-tools', 'adb.exe'),
+            '"%s"' % self.parent().mainWindow.getAndroidSDKPath('platform-tools', command),
             'logcat',
             '-d',
-            '-v', 'long'
-        ]
+            '-v', 'long']
 
         result = SystemUtils.executeCommand(cmd)
         if 'out' in result:
@@ -107,9 +106,9 @@ class AndroidLogcatThread(RemoteExecutionThread):
                         'level':r.groupdict()['level'],
                         'pid':r.groupdict()['pid'],
                         'time':r.groupdict()['time'],
-                        'id':r.groupdict()['id']
-                    })
-                entries[-1]['value'] = out[entries[-1]['res'].end():].strip()
+                        'id':r.groupdict()['id'] })
+                if entries:
+                    entries[-1]['value'] = out[entries[-1]['res'].end():].strip()
 
                 res = ''
                 for item in entries:
@@ -139,8 +138,9 @@ class AndroidLogcatThread(RemoteExecutionThread):
             '<div style="font-size:24px">Clearing Android Logcat...</div>\n'
         )
 
+        command = 'adb.exe' if OsUtils.isWindows() else 'adb'
         cmd = [
-            '"%s"' % self.parent().mainWindow.getAndroidSDKPath('platform-tools', 'adb.exe'),
+            '"%s"' % self.parent().mainWindow.getAndroidSDKPath('platform-tools', command),
             'logcat',
             '-c'
         ]
@@ -165,8 +165,7 @@ class AndroidLogcatThread(RemoteExecutionThread):
                 value=value,
                 ignore=False,
                 color=searchType['color'],
-                backColor=searchType['backColor'],
-            )
+                backColor=searchType['backColor'])
 
             for search in searchType['values']:
                 if vid.lower().find(search) != -1:
@@ -182,8 +181,7 @@ class AndroidLogcatThread(RemoteExecutionThread):
                 value=value,
                 ignore=False,
                 color=searchType['color'],
-                backColor=searchType['backColor'],
-            )
+                backColor=searchType['backColor'])
 
             for search in searchType['values']:
                 if value.lower().find(search) != -1:
@@ -198,5 +196,4 @@ class AndroidLogcatThread(RemoteExecutionThread):
             value=value,
             ignore=True,
             color=None,
-            backColor=None,
-        )
+            backColor=None)

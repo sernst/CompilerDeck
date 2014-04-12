@@ -148,8 +148,15 @@ class AirCompiler(AdobeSystemCompiler):
         if not sets.aneIncludes:
             return
 
+        extensionIDs = []
         for ane in sets.aneIncludes:
-            cmd.extend(['-extdir', FileUtils.createPath(sets.projectPath, 'air', 'ane', ane)])
+            anePath = FileUtils.createPath(sets.projectPath, 'NativeExtensions', ane, isDir=True)
+            aneSets = FlexProjectData(anePath)
+            cmd.extend(
+                ['-extdir', "%s" % FileUtils.createPath(aneSets.projectPath, isDir=True, noTail=True)])
+            extensionIDs.append(aneSets.getSetting('ID'))
+
+        AirUtils.updateAppExtensions(sets.appDescriptorPath, extensionIDs)
 
 #===================================================================================================
 #                                                                               I N T R I N S I C

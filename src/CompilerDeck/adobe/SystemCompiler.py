@@ -72,7 +72,7 @@ class SystemCompiler(object):
 
 #___________________________________________________________________________________________________ getTargetPath
     def getTargetPath(self, *args, **kwargs):
-        return FileUtils.createPath(self._settings.projectPath, *args)
+        return FileUtils.createPath(self._settings.projectPath, *args, **kwargs)
 
 #___________________________________________________________________________________________________ printCommand
     def printCommand(self, cmd =None, header =None):

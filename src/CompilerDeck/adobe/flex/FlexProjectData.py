@@ -21,7 +21,10 @@ class FlexProjectData(ProjectData):
 
     FLASH_PLATFORM      = 'FLASH'
     AIR_PLATFORM        = 'AIR'
+    DEFAULT_PLATFORM    = 'DEFAULT'
     NATIVE_PLATFORM     = 'NATIVE'
+    WINDOWS_PLATFORM    = 'WINDOWS'
+    MAC_PLATFORM        = 'MAC'
     ANDROID_PLATFORM    = 'ANDROID'
     IOS_PLATFORM        = 'IOS'
     USB_DEBUG_PORT      = '7936'
@@ -387,3 +390,31 @@ class FlexProjectData(ProjectData):
             return False
         self._currentPlatformID = platformID
         self.overrideSettings   = self.platforms[platformID]
+        return True
+
+#___________________________________________________________________________________________________ getFlashVersion
+    def getFlashVersion(self, airPath):
+        if self.currentPlatformID == FlexProjectData.FLASH_PLATFORM:
+            return self.flashVersion
+
+        playersPath = FileUtils.createPath(
+            airPath, self.airVersion, 'frameworks', 'libs', 'player', isDir=True)
+
+        playerVersion = None
+        for item in os.listdir(playersPath):
+            itemPath = FileUtils.createPath(playersPath, item, isDir=True)
+            if not os.path.exists(itemPath) or not os.path.isdir(itemPath):
+                continue
+
+            try:
+                versionValue = float(item)
+            except Exception, err:
+                continue
+
+            if playerVersion is None or versionValue > float(playerVersion):
+                playerVersion = item
+
+        if playerVersion is None:
+            return self.flashVersion
+
+        return playerVersion

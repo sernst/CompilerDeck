@@ -29,6 +29,7 @@ from CompilerDeck.adobe.flex.FlexProjectData import FlexProjectData
 from CompilerDeck.android.AndroidLogcatThread import AndroidLogcatThread
 from CompilerDeck.deploy.S3DeployerThread import S3DeployerThread
 from CompilerDeck.ios.IosSimulatorThread import IosSimulatorThread
+from CompilerDeck.views.compile.ExtensionsPane import ExtensionsPane
 
 #___________________________________________________________________________________________________ DeckCompileWidget
 class DeckCompileWidget(PyGlassWidget):
@@ -62,10 +63,11 @@ class DeckCompileWidget(PyGlassWidget):
         """Creates a new instance of DeckCompileWidget."""
         super(DeckCompileWidget, self).__init__(*args, **kwargs)
 
-        self._results       = ''
-        self._compThread    = None
-        self._buildSnapshot = None
-        self._package       = False
+        self._results           = ''
+        self._compThread        = None
+        self._buildSnapshot     = None
+        self._package           = False
+        self._extensionsPane    = ExtensionsPane(self)
 
         versions = self.mainWindow.listInstalledAirSDKs()
         if versions:
@@ -173,6 +175,18 @@ class DeckCompileWidget(PyGlassWidget):
         return self.compileModeComboBox.currentText().lower() == u'release'
 
 #===================================================================================================
+#                                                                                     P U B L I C
+
+#___________________________________________________________________________________________________ executeRemoteThread
+    def executeRemoteThread(self, thread, completeCallback =None):
+        self._executeRemoteThread(thread, completeCallback=completeCallback)
+
+#___________________________________________________________________________________________________ remoteThreadResult
+    def remoteThreadResult(self, result):
+        self.log.removePrintCallback(self._handleUpdateResults)
+        self._toggleInteractivity(True)
+
+#===================================================================================================
 #                                                                               P R O T E C T E D
 
 #___________________________________________________________________________________________________ _initializeCheck
@@ -185,6 +199,8 @@ class DeckCompileWidget(PyGlassWidget):
         self._buildSnapshot = None
         self._loadBuildSnapshot()
         self._reloadDeployText()
+
+        self._extensionsPane.activate()
 
 #___________________________________________________________________________________________________ _reloadDeployText
     def _reloadDeployText(self):
@@ -280,7 +296,6 @@ class DeckCompileWidget(PyGlassWidget):
 #___________________________________________________________________________________________________ _executeDebugProcess
     def _executeDebugProcess(self):
         self._executeRemoteThread(AirDebugThread(parent=self, **self._createBuildSnapshot()))
-
 
 #___________________________________________________________________________________________________ _createPackageSnapshot
     def _createPlatformsSnapshot(self, overrides =None):
@@ -420,8 +435,7 @@ class DeckCompileWidget(PyGlassWidget):
 
 #___________________________________________________________________________________________________ _handleRemoteThreadComplete
     def _handleRemoteThreadComplete(self, result):
-        self.log.removePrintCallback(self._handleUpdateResults)
-        self._toggleInteractivity(True)
+        self.remoteThreadResult(result)
 
 #___________________________________________________________________________________________________ _handleUpdateResults
     def _handleUpdateResults(self, value):

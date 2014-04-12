@@ -25,7 +25,7 @@ class CompilerDeckEnvironment(object):
         if not cls._rootProjectPath:
             return None
 
-        return cls.getCompileConfigsPath( cls.SETTINGS_FILE_NAME, isFile=True)
+        return cls.getCompileConfigsPath(cls.SETTINGS_FILE_NAME, isFile=True)
 
 #___________________________________________________________________________________________________ GS: desktopAppXmlFilePath
     @ClassGetter

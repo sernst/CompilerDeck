@@ -21,6 +21,9 @@ class AirUtils(object):
     APP_ICON_PATTERN = re.compile(
         '(?P<prefix><icon>).*?(?P<suffix></icon>)', re.MULTILINE | re.DOTALL)
 
+    APP_EXTENSION_PATTERN = re.compile(
+        '(?P<prefix><extensions>).*?(?P<suffix></extensions>)', re.MULTILINE | re.DOTALL)
+
     APP_ID_PATTERN = re.compile('(?P<prefix><id>)[^<]+(?P<suffix></id>)')
 
     DESCRIPTOR_VERSION_PATTERN = re.compile(
@@ -60,6 +63,20 @@ class AirUtils(object):
 
         data = FileUtils.getContents(descriptorPath)
         data = cls.APP_ICON_PATTERN.sub(
+            '\g<prefix>' + offset + offset.join(s) + '\n    \g<suffix>', data)
+
+        return FileUtils.putContents(data, descriptorPath)
+
+#___________________________________________________________________________________________________ updateAppExtensions
+    @classmethod
+    def updateAppExtensions(cls, descriptorPath, extensionIDs):
+        s = []
+        offset = '\n        '
+        for eid in extensionIDs:
+            s.append('<extensionID>%s</extensionID>' % eid)
+
+        data = FileUtils.getContents(descriptorPath)
+        data = cls.APP_EXTENSION_PATTERN.sub(
             '\g<prefix>' + offset + offset.join(s) + '\n    \g<suffix>', data)
 
         return FileUtils.putContents(data, descriptorPath)
@@ -119,6 +136,9 @@ class AirUtils(object):
         includesPath = sets.externalIncludesPath
         if os.path.exists(includesPath):
             for item in os.listdir(includesPath):
+                if item.startswith('.'):
+                    continue
+
                 source = FileUtils.createPath(includesPath, item)
                 merges.append(FileUtils.mergeCopy(
                     source, FileUtils.createPath(sets.platformBinPath, item)))
@@ -134,6 +154,9 @@ class AirUtils(object):
             return out
 
         for item in os.listdir(includesPath):
+            if item.startswith('.'):
+                continue
+
             source = FileUtils.createPath(includesPath, item)
             merges.append(FileUtils.mergeCopy(
                 source, FileUtils.createPath(sets.platformBinPath, item)))

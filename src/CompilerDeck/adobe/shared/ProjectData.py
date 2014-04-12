@@ -11,7 +11,6 @@ from pyaid.config.ConfigsDict import ConfigsDict
 from pyaid.config.SettingsConfig import SettingsConfig
 from pyaid.file.FileUtils import FileUtils
 
-from CompilerDeck.CompilerDeckEnvironment import CompilerDeckEnvironment
 from CompilerDeck.adobe.shared.FlashUtils import FlashUtils
 
 #___________________________________________________________________________________________________ ClassTemplate
@@ -34,13 +33,16 @@ class ProjectData(object):
         self._debug        = ArgsUtils.get('debug', None, kwargs)
 
         # The version of the AIR runtime to use for compiling/debugging/packaging
-        self._airVersion   = ArgsUtils.get('airVersion', '3.9', kwargs)
+        self._airVersion   = ArgsUtils.get('airVersion', '4.0', kwargs)
 
         # The version of the Flash player to use for compiling/debugging
-        self._flashVersion = ArgsUtils.get('flashVersion', '11.8', kwargs)
+        self._flashVersion = ArgsUtils.get('flashVersion', '12.0', kwargs)
 
         # Loads the settings file where the project settings are stored
-        self._settings = SettingsConfig(CompilerDeckEnvironment.projectSettingsPath, pretty=True)
+        self._settings = SettingsConfig(
+            FileUtils.createPath(self.projectPath, 'compiler', 'settings.vcd', isFile=True),
+            pretty=True)
+
         self._overrideSettings = None
 
 #===================================================================================================

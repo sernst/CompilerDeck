@@ -2,7 +2,7 @@
 # (C)2012-2013
 # Scott Ernst
 
-from pyaid.ArgsUtils import ArgsUtils
+from pyaid.OsUtils import OsUtils
 from pyaid.file.FileUtils import FileUtils
 from pyaid.system.SystemUtils import SystemUtils
 
@@ -38,8 +38,9 @@ class InstallApkThread(RemoteExecutionThread):
             + '(This can take a few minutes. Please stand by)'
         )
 
+        command = 'adb.exe' if OsUtils.isWindows() else 'adb'
         cmd = [
-            '"%s"' % self.parent().mainWindow.getAndroidSDKPath('platform-tools', 'adb.exe'),
+            '"%s"' % self.parent().mainWindow.getAndroidSDKPath('platform-tools', command),
             'install',
             '-r',
             FileUtils.createPath(
