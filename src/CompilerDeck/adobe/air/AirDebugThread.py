@@ -68,8 +68,11 @@ class AirDebugThread(RemoteExecutionThread):
 
         cmd = [
             self.parent().mainWindow.getRootAIRPath(sets.airVersion, 'bin', adlCommand),
-            appDescriptor,
-            sets.platformBinPath ]
+            '-profile', 'extendedDesktop']
+
+        aneDebugPath = AirUtils.deployDebugNativeExtensions(cmd, sets)
+
+        cmd += [appDescriptor, sets.platformBinPath]
 
         deployment = AirUtils.deployExternalIncludes(self._settings)
         code       = 0
@@ -89,6 +92,9 @@ class AirDebugThread(RemoteExecutionThread):
         # Cleanup deployment
         for item in deployment['merges']:
             item.removeFiltered(FileList.CREATED)
+
+        if aneDebugPath is not None:
+            SystemUtils.remove(aneDebugPath)
 
         return code
 

@@ -1,11 +1,15 @@
 # AirUtils.py
-# (C)2012-2013
+# (C)2012-2014
 # Scott Ernst
 
 import os
 import re
+import zipfile
 
 from pyaid.file.FileUtils import FileUtils
+from pyaid.system.SystemUtils import SystemUtils
+
+# AS NEEDED: from CompilerDeck.adobe.flex.FlexProjectData import FlexProjectData
 
 #___________________________________________________________________________________________________ AirUtils
 class AirUtils(object):
@@ -67,6 +71,57 @@ class AirUtils(object):
 
         return FileUtils.putContents(data, descriptorPath)
 
+#___________________________________________________________________________________________________ _addAIRNativeExtensionArguments
+    @classmethod
+    def addAIRNativeExtensionArguments(cls, cmd, settings):
+        from CompilerDeck.adobe.flex.FlexProjectData import FlexProjectData
+
+        sets = settings
+        if not sets.aneIncludes:
+            return
+
+        extensionIDs = []
+        for ane in sets.aneIncludes:
+            anePath = FileUtils.createPath(sets.projectPath, 'NativeExtensions', ane, isDir=True)
+            aneSets = FlexProjectData(anePath)
+            cmd.extend(
+                ['-extdir', '"%s"' % FileUtils.createPath(aneSets.projectPath, isDir=True, noTail=True)])
+            extensionIDs.append(aneSets.getSetting('ID'))
+
+        AirUtils.updateAppExtensions(sets.appDescriptorPath, extensionIDs)
+
+#___________________________________________________________________________________________________ _deployDebugNativeExtensions
+    @classmethod
+    def deployDebugNativeExtensions(cls, cmd, settings):
+        from CompilerDeck.adobe.flex.FlexProjectData import FlexProjectData
+
+        sets = settings
+        if not sets.aneIncludes:
+            return None
+
+        debugPath = FileUtils.createPath(
+            sets.projectPath, 'NativeExtensions', '__debug__', isDir=True, noTail=True)
+
+        if os.path.exists(debugPath):
+            SystemUtils.remove(debugPath)
+        os.makedirs(debugPath)
+
+        extensionIDs = []
+        for ane in sets.aneIncludes:
+            anePath = FileUtils.createPath(sets.projectPath, 'NativeExtensions', ane, isDir=True)
+            aneSets = FlexProjectData(anePath)
+            extensionIDs.append(aneSets.getSetting('ID'))
+            aneFilename = aneSets.getSetting('FILENAME')
+
+            aneFile = FileUtils.createPath(anePath, aneFilename + '.ane', isFile=True)
+            z = zipfile.ZipFile(aneFile)
+            z.extractall(FileUtils.createPath(debugPath, aneFilename + '.ane', isDir=True, noTail=True))
+
+        AirUtils.updateAppExtensions(sets.appDescriptorPath, extensionIDs)
+
+        cmd.extend(['-extdir', '"%s"' % debugPath])
+        return debugPath
+
 #___________________________________________________________________________________________________ updateAppExtensions
     @classmethod
     def updateAppExtensions(cls, descriptorPath, extensionIDs):
@@ -74,7 +129,7 @@ class AirUtils(object):
         offset = '\n        '
         for eid in extensionIDs:
             s.append('<extensionID>%s</extensionID>' % eid)
-
+        print 'EXTENSIONS:', s
         data = FileUtils.getContents(descriptorPath)
         data = cls.APP_EXTENSION_PATTERN.sub(
             '\g<prefix>' + offset + offset.join(s) + '\n    \g<suffix>', data)

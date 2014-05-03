@@ -84,7 +84,7 @@ class AirCompiler(AdobeSystemCompiler):
         self._copyMerges.extend(deployResults['merges'])
         cmd.extend(deployResults['itemNames'])
 
-        self._addAIRNativeExtensionArguments(cmd)
+        AirUtils.addAIRNativeExtensionArguments(cmd, sets)
 
         # Deploy iOS launch images
         if sets.currentPlatformID == FlexProjectData.IOS_PLATFORM:
@@ -141,22 +141,6 @@ class AirCompiler(AdobeSystemCompiler):
                     cmd.extend(['-listen', sets.usbDebugPort])
             elif sets.ipAddress:
                 cmd.extend(['-connect', sets.ipAddress])
-
-#___________________________________________________________________________________________________ _addAIRNativeExtensionArguments
-    def _addAIRNativeExtensionArguments(self, cmd):
-        sets = self._settings
-        if not sets.aneIncludes:
-            return
-
-        extensionIDs = []
-        for ane in sets.aneIncludes:
-            anePath = FileUtils.createPath(sets.projectPath, 'NativeExtensions', ane, isDir=True)
-            aneSets = FlexProjectData(anePath)
-            cmd.extend(
-                ['-extdir', "%s" % FileUtils.createPath(aneSets.projectPath, isDir=True, noTail=True)])
-            extensionIDs.append(aneSets.getSetting('ID'))
-
-        AirUtils.updateAppExtensions(sets.appDescriptorPath, extensionIDs)
 
 #===================================================================================================
 #                                                                               I N T R I N S I C
