@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/scott/Python/CompilerDeck/resources/widget/DeckCompileWidget/DeckCompileWidget.ui'
+# Form implementation generated from reading ui file 'C:\Users\scott\Documents\GitHub\CompilerDeck\resources\widget\DeckCompileWidget\DeckCompileWidget.ui'
 #
-# Created: Sat May  3 09:50:32 2014
+# Created: Wed May 07 12:20:54 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
