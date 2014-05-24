@@ -7,6 +7,7 @@ import imp
 import time
 
 from pyaid.ArgsUtils import ArgsUtils
+from pyaid.OsUtils import OsUtils
 from pyaid.file.FileUtils import FileUtils
 
 from pyglass.threading.RemoteExecutionThread import RemoteExecutionThread
@@ -14,6 +15,7 @@ from pyglass.threading.RemoteExecutionThread import RemoteExecutionThread
 from CompilerDeck.adobe.air.AirCompiler import AirCompiler
 from CompilerDeck.adobe.flex.FlexCompiler import FlexCompiler
 from CompilerDeck.adobe.flex.FlexProjectData import FlexProjectData
+from CompilerDeck.deploy.BuildPackageUploader import BuildPackageUploader
 
 #___________________________________________________________________________________________________ ANECompileThread
 class ANECompileThread(RemoteExecutionThread):
@@ -27,11 +29,18 @@ class ANECompileThread(RemoteExecutionThread):
 #___________________________________________________________________________________________________ __init__
     def __init__(self, parent, **kwargs):
         RemoteExecutionThread.__init__(self, parent, explicitComplete=True, **kwargs)
-        self._pausePackageSteps = ArgsUtils.get('pausePackageSteps', False, kwargs)
-        self._flexData          = FlexProjectData(**kwargs)
-        self._queue             = []
-        self._isProcessingQueue = False
-        self._isAbortingQueue   = False
+        self._pausePackageSteps     = ArgsUtils.extract('pausePackageSteps', False, kwargs)
+        self._uploadAfterPackage    = ArgsUtils.extract('uploadAfterPackage', False, kwargs)
+        self._flexData              = FlexProjectData(**kwargs)
+        self._queue                 = []
+        self._isProcessingQueue     = False
+        self._isAbortingQueue       = False
+        self._bucket                = None
+        self._output                = dict()
+
+        if self._uploadAfterPackage:
+            self._output['urls'] = dict()
+            self._bucket = self._flexData.createBucket()
 
 #===================================================================================================
 #                                                                                     P U B L I C
@@ -52,18 +61,21 @@ class ANECompileThread(RemoteExecutionThread):
         pd          = self._flexData
         useFlash    = pd.isPlatformActive(FlexProjectData.FLASH_PLATFORM)
         useAir      = pd.isPlatformActive(FlexProjectData.AIR_PLATFORM)
-        useNative   = pd.isPlatformActive(FlexProjectData.NATIVE_PLATFORM)
+        useWindows  = pd.isPlatformActive(FlexProjectData.WINDOWS_PLATFORM) and OsUtils.isWindows()
+        useMac      = pd.isPlatformActive(FlexProjectData.MAC_PLATFORM) and OsUtils.isMac()
         useAndroid  = pd.isPlatformActive(FlexProjectData.ANDROID_PLATFORM)
         useIOS      = pd.isPlatformActive(FlexProjectData.IOS_PLATFORM)
 
         # In cases where nothing was set (usual because debugging will be run on the default
         # platform) pick the platform to compile if such a platform exists
-        useAny = useFlash or useAir or useNative or useAndroid or useIOS
+        useAny = useFlash or useAir or useWindows or useMac or useAndroid or useIOS
         if not useAny:
             if pd.hasPlatform(FlexProjectData.AIR_PLATFORM):
                 useAir = True
-            elif pd.hasPlatform(FlexProjectData.NATIVE_PLATFORM):
-                useNative = True
+            elif pd.hasPlatform(FlexProjectData.WINDOWS_PLATFORM) and OsUtils.isWindows():
+                useWindows = True
+            elif pd.hasPlatform(FlexProjectData.MAC_PLATFORM) and OsUtils.isMac():
+                useMac = True
             elif pd.hasPlatform(FlexProjectData.FLASH_PLATFORM):
                 useFlash = True
             elif pd.hasPlatform(FlexProjectData.ANDROID_PLATFORM):
@@ -77,23 +89,45 @@ class ANECompileThread(RemoteExecutionThread):
         q = self._queue
 
         if useFlash:
-            q.append([self._doCompile, FlexProjectData.FLASH_PLATFORM, 'Flash SWF Compiled'])
+            pid = FlexProjectData.FLASH_PLATFORM
+            q.append([self._doCompile, pid, 'Flash SWF Compiled'])
+            if self._uploadAfterPackage:
+                q.append([self._doUpload, pid, 'Flash'])
 
         if useAir:
-            q.append([self._doCompile, FlexProjectData.AIR_PLATFORM, 'Air SWF Compiled'])
-            q.append([self._doPackage, FlexProjectData.AIR_PLATFORM, 'Air Packaged'])
+            pid = FlexProjectData.AIR_PLATFORM
+            q.append([self._doCompile, pid, 'Air SWF Compiled'])
+            q.append([self._doPackage, pid, 'Air Packaged'])
+            if self._uploadAfterPackage:
+                q.append([self._doUpload, pid, 'Air'])
 
-        if useNative:
-            q.append([self._doCompile, FlexProjectData.NATIVE_PLATFORM, 'Native SWF Compiled'])
-            q.append([self._doPackage, FlexProjectData.NATIVE_PLATFORM, 'Native Packaged'])
+        if useWindows:
+            pid = FlexProjectData.WINDOWS_PLATFORM
+            q.append([self._doCompile, pid, 'Windows SWF Compiled'])
+            q.append([self._doPackage, pid, 'Windows Packaged'])
+            if self._uploadAfterPackage:
+                q.append([self._doUpload, pid, 'Windows'])
+
+        if useMac:
+            pid = FlexProjectData.MAC_PLATFORM
+            q.append([self._doCompile, pid, 'Mac SWF Compiled'])
+            q.append([self._doPackage, pid, 'Mac Packaged'])
+            if self._uploadAfterPackage:
+                q.append([self._doUpload, pid, 'Mac'])
 
         if useAndroid:
-            q.append([self._doCompile, FlexProjectData.ANDROID_PLATFORM, 'Android SWF Compiled'])
-            q.append([self._doPackage, FlexProjectData.ANDROID_PLATFORM, 'Android Packaged'])
+            pid = FlexProjectData.ANDROID_PLATFORM
+            q.append([self._doCompile, pid, 'Android SWF Compiled'])
+            q.append([self._doPackage, pid, 'Android Packaged'])
+            if self._uploadAfterPackage:
+                q.append([self._doUpload, pid, 'Android'])
 
         if useIOS:
-            q.append([self._doCompile, FlexProjectData.IOS_PLATFORM, 'iOS SWF Compiled'])
-            q.append([self._doPackage, FlexProjectData.IOS_PLATFORM, 'iOS Packaged'])
+            pid = FlexProjectData.IOS_PLATFORM
+            q.append([self._doCompile, pid, 'iOS SWF Compiled'])
+            q.append([self._doPackage, pid, 'iOS Packaged'])
+            if self._uploadAfterPackage:
+                q.append([self._doUpload, pid, 'iOS'])
 
         self._isProcessingQueue = True
         while self._queue:
@@ -114,6 +148,7 @@ class ANECompileThread(RemoteExecutionThread):
                 self._runComplete(1)
                 return
 
+        self._log.write('<h2>Compilation/Packaging Complete</h2>')
         self._runComplete(0)
 
 #___________________________________________________________________________________________________ _doCompile
@@ -145,6 +180,18 @@ class ANECompileThread(RemoteExecutionThread):
 
         if not self._notifyPause('Packaging', pauseMessage):
             raise Exception, 'Compilation/Packaging Process Aborted'
+
+#___________________________________________________________________________________________________ _doUpload
+    def _doUpload(self, platformID, uploadMessage):
+        uploader = BuildPackageUploader(self._flexData, self._bucket)
+        self._log.write('<hr /><h1>Uploading Package: ' + uploadMessage + '</h1><hr />')
+        url = uploader.upload(platformID)
+        if url is None:
+            self._log.write('<h2>UPLOAD FAILED!</h2>')
+            raise Exception, 'Failed to upload file. Compilation/Packaging Process Aborted'
+        else:
+            self._output['urls'][platformID] = url
+            self._log.write('<h2>Upload Success:</h2><a href="%s">%s</a>' % (url, url))
 
 #___________________________________________________________________________________________________ _notifyPause
     def _notifyPause(self, actionType, message):

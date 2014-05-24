@@ -16,6 +16,8 @@ class ReleaseNotesGenerator(object):
         self._label          = label
         self._versionInfo    = versionInfo
         self._summary        = None
+        self._message        = None
+        self._buildType      = u'Beta (Private Testing)'
         self._additions      = []
         self._fixes          = []
         self._removals       = []
@@ -45,7 +47,7 @@ class ReleaseNotesGenerator(object):
 
         self._output = (u"""%s Release\nType: %s\nVersion: %s.%s.%s.%s\nID: %s-%s-%s\n%s%s%s%s%s""" % (
             self._label if self._label else u'Application',
-            u'',
+            self._buildType,
             self._versionInfo.get('major', u'0'),
             self._versionInfo.get('minor', u'0'),
             self._versionInfo.get('micro', u'0'),
@@ -64,13 +66,17 @@ class ReleaseNotesGenerator(object):
 #___________________________________________________________________________________________________ populate
     def populate(
             self, label =None, versionInfo =None, summary =None, additions =None, fixes =None,
-            removals =None, info =None
+            removals =None, info =None, message =None, buildType =None
     ):
         """Doc..."""
+        if buildType is not None:
+            self._buildType = buildType
         if label is not None:
             self._label = label
         if versionInfo is not None:
             self._versionInfo = versionInfo
+        if message is not None:
+            self._message = message.strip()
         if summary is not None:
             self._summary = summary.strip()
         if additions is not None:

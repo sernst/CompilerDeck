@@ -8,7 +8,9 @@ from PySide import QtGui
 from PySide import QtCore
 
 from pyaid.ArgsUtils import ArgsUtils
+from pyaid.OsUtils import OsUtils
 from pyaid.config.SettingsConfig import SettingsConfig
+from pyaid.dict.DictUtils import DictUtils
 from pyaid.file.FileUtils import FileUtils
 from pyaid.json.JSON import JSON
 from pyaid.system.SystemUtils import SystemUtils
@@ -32,6 +34,9 @@ from CompilerDeck.ios.IosSimulatorThread import IosSimulatorThread
 from CompilerDeck.views.compile.ExtensionsPane import ExtensionsPane
 
 #___________________________________________________________________________________________________ DeckCompileWidget
+from CompilerDeck.views.dialogs.deploy.DeployBuildDialog import DeployBuildDialog
+
+
 class DeckCompileWidget(PyGlassWidget):
     """A class for..."""
 
@@ -57,6 +62,7 @@ class DeckCompileWidget(PyGlassWidget):
     _NATIVE_CAPTIVE_RUNTIME   = 'NATIVE_CAPTIVE_RUNTIME'
     _PAUSE_PACKAGE_STEPS      = 'PAUSE_PACKAGE_STEPS'
     _COMPILE_BEFORE_PACKAGE   = 'COMPILE_BEFORE_PACKAGE'
+    _UPLOAD_AFTER_PACKAGE     = 'UPLOAD_AFTER_PACKAGE'
 
 #___________________________________________________________________________________________________ __init__
     def __init__(self, *args, **kwargs):
@@ -129,6 +135,7 @@ class DeckCompileWidget(PyGlassWidget):
         self.openSimDocsBtn.clicked.connect(self._handleOpenDocumentsInFinder)
         self.mainTab.setCurrentIndex(0)
 
+        self._checkProperties = dict()
         self._initializeCheck(self.simulatorCheck, self._IOS_SIMULATOR, False)
         self._initializeCheck(self.iosInterpCheck, self._IOS_INTERP, False)
         self._initializeCheck(self.liveCheck, self._LIVE_CFG, False)
@@ -142,6 +149,7 @@ class DeckCompileWidget(PyGlassWidget):
         self._initializeCheck(self.packagePauseChk, self._PAUSE_PACKAGE_STEPS, False)
         self._initializeCheck(self.nativeCaptiveChk, self._NATIVE_CAPTIVE_RUNTIME, False)
         self._initializeCheck(self.compileBeforePackageChk, self._COMPILE_BEFORE_PACKAGE, True)
+        self._initializeCheck(self.uploadPackageCheck, self._UPLOAD_AFTER_PACKAGE, False)
 
         self._settingsEditor = SettingsEditor()
         self._settingsEditor.populate()
@@ -191,6 +199,7 @@ class DeckCompileWidget(PyGlassWidget):
 
 #___________________________________________________________________________________________________ _initializeCheck
     def _initializeCheck(self, checkBox, configValue, defaultValue):
+        self._checkProperties[configValue] = checkBox
         self._setCheckState(checkBox, self.parent().appConfig.get(configValue, defaultValue))
         checkBox.stateChanged.connect(self._handleCheckStateChange)
 
@@ -291,6 +300,7 @@ class DeckCompileWidget(PyGlassWidget):
         self._executeRemoteThread(ANECompileThread(
             parent=self,
             pausePackageSteps=self.packagePauseChk.isChecked(),
+            uploadAfterPackage=self.uploadPackageCheck.isChecked(),
             **self._buildSnapshot), callback)
 
 #___________________________________________________________________________________________________ _executeDebugProcess
@@ -302,12 +312,20 @@ class DeckCompileWidget(PyGlassWidget):
         out = dict()
         platforms = {
             FlexProjectData.NATIVE_PLATFORM:self.nativePlatformCheck,
+            FlexProjectData.WINDOWS_PLATFORM:self.nativePlatformCheck,
+            FlexProjectData.MAC_PLATFORM:self.nativePlatformCheck,
             FlexProjectData.AIR_PLATFORM:self.airPlatformCheck,
             FlexProjectData.FLASH_PLATFORM:self.webPlatformCheck,
             FlexProjectData.ANDROID_PLATFORM:self.androidPlatformCheck,
             FlexProjectData.IOS_PLATFORM:self.iosPlatformCheck }
         for pid, check in platforms.iteritems():
             out[pid] = check.isChecked() or ArgsUtils.get(pid, False, overrides)
+
+        out[FlexProjectData.WINDOWS_PLATFORM] \
+            = out[FlexProjectData.WINDOWS_PLATFORM] and OsUtils.isWindows()
+        out[FlexProjectData.MAC_PLATFORM] \
+            = out[FlexProjectData.MAC_PLATFORM] and OsUtils.isMac()
+
         return out
 
 #___________________________________________________________________________________________________ _createBuildSnapshot
@@ -328,6 +346,7 @@ class DeckCompileWidget(PyGlassWidget):
             compileSwf=self.compileBeforePackageChk.isChecked() or not self._package,
             remoteDebug=(not self.remoteDebugComboBox.currentText().lower().startswith('none')),
             usbDebug=(self.remoteDebugComboBox.currentText().lower().startswith('usb')),
+            platformUploads={},
             platforms=self._createPlatformsSnapshot() )
 
 #___________________________________________________________________________________________________ _storeBuildSnapshot
@@ -379,6 +398,8 @@ class DeckCompileWidget(PyGlassWidget):
         platforms[FlexProjectData.AIR_PLATFORM]     = False
         platforms[FlexProjectData.FLASH_PLATFORM]   = False
         platforms[FlexProjectData.NATIVE_PLATFORM]  = False
+        platforms[FlexProjectData.MAC_PLATFORM]     = False
+        platforms[FlexProjectData.WINDOWS_PLATFORM] = False
         self._executeCompilation(self._handleDebugCompilation, snap)
 
 #___________________________________________________________________________________________________ _handleDebugCompilation
@@ -413,14 +434,22 @@ class DeckCompileWidget(PyGlassWidget):
                 del snap['combinedPlatforms']
             else:
                 platforms = snap['platforms']
+
+            # Any package uploads conducted as part of the compilation process should be included
+            # in the build snapshot for reference to prevent uploading them again in the future
+            if 'urls' in result['output']:
+                snap['platformUploads'] = DictUtils.merge(
+                    snap['platformUploads'], result['output']['urls'])
+
             self._storeBuildSnapshot()
 
             FileUtils.putContents('\t'.join([
                     TimeUtils.getNowDatetime().strftime('[%a %m-%d %H:%M]'),
                     'DSK' if platforms.get(FlexProjectData.AIR_PLATFORM, False) else '---',
-                    'NAT' if platforms.get(FlexProjectData.NATIVE_PLATFORM, False) else '---',
                     'AND' if platforms.get(FlexProjectData.ANDROID_PLATFORM, False) else '---',
                     'IOS' if platforms.get(FlexProjectData.IOS_PLATFORM, False) else '---',
+                    'WIN' if platforms.get(FlexProjectData.WINDOWS_PLATFORM, False) else '---',
+                    'MAC' if platforms.get(FlexProjectData.MAC_PLATFORM, False) else '---',
                     '<<' + snap['versionInfo']['number'] + '>>',
                     '<<' + snap['versionInfo']['label'] + '>>' ]) + '\n',
                 self._settingsEditor.buildLogFilePath,
@@ -459,31 +488,12 @@ class DeckCompileWidget(PyGlassWidget):
 #___________________________________________________________________________________________________ _handlePackageAirStateChange
     def _handleCheckStateChange(self):
         sender = self.sender()
-        prop   = None
-        if sender == self.liveCheck:
-            prop = self._LIVE_CFG
-        elif sender == self.iosInterpCheck:
-            prop = self._IOS_INTERP
-        elif sender == self.simulatorCheck:
-            prop = self._IOS_SIMULATOR
-        elif sender == self.webPlatformCheck:
-            prop = self._COMPILE_WEB
-        elif sender == self.airPlatformCheck:
-            prop = self._COMPILE_AIR
-        elif sender == self.nativePlatformCheck:
-            prop = self._COMPILE_NATIVE
-        elif sender == self.androidPlatformCheck:
-            prop = self._COMPILE_ANDROID
-        elif sender == self.iosPlatformCheck:
-            prop = self._COMPILE_IOS
-        elif sender == self.telemetryCheck:
-            prop = self._ADV_TELEMETRY
-        elif sender == self.expandPackageChk:
-            prop = self._APPEND_TO_PACKAGE
-        elif sender == self.nativeCaptiveChk:
-            prop = self._NATIVE_CAPTIVE_RUNTIME
-        elif sender == self.packagePauseChk:
-            prop = self._PAUSE_PACKAGE_STEPS
+        prop = None
+        for key,value in self._checkProperties.iteritems():
+            if value != sender:
+                continue
+            prop = key
+            break
 
         if prop:
             self.owner.appConfig.set(prop, sender.isChecked())
@@ -551,6 +561,15 @@ class DeckCompileWidget(PyGlassWidget):
             print 'No build snapshot to deploy:', self._buildSnapshot
             return
 
+        DeployBuildDialog(self.mainWindow, callback=self._handleDeployDialogResult).open()
+
+#___________________________________________________________________________________________________ _handleDeployDialogResult
+    def _handleDeployDialogResult(self, dialog):
+        widget = dialog.contentWidget
+
+        if widget.canceled:
+            return
+
         releaseNotes = dict(
             summary=self.summaryText.toPlainText(),
             additions=self.additionsText.toPlainText(),
@@ -558,22 +577,25 @@ class DeckCompileWidget(PyGlassWidget):
             removals=self.removalsText.toPlainText(),
             info=self.releaseInfoText.toPlainText())
 
-        sendEmails = PyGlassBasicDialogManager.openYesNo(
-            parent=self,
-            header=u'Send Notification Emails?',
-            message=u'Would you like to send email notifications out with this deployment?')
-
         self._executeRemoteThread(
             S3DeployerThread(
                 parent=self,
                 snapshot=self._buildSnapshot,
-                sendEmails=sendEmails,
+                sendEmails=widget.includeEmails,
+                message=widget.buildMessage,
                 releaseNotes=releaseNotes),
             self._handleDeployResult)
 
 #___________________________________________________________________________________________________ _handleDeployResult
     def _handleDeployResult(self, result):
         if result['response'] == 0:
+
+            # Any new Urls added by uploads during the deployment should be stored in the build
+            # snapshot to save the information for future reference
+            self._buildSnapshot['platformUploads'] = DictUtils.merge(
+                self._buildSnapshot['platformUploads'], result['output']['urls'])
+            self._storeBuildSnapshot()
+
             settings = SettingsConfig(CompilerDeckEnvironment.projectSettingsPath, pretty=True)
             settings.set(['DEPLOY', 'LAST', 'SUMMARY'], self.summaryText.toPlainText())
             settings.set(['DEPLOY', 'LAST', 'ADDITIONS'], self.additionsText.toPlainText())

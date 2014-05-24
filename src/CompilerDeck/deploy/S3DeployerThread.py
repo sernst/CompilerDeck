@@ -1,19 +1,20 @@
 # S3DeployerThread.py
-# (C)2013
+# (C)2013-2014
 # Scott Ernst
 
 import os
-import datetime
 import smtplib
 from email.mime.text import MIMEText
 
 from pyaid.aws.s3.S3Bucket import S3Bucket
+from pyaid.dict.DictUtils import DictUtils
 from pyaid.file.FileUtils import FileUtils
 from pyaid.time.TimeUtils import TimeUtils
 
 from pyglass.threading.RemoteExecutionThread import RemoteExecutionThread
 
 from CompilerDeck.adobe.flex.FlexProjectData import FlexProjectData
+from CompilerDeck.deploy.BuildPackageUploader import BuildPackageUploader
 from CompilerDeck.deploy.ReleaseNotesGenerator import ReleaseNotesGenerator
 
 #___________________________________________________________________________________________________ S3DeployerThread
@@ -24,22 +25,27 @@ class S3DeployerThread(RemoteExecutionThread):
 #                                                                                       C L A S S
 
 #___________________________________________________________________________________________________ __init__
-    def __init__(self, parent, snapshot, sendEmails, releaseNotes, **kwargs):
+    def __init__(self, parent, snapshot, sendEmails, releaseNotes, message, **kwargs):
         """Creates a new instance of S3Deployer."""
         super(S3DeployerThread, self).__init__(parent, **kwargs)
         self._doSendEmails  = sendEmails
         self._releaseNotes  = releaseNotes
+        self._snapshot      = snapshot
         self._flexData      = FlexProjectData(**snapshot)
+        self._message       = message if message else u''
 
-        self._keyPrefix = [
-            'downloads',
-            'debug' if self._flexData.debug else 'release',
-            TimeUtils.getNowDatetime().strftime('%b-%d-%y')]
+        if self._flexData.debug:
+            self._buildType = u'Beta (Private Testing)'
+        elif self._flexData.iosAdHoc:
+            self._buildType = u'Release Candidate (Public Pre-Release)'
+        else:
+            self._buildType = u'Official Release (Public Distribution)'
 
-        self._bucket = S3Bucket(
-            self._flexData.getSetting(['S3', 'BUCKET']),
-            self._flexData.getSetting(['S3', 'AWS_ID']),
-            self._flexData.getSetting(['S3', 'AWS_SECRET']))
+        if self._releaseNotes:
+            self._releaseNotes['buildType'] = self._buildType
+
+        self._output = dict()
+        self._bucket = self._flexData.createBucket()
 
 #===================================================================================================
 #                                                                               P R O T E C T E D
@@ -48,7 +54,6 @@ class S3DeployerThread(RemoteExecutionThread):
     def _runImpl(self):
         """Doc..."""
         data = self._flexData
-        urls = dict()
 
         self._log.write(
             '<div style="font-size:24px">Beginning distribution file upload(s)</div><hr>')
@@ -58,30 +63,18 @@ class S3DeployerThread(RemoteExecutionThread):
                 continue
 
             data.setPlatform(platformID)
-            if not os.path.exists(data.targetFilePath):
-                continue
-
-            name = data.contentTargetFilename + '-' + \
-                   data.versionInfo['major'] + '-' + \
-                   data.versionInfo['minor'] + '-' + \
-                   data.versionInfo['micro'] + '-' + \
-                   data.versionInfo['revision'] + '.' + \
-                   data.airExtension
-
-            key = '/'.join(self._keyPrefix + [name])
-            self._log.write('Uploading %s distribution file to: %s' % (platformID, key))
-            self._bucket.putFile(
-                key=key,
-                filename=data.targetFilePath,
-                policy=S3Bucket.PRIVATE if data.debug else S3Bucket.PUBLIC_READ)
-
-            expires  = TimeUtils.getNowDatetime()
-            expires += datetime.timedelta(days=30)
-            if data.debug:
-                url = self._bucket.generateExpiresUrl(key, expires)
+            if data.isPlatformUploaded:
+                url = data.platformUploads[platformID]
             else:
-                url = 'http://' + self._bucket.bucketName + '/' + key
-            urls[platformID] = url
+                uploader = BuildPackageUploader(data, self._bucket)
+                self._log.write(
+                    'Uploading %s distribution file to: %s' % (platformID, uploader.uploadFolder))
+                url = uploader.upload(platformID)
+                if url is None:
+                    continue
+
+                data.platformUploads[platformID] = url
+
             self._log.write(
                 '<div style="font-size:18px">Deployed URL:</div><br />' +
                 '<a style="font-size:8px" href="%s">%s</a>' % ((url, url)))
@@ -94,9 +87,10 @@ class S3DeployerThread(RemoteExecutionThread):
 
         if self._doSendEmails:
             self._log.write('Sending notification emails...')
-            self._sendEmailNotifications(urls, notes)
+            self._sendEmailNotifications(data.platformUploads, notes)
 
-        self._log.write('<div style="font-size:24px">Deployment Complete!</div>')
+        self._log.write('<br /><div style="font-size:24px">Deployment Complete!</div>')
+        self._output['urls'] = DictUtils.clone(data.platformUploads)
         return 0
 
 #___________________________________________________________________________________________________ _createReleaseNotes
@@ -118,12 +112,9 @@ class S3DeployerThread(RemoteExecutionThread):
         path = FileUtils.createPath(path, filename, isFile=True)
         FileUtils.putContents(notes.generate(), path)
 
-        key = '/'.join(self._keyPrefix + [filename])
-        self._log.write('Uploading release notes to: %s' % key)
-        self._bucket.putFile(
-            key=key,
-            filename=path,
-            policy=S3Bucket.PRIVATE if self._flexData.debug else S3Bucket.PUBLIC_READ)
+        uploader = BuildPackageUploader(self._flexData, self._bucket)
+        url = uploader.uploadFile(path, filename)
+        self._log.write('Uploaded release notes to: <a href="%s">%s</a>' % (url, url))
 
         return notes.text
 
@@ -133,29 +124,28 @@ class S3DeployerThread(RemoteExecutionThread):
         uid        = self._flexData.versionInfoLabel
         label      = self._flexData.getSetting('LABEL', u'Application')
 
-        if self._flexData.debug:
-            buildType = u'Beta (Private Testing)'
-        elif self._flexData.iosAdHoc:
-            buildType = u'Release Candidate (Public Pre-Release)'
-        else:
-            buildType = u'Official Release (Public Distribution)'
-
         body = [
-            u'A new build of %s is available.\n' % label,
+            u'A new build of %s is available: %s\n' % (label, self._message),
+            u'  * Type: %s\n\n' % self._buildType,
             u'  * Version: ' + version,
             u'  * Build: ' + uid,
-            u'  * Type: %s\n\n' % buildType,
             u'=== DOWNLOADS ===\n',
             u'Please update your application to the latest version by downloading and installing ' +
-            u'it from the URL listed below for your choice of platform(s).\n' ]
+            u'it from the URL listed below for your choice of platform(s):\n' ]
 
-        for key, url in deployUrls.iteritems():
-            if key in FlexProjectData.AIR_PLATFORM:
+        for name, url in deployUrls.iteritems():
+            if name in FlexProjectData.AIR_PLATFORM:
                 key = u'Desktop (Mac/PC)'
-            elif key == FlexProjectData.IOS_PLATFORM:
+            elif name == FlexProjectData.IOS_PLATFORM:
                 key = u'iOS (iPad 3+)'
-            elif key == FlexProjectData.AIR_PLATFORM:
+            elif name == FlexProjectData.ANDROID_PLATFORM:
                 key = u'Android (2.3+)'
+            elif name == FlexProjectData.WINDOWS_PLATFORM:
+                key = u'Windows'
+            elif name == FlexProjectData.MAC_PLATFORM:
+                key = u'Mac'
+            else:
+                key = name
 
             body.append(u'--- ' + key + u' Download ---\n' + url + u'\n')
 

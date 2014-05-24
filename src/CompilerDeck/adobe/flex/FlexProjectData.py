@@ -5,9 +5,9 @@
 import os
 
 from pyaid.ArgsUtils import ArgsUtils
+from pyaid.OsUtils import OsUtils
+from pyaid.aws.s3.S3Bucket import S3Bucket
 from pyaid.file.FileUtils import FileUtils
-
-from pyglass.app.PyGlassEnvironment import PyGlassEnvironment
 
 from CompilerDeck.adobe.air.AirUtils import AirUtils
 from CompilerDeck.adobe.shared.ProjectData import ProjectData
@@ -40,6 +40,7 @@ class FlexProjectData(ProjectData):
         self.nativeCaptiveRuntime = ArgsUtils.get('nativeCaptive', False, kwargs)
         self.advancedTelemetry    = ArgsUtils.get('telemetry', False, kwargs)
         self.iosAdHoc             = ArgsUtils.get('iosAdHoc', False, kwargs)
+        self.platformUploads      = ArgsUtils.getAsDict('platformUploads', kwargs)
 
         self._currentPlatformID = None
         self._iosInterpreter    = ArgsUtils.get('iosInterpreter', False, kwargs)
@@ -55,6 +56,11 @@ class FlexProjectData(ProjectData):
 
 #===================================================================================================
 #                                                                                   G E T / S E T
+
+#___________________________________________________________________________________________________ GS: isPlatformUploaded
+    @property
+    def isPlatformUploaded(self):
+        return self._currentPlatformID in self.platformUploads
 
 #___________________________________________________________________________________________________ GS: compileSwf
     @property
@@ -84,7 +90,10 @@ class FlexProjectData(ProjectData):
 #___________________________________________________________________________________________________ GS: isNative
     @property
     def isNative(self):
-        return self.isDesktop and self._currentPlatformID == self.NATIVE_PLATFORM
+        return self.isDesktop and self._currentPlatformID in [
+            self.NATIVE_PLATFORM,
+            self.MAC_PLATFORM,
+            self.WINDOWS_PLATFORM]
 
 #___________________________________________________________________________________________________ GS: isDesktop
     @property
@@ -126,8 +135,8 @@ class FlexProjectData(ProjectData):
     def platformBinPath(self):
         ptype = self.buildTypeFolderName
 
-        if self.currentPlatformID == FlexProjectData.NATIVE_PLATFORM:
-            platform = 'win' if PyGlassEnvironment.isWindows else 'mac'
+        if self.isNative:
+            platform = 'win' if OsUtils.isWindows() else 'mac'
             return FileUtils.createPath(
                 self.platformProjectPath,
                 'bin', 'native', platform, ptype, isDir=True)
@@ -139,8 +148,8 @@ class FlexProjectData(ProjectData):
     def platformDistributionPath(self):
         ptype = self.buildTypeFolderName
 
-        if self.currentPlatformID == FlexProjectData.NATIVE_PLATFORM:
-            platform = 'win' if PyGlassEnvironment.isWindows else 'mac'
+        if self.isNative:
+            platform = 'win' if OsUtils.isWindows() else 'mac'
             return FileUtils.createPath(
                 self.platformProjectPath,
                 'dist', 'native', platform, ptype, isDir=True)
@@ -270,7 +279,11 @@ class FlexProjectData(ProjectData):
         elif self.currentPlatformID == FlexProjectData.ANDROID_PLATFORM:
             return 'apk'
         elif self.currentPlatformID == FlexProjectData.NATIVE_PLATFORM:
-            return 'exe' if PyGlassEnvironment.isWindows else 'dmg'
+            return 'exe' if OsUtils.isWindows() else 'dmg'
+        elif self._currentPlatformID == FlexProjectData.WINDOWS_PLATFORM:
+            return 'exe'
+        elif self._currentPlatformID == FlexProjectData.MAC_PLATFORM:
+            return 'dmg'
 
         return 'air'
 
@@ -297,7 +310,7 @@ class FlexProjectData(ProjectData):
                     return 'ipa-test-interpreter' if self._iosInterpreter else 'ipa-test'
             else:
                 return 'ipa-test-interpreter-simulator' if self._iosSimulator else 'ipa-app-store'
-        elif self.currentPlatformID == FlexProjectData.NATIVE_PLATFORM:
+        elif self.isNative:
             return 'bundle' if self.nativeCaptiveRuntime else 'native'
 
         return 'air'
@@ -350,6 +363,13 @@ class FlexProjectData(ProjectData):
 
 #===================================================================================================
 #                                                                                     P U B L I C
+
+#___________________________________________________________________________________________________ createBucket
+    def createBucket(self, groupKey ='S3'):
+        return S3Bucket(
+            self.getSetting([groupKey, 'BUCKET']),
+            self.getSetting([groupKey, 'AWS_ID']),
+            self.getSetting([groupKey, 'AWS_SECRET']))
 
 #___________________________________________________________________________________________________ updateApplicationConfigFile
     def updateApplicationConfigFile(self, iconDefs =None):

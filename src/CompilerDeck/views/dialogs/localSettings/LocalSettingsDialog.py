@@ -22,5 +22,4 @@ class LocalSettingsDialog(PyGlassDialog):
             parent,
             title='Modify Environment Paths',
             widget=LocalSettingsWidget,
-            **kwargs
-        )
+            **kwargs)

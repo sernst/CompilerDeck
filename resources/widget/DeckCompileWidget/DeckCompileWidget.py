@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\scott\Documents\GitHub\CompilerDeck\resources\widget\DeckCompileWidget\DeckCompileWidget.ui'
+# Form implementation generated from reading ui file '/Users/scott/Python/CompilerDeck/resources/widget/DeckCompileWidget/DeckCompileWidget.ui'
 #
-# Created: Fri May 23 22:07:48 2014
+# Created: Sat May 24 12:11:50 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -201,6 +201,9 @@ class PySideUiFileSetup(object):
         Form.expandPackageChk = QtGui.QCheckBox(Form.widget_32)
         Form.expandPackageChk.setObjectName("expandPackageChk")
         Form.verticalLayout_17.addWidget(Form.expandPackageChk)
+        Form.uploadPackageCheck = QtGui.QCheckBox(Form.widget_32)
+        Form.uploadPackageCheck.setObjectName("uploadPackageCheck")
+        Form.verticalLayout_17.addWidget(Form.uploadPackageCheck)
         Form.packageBtn = QtGui.QPushButton(Form.widget_32)
         font = QtGui.QFont()
         font.setPointSize(14)
@@ -691,7 +694,7 @@ class PySideUiFileSetup(object):
         Form.horizontalLayout_5.addWidget(Form.mainTab)
 
         self.retranslateUi(Form)
-        Form.mainTab.setCurrentIndex(2)
+        Form.mainTab.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Form)
         Form.setTabOrder(Form.summaryText, Form.additionsText)
         Form.setTabOrder(Form.additionsText, Form.fixesText)
@@ -742,6 +745,7 @@ class PySideUiFileSetup(object):
         Form.compileBeforePackageChk.setText(QtGui.QApplication.translate("Form", "Compile Before Packaging", None, QtGui.QApplication.UnicodeUTF8))
         Form.packagePauseChk.setText(QtGui.QApplication.translate("Form", "Notify Each Step (Pause)", None, QtGui.QApplication.UnicodeUTF8))
         Form.expandPackageChk.setText(QtGui.QApplication.translate("Form", "Append to Previous Package", None, QtGui.QApplication.UnicodeUTF8))
+        Form.uploadPackageCheck.setText(QtGui.QApplication.translate("Form", "Upload After Packaging", None, QtGui.QApplication.UnicodeUTF8))
         Form.packageBtn.setText(QtGui.QApplication.translate("Form", "Package", None, QtGui.QApplication.UnicodeUTF8))
         Form.mainTab.setTabText(Form.mainTab.indexOf(Form.settingsTabPage), QtGui.QApplication.translate("Form", "Compile", None, QtGui.QApplication.UnicodeUTF8))
         Form.label_8.setText(QtGui.QApplication.translate("Form", "Desktop", None, QtGui.QApplication.UnicodeUTF8))

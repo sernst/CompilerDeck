@@ -29,7 +29,7 @@
    <item>
     <widget class="QTabWidget" name="mainTab">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="settingsTabPage">
       <attribute name="title">
@@ -406,6 +406,13 @@
               <widget class="QCheckBox" name="expandPackageChk">
                <property name="text">
                 <string>Append to Previous Package</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="uploadPackageCheck">
+               <property name="text">
+                <string>Upload After Packaging</string>
                </property>
               </widget>
              </item>
