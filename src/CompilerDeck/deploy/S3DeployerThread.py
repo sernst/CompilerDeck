@@ -115,9 +115,8 @@ class S3DeployerThread(RemoteExecutionThread):
         filename = self._flexData.contentTargetFilename + \
                 self._flexData.versionInfoNumber.replace(u'.', u'-') + u'.txt'
 
-        FileUtils.putContents(
-            notes.generate(),
-            FileUtils.createPath(path, filename, isFile=True))
+        path = FileUtils.createPath(path, filename, isFile=True)
+        FileUtils.putContents(notes.generate(), path)
 
         key = '/'.join(self._keyPrefix + [filename])
         self._log.write('Uploading release notes to: %s' % key)
