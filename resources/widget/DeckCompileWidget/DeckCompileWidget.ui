@@ -29,7 +29,7 @@
    <item>
     <widget class="QTabWidget" name="mainTab">
      <property name="currentIndex">
-      <number>0</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="settingsTabPage">
       <attribute name="title">
@@ -1021,7 +1021,7 @@
                  <widget class="QPushButton" name="summaryDefaultBtn">
                   <property name="font">
                    <font>
-                    <pointsize>8</pointsize>
+                    <pointsize>13</pointsize>
                    </font>
                   </property>
                   <property name="text">
@@ -1081,7 +1081,7 @@
                  <widget class="QPushButton" name="additionsDefaultBtn">
                   <property name="font">
                    <font>
-                    <pointsize>8</pointsize>
+                    <pointsize>13</pointsize>
                    </font>
                   </property>
                   <property name="text">
@@ -1150,7 +1150,7 @@
                  <widget class="QPushButton" name="fixesDefaultBtn">
                   <property name="font">
                    <font>
-                    <pointsize>8</pointsize>
+                    <pointsize>13</pointsize>
                    </font>
                   </property>
                   <property name="text">
@@ -1210,7 +1210,7 @@
                  <widget class="QPushButton" name="removalsDefaultBtn">
                   <property name="font">
                    <font>
-                    <pointsize>8</pointsize>
+                    <pointsize>13</pointsize>
                    </font>
                   </property>
                   <property name="text">
@@ -1273,7 +1273,7 @@
               <widget class="QPushButton" name="releaseInfoDefaultBtn">
                <property name="font">
                 <font>
-                 <pointsize>8</pointsize>
+                 <pointsize>13</pointsize>
                 </font>
                </property>
                <property name="text">
@@ -1300,11 +1300,18 @@
            <widget class="QPushButton" name="deployBuildBtn">
             <property name="font">
              <font>
-              <pointsize>10</pointsize>
+              <pointsize>13</pointsize>
              </font>
             </property>
             <property name="text">
              <string>Deploy</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="uploadPackagesBtn">
+            <property name="text">
+             <string>Upload</string>
             </property>
            </widget>
           </item>

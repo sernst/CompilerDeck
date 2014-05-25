@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/Users/scott/Python/CompilerDeck/resources/widget/DeckCompileWidget/DeckCompileWidget.ui'
 #
-# Created: Sat May 24 12:11:50 2014
+# Created: Sat May 24 21:39:21 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -509,7 +509,7 @@ class PySideUiFileSetup(object):
         Form.horizontalLayout_12.addItem(spacerItem19)
         Form.summaryDefaultBtn = QtGui.QPushButton(Form.widget_20)
         font = QtGui.QFont()
-        font.setPointSize(8)
+        font.setPointSize(13)
         Form.summaryDefaultBtn.setFont(font)
         Form.summaryDefaultBtn.setObjectName("summaryDefaultBtn")
         Form.horizontalLayout_12.addWidget(Form.summaryDefaultBtn)
@@ -542,7 +542,7 @@ class PySideUiFileSetup(object):
         Form.horizontalLayout_13.addItem(spacerItem20)
         Form.additionsDefaultBtn = QtGui.QPushButton(Form.widget_21)
         font = QtGui.QFont()
-        font.setPointSize(8)
+        font.setPointSize(13)
         Form.additionsDefaultBtn.setFont(font)
         Form.additionsDefaultBtn.setObjectName("additionsDefaultBtn")
         Form.horizontalLayout_13.addWidget(Form.additionsDefaultBtn)
@@ -582,7 +582,7 @@ class PySideUiFileSetup(object):
         Form.horizontalLayout_14.addItem(spacerItem21)
         Form.fixesDefaultBtn = QtGui.QPushButton(Form.widget_22)
         font = QtGui.QFont()
-        font.setPointSize(8)
+        font.setPointSize(13)
         Form.fixesDefaultBtn.setFont(font)
         Form.fixesDefaultBtn.setObjectName("fixesDefaultBtn")
         Form.horizontalLayout_14.addWidget(Form.fixesDefaultBtn)
@@ -615,7 +615,7 @@ class PySideUiFileSetup(object):
         Form.horizontalLayout_15.addItem(spacerItem22)
         Form.removalsDefaultBtn = QtGui.QPushButton(Form.widget_23)
         font = QtGui.QFont()
-        font.setPointSize(8)
+        font.setPointSize(13)
         Form.removalsDefaultBtn.setFont(font)
         Form.removalsDefaultBtn.setObjectName("removalsDefaultBtn")
         Form.horizontalLayout_15.addWidget(Form.removalsDefaultBtn)
@@ -649,7 +649,7 @@ class PySideUiFileSetup(object):
         Form.horizontalLayout_16.addItem(spacerItem23)
         Form.releaseInfoDefaultBtn = QtGui.QPushButton(Form.widget_24)
         font = QtGui.QFont()
-        font.setPointSize(8)
+        font.setPointSize(13)
         Form.releaseInfoDefaultBtn.setFont(font)
         Form.releaseInfoDefaultBtn.setObjectName("releaseInfoDefaultBtn")
         Form.horizontalLayout_16.addWidget(Form.releaseInfoDefaultBtn)
@@ -666,10 +666,13 @@ class PySideUiFileSetup(object):
         Form.horizontalLayout_9.setObjectName("horizontalLayout_9")
         Form.deployBuildBtn = QtGui.QPushButton(Form.widget_12)
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(13)
         Form.deployBuildBtn.setFont(font)
         Form.deployBuildBtn.setObjectName("deployBuildBtn")
         Form.horizontalLayout_9.addWidget(Form.deployBuildBtn)
+        Form.uploadPackagesBtn = QtGui.QPushButton(Form.widget_12)
+        Form.uploadPackagesBtn.setObjectName("uploadPackagesBtn")
+        Form.horizontalLayout_9.addWidget(Form.uploadPackagesBtn)
         spacerItem24 = QtGui.QSpacerItem(514, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         Form.horizontalLayout_9.addItem(spacerItem24)
         Form.resetDeployBtn = QtGui.QPushButton(Form.widget_12)
@@ -694,7 +697,7 @@ class PySideUiFileSetup(object):
         Form.horizontalLayout_5.addWidget(Form.mainTab)
 
         self.retranslateUi(Form)
-        Form.mainTab.setCurrentIndex(0)
+        Form.mainTab.setCurrentIndex(5)
         QtCore.QMetaObject.connectSlotsByName(Form)
         Form.setTabOrder(Form.summaryText, Form.additionsText)
         Form.setTabOrder(Form.additionsText, Form.fixesText)
@@ -790,6 +793,7 @@ class PySideUiFileSetup(object):
         Form.label_21.setText(QtGui.QApplication.translate("Form", "Release Information", None, QtGui.QApplication.UnicodeUTF8))
         Form.releaseInfoDefaultBtn.setText(QtGui.QApplication.translate("Form", "Set As Default", None, QtGui.QApplication.UnicodeUTF8))
         Form.deployBuildBtn.setText(QtGui.QApplication.translate("Form", "Deploy", None, QtGui.QApplication.UnicodeUTF8))
+        Form.uploadPackagesBtn.setText(QtGui.QApplication.translate("Form", "Upload", None, QtGui.QApplication.UnicodeUTF8))
         Form.resetDeployBtn.setText(QtGui.QApplication.translate("Form", "Reset", None, QtGui.QApplication.UnicodeUTF8))
         Form.reloadDeployBtn.setText(QtGui.QApplication.translate("Form", "Reload", None, QtGui.QApplication.UnicodeUTF8))
         Form.saveDeployBtn.setText(QtGui.QApplication.translate("Form", "Save", None, QtGui.QApplication.UnicodeUTF8))

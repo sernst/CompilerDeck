@@ -1,5 +1,5 @@
 # DeckCompileWidget.py
-# (C)2013
+# (C)2013-2014
 # Scott Ernst
 
 import os
@@ -30,6 +30,7 @@ from CompilerDeck.adobe.flex.FlexDebugThread import FlexDebugThread
 from CompilerDeck.adobe.flex.FlexProjectData import FlexProjectData
 from CompilerDeck.android.AndroidLogcatThread import AndroidLogcatThread
 from CompilerDeck.deploy.S3DeployerThread import S3DeployerThread
+from CompilerDeck.deploy.UploaderThread import UploaderThread
 from CompilerDeck.ios.IosSimulatorThread import IosSimulatorThread
 from CompilerDeck.views.compile.ExtensionsPane import ExtensionsPane
 
@@ -133,6 +134,7 @@ class DeckCompileWidget(PyGlassWidget):
         self.resetDeployBtn.clicked.connect(self._handleResetDeployInfo)
         self.simulateBtn.clicked.connect(self._handleSimulateApp)
         self.openSimDocsBtn.clicked.connect(self._handleOpenDocumentsInFinder)
+        self.uploadPackagesBtn.clicked.connect(self._handleUploadPackages)
         self.mainTab.setCurrentIndex(0)
 
         self._checkProperties = dict()
@@ -691,3 +693,26 @@ class DeckCompileWidget(PyGlassWidget):
                 event['target'].resumeQueueProcessing()
             else:
                 event['target'].abortQueueProcessing()
+
+#___________________________________________________________________________________________________ _handleUploadPackages
+    def _handleUploadPackages(self):
+        if not self._buildSnapshot:
+            return
+
+        self._executeRemoteThread(
+            UploaderThread(parent=self, snapshot=self._buildSnapshot),
+            self._handleUploadResult)
+
+#___________________________________________________________________________________________________ _handleUploadResult
+    def _handleUploadResult(self, result):
+        self._toggleInteractivity(True)
+
+        if result['response'] != 0:
+            return
+
+        # Add the upload urls to the build snapshot
+        if 'urls' in result['output']:
+            self._buildSnapshot['platformUploads'] = DictUtils.merge(
+                self._buildSnapshot['platformUploads'], result['output']['urls'])
+
+        self._storeBuildSnapshot()

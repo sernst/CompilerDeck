@@ -6,16 +6,14 @@ import os
 import smtplib
 from email.mime.text import MIMEText
 
-from pyaid.aws.s3.S3Bucket import S3Bucket
 from pyaid.dict.DictUtils import DictUtils
 from pyaid.file.FileUtils import FileUtils
-from pyaid.time.TimeUtils import TimeUtils
-
 from pyglass.threading.RemoteExecutionThread import RemoteExecutionThread
 
 from CompilerDeck.adobe.flex.FlexProjectData import FlexProjectData
 from CompilerDeck.deploy.BuildPackageUploader import BuildPackageUploader
 from CompilerDeck.deploy.ReleaseNotesGenerator import ReleaseNotesGenerator
+
 
 #___________________________________________________________________________________________________ S3DeployerThread
 class S3DeployerThread(RemoteExecutionThread):
