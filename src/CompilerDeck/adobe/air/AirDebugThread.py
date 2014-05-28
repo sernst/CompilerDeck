@@ -5,6 +5,7 @@
 import os
 
 from pyaid.ArgsUtils import ArgsUtils
+from pyaid.OsUtils import OsUtils
 from pyaid.file.FileList import FileList
 from pyaid.file.FileUtils import FileUtils
 from pyaid.system.SystemUtils import SystemUtils
@@ -28,7 +29,7 @@ class AirDebugThread(RemoteExecutionThread):
         RemoteExecutionThread.__init__(self, parent, **kwargs)
         self._log.trace = True
         projectPath     = ArgsUtils.extract('projectPath', None, kwargs)
-        self._settings  = FlexProjectData(projectPath, **kwargs)
+        self._projectData  = FlexProjectData(projectPath, **kwargs)
 
 #===================================================================================================
 #                                                                               P R O T E C T E D
@@ -38,11 +39,11 @@ class AirDebugThread(RemoteExecutionThread):
         """Doc..."""
         self._log.write('<div style="font-size:24px;">Executing debug...</div>')
 
-        sets = self._settings
+        pd = self._projectData
 
-        if sets.hasPlatform([FlexProjectData.AIR_PLATFORM, FlexProjectData.NATIVE_PLATFORM]):
+        if pd.hasPlatform([FlexProjectData.AIR_PLATFORM, FlexProjectData.NATIVE_PLATFORM]):
             out = self._runAirDebug()
-        elif sets.hasPlatform(FlexProjectData.FLASH_PLATFORM):
+        elif pd.hasPlatform(FlexProjectData.FLASH_PLATFORM):
             out = self._runFlashDebug()
         else:
             out = self._runAirDebug()
@@ -52,32 +53,40 @@ class AirDebugThread(RemoteExecutionThread):
 
 #___________________________________________________________________________________________________ _runAirDebug
     def _runAirDebug(self):
-        sets = self._settings
+        pd = self._projectData
 
-        if not sets.updateApplicationConfigFile():
+        if OsUtils.isWindows() and pd.hasPlatform(FlexProjectData.WINDOWS_PLATFORM):
+            pd.setPlatform(FlexProjectData.WINDOWS_PLATFORM)
+        elif OsUtils.isMac() and pd.hasPlatform(FlexProjectData.MAC_PLATFORM):
+            pd.setPlatform(FlexProjectData.MAC_PLATFORM)
+        elif pd.hasPlatform(FlexProjectData.AIR_PLATFORM):
+            pd.setPlatform(FlexProjectData.AIR_PLATFORM)
+
+        if not pd.updateApplicationConfigFile():
             self._log.write([
                 'ERROR: Unable to update the application descriptor file',
-                'PATH: ' + sets.appDescriptorPath,
-                'VERSION: ' + sets.airVersion,
-                'ID: ' + sets.appId ])
+                'PATH: ' + pd.appDescriptorPath,
+                'VERSION: ' + pd.airVersion,
+                'ID: ' + pd.appId ])
             return 1
 
 
         adlCommand    = 'adl.exe' if PyGlassEnvironment.isWindows else 'adl'
-        appDescriptor = FileUtils.createPath(sets.projectPath, 'application.xml', isFile=True)
+        appDescriptor = FileUtils.createPath(pd.projectPath, 'application.xml', isFile=True)
 
         cmd = [
-            self.parent().mainWindow.getRootAIRPath(sets.airVersion, 'bin', adlCommand),
+            self.parent().mainWindow.getRootAIRPath(pd.airVersion, 'bin', adlCommand),
             '-profile', 'extendedDesktop']
 
-        aneDebugPath = AirUtils.deployDebugNativeExtensions(cmd, sets)
+        aneDebugPath = AirUtils.deployDebugNativeExtensions(cmd, pd)
 
-        cmd += [appDescriptor, sets.platformBinPath]
+        cmd += [appDescriptor, pd.platformBinPath]
 
-        deployment = AirUtils.deployExternalIncludes(self._settings)
+        deployment = AirUtils.deployExternalIncludes(self._projectData)
         code       = 0
         try:
-            os.chdir(FileUtils.createPath(sets.projectPath, isDir=True))
+            os.chdir(FileUtils.createPath(pd.projectPath, isDir=True))
+            print 'PLATFORM:', pd.currentPlatformID
             print 'LOCATION:', os.path.abspath(os.curdir)
             print 'COMMAND:', cmd
 
@@ -100,7 +109,7 @@ class AirDebugThread(RemoteExecutionThread):
 
 #___________________________________________________________________________________________________ _runFlashDebug
     def _runFlashDebug(self):
-        sets = self._settings
+        sets = self._projectData
 
         cmd = [
             'C:\\Program Files (x86)\\Internet Explorer\\iexplore.exe',

@@ -301,8 +301,8 @@ class DeckCompileWidget(PyGlassWidget):
 
         self._executeRemoteThread(ANECompileThread(
             parent=self,
-            pausePackageSteps=self.packagePauseChk.isChecked(),
-            uploadAfterPackage=self.uploadPackageCheck.isChecked(),
+            pausePackageSteps=self._package and self.packagePauseChk.isChecked(),
+            uploadAfterPackage=self._package and self.uploadPackageCheck.isChecked(),
             **self._buildSnapshot), callback)
 
 #___________________________________________________________________________________________________ _executeDebugProcess
