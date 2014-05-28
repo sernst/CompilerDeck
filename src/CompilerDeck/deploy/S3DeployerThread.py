@@ -124,9 +124,9 @@ class S3DeployerThread(RemoteExecutionThread):
 
         body = [
             u'A new build of %s is available: %s\n' % (label, self._message),
-            u'  * Type: %s\n\n' % self._buildType,
-            u'  * Version: ' + version,
-            u'  * Build: ' + uid,
+            u'  * Type: %s' % self._buildType,
+            u'  * Version: %s' % version,
+            u'  * Build: %s\n\n' % uid,
             u'=== DOWNLOADS ===\n',
             u'Please update your application to the latest version by downloading and installing ' +
             u'it from the URL listed below for your choice of platform(s):\n' ]
