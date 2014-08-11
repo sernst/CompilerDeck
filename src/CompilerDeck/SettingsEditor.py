@@ -1,8 +1,8 @@
 # SettingsEditor.py
-# (C)2013
+# (C)2013-2014
 # Scott Ernst
 
-
+import os
 import re
 import datetime
 from collections import namedtuple
@@ -239,12 +239,21 @@ class SettingsEditor(object):
             'date':self._date.value }
         JSON.toFile(CompilerDeckEnvironment.projectSettingsPath, settings, True)
 
+        hasDesktop = os.path.exists(CompilerDeckEnvironment.desktopAppXmlFilePath)
+        hasIos = os.path.exists(CompilerDeckEnvironment.iosAppXmlFilePath)
+        hasAndroid = os.path.exists(CompilerDeckEnvironment.androidAppXmlFilePath)
+
         desktopAppXml = FileUtils.getContents(
-            CompilerDeckEnvironment.desktopAppXmlFilePath, raiseErrors=True)
-        iosAppXml     = FileUtils.getContents(
-            CompilerDeckEnvironment.iosAppXmlFilePath, raiseErrors=True)
+            CompilerDeckEnvironment.desktopAppXmlFilePath, raiseErrors=True) \
+            if hasDesktop else None
+
+        iosAppXml = FileUtils.getContents(
+            CompilerDeckEnvironment.iosAppXmlFilePath, raiseErrors=True) \
+            if hasIos else None
+
         androidAppXml = FileUtils.getContents(
-            CompilerDeckEnvironment.androidAppXmlFilePath, raiseErrors=True)
+            CompilerDeckEnvironment.androidAppXmlFilePath, raiseErrors=True) \
+            if hasAndroid else None
 
         tagName       = 'versionLabel'
         value         = self.versionNumber
@@ -258,18 +267,26 @@ class SettingsEditor(object):
         iosAppXml     = self._setAppXmlValue(iosAppXml, tagName, value)
         androidAppXml = self._setAppXmlValue(androidAppXml, tagName, value)
 
-        FileUtils.putContents(
-            desktopAppXml, CompilerDeckEnvironment.desktopAppXmlFilePath, raiseErrors=True)
-        FileUtils.putContents(
-            iosAppXml, CompilerDeckEnvironment.iosAppXmlFilePath, raiseErrors=True)
-        FileUtils.putContents(
-            androidAppXml, CompilerDeckEnvironment.androidAppXmlFilePath, raiseErrors=True)
+        if hasDesktop:
+            FileUtils.putContents(
+                desktopAppXml, CompilerDeckEnvironment.desktopAppXmlFilePath, raiseErrors=True)
+
+        if hasIos:
+            FileUtils.putContents(
+                iosAppXml, CompilerDeckEnvironment.iosAppXmlFilePath, raiseErrors=True)
+
+        if hasAndroid:
+            FileUtils.putContents(
+                androidAppXml, CompilerDeckEnvironment.androidAppXmlFilePath, raiseErrors=True)
 
 #===================================================================================================
 #                                                                               P R O T E C T E D
 
 #___________________________________________________________________________________________________ _setAppXmlValue
     def _setAppXmlValue(self, appXml, tagName, value):
+        if appXml is None:
+            return appXml
+
         if value is None:
             value = appXml
         value = unicode(value)
