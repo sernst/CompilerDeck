@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/Users/scott/Python/CompilerDeck/resources/widget/DeployWidget/DeployWidget.ui'
 #
-# Created: Sat Jun  7 22:07:22 2014
+# Created: Sun Aug 17 08:23:40 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
