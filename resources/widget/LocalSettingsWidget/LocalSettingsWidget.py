@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file '/Users/scott/Python/CompilerDeck/resources/widget/LocalSettingsWidget/LocalSettingsWidget.ui'
 #
-# Created: Sun Aug 17 08:23:40 2014
-#      by: pyside-uic 0.2.15 running on PySide 1.2.1
+# Created: Mon Oct 27 09:01:01 2014
+#      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
 

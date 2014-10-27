@@ -192,7 +192,7 @@ class DeckCompileWidget(PyGlassWidget):
         self._executeRemoteThread(thread, completeCallback=completeCallback)
 
 #___________________________________________________________________________________________________ remoteThreadResult
-    def remoteThreadResult(self, result):
+    def remoteThreadResult(self, event):
         self.log.removePrintCallback(self._handleUpdateResults)
         self._toggleInteractivity(True)
 
@@ -405,11 +405,11 @@ class DeckCompileWidget(PyGlassWidget):
         self._executeCompilation(self._handleDebugCompilation, snap)
 
 #___________________________________________________________________________________________________ _handleDebugCompilation
-    def _handleDebugCompilation(self, result):
-        if result['response'] == 0:
+    def _handleDebugCompilation(self, event):
+        if event.target.success:
             self._executeDebugProcess()
         else:
-            self._handleRemoteThreadComplete(result)
+            self._handleRemoteThreadComplete(event)
 
 #___________________________________________________________________________________________________ _handleCompileClick
     def _handleCompileClick(self):
@@ -422,10 +422,10 @@ class DeckCompileWidget(PyGlassWidget):
         self._executeCompilation(self._handleCompilationComplete)
 
 #___________________________________________________________________________________________________ _handleCompilationComplete
-    def _handleCompilationComplete(self, result):
+    def _handleCompilationComplete(self, event):
         snap = self._buildSnapshot
 
-        if self._package and result['response'] == 0:
+        if self._package and event.target.success:
 
             # If this was an appended package then prior to storing the snapshot the combined
             # platforms should be stored as the result instead of the platforms stored in this
@@ -439,9 +439,10 @@ class DeckCompileWidget(PyGlassWidget):
 
             # Any package uploads conducted as part of the compilation process should be included
             # in the build snapshot for reference to prevent uploading them again in the future
-            if 'urls' in result['output']:
+            output = event.target.output
+            if 'urls' in output:
                 snap['platformUploads'] = DictUtils.merge(
-                    snap['platformUploads'], result['output']['urls'])
+                    snap['platformUploads'], output['urls'])
 
             self._storeBuildSnapshot()
 
@@ -461,15 +462,16 @@ class DeckCompileWidget(PyGlassWidget):
             self._settingsEditor.populate()
             self._updateSettings()
 
-        self._handleRemoteThreadComplete(result)
+        self._handleRemoteThreadComplete(event)
         self._package = False
 
 #___________________________________________________________________________________________________ _handleRemoteThreadComplete
-    def _handleRemoteThreadComplete(self, result):
-        self.remoteThreadResult(result)
+    def _handleRemoteThreadComplete(self, event):
+        self.remoteThreadResult(event)
 
 #___________________________________________________________________________________________________ _handleUpdateResults
-    def _handleUpdateResults(self, value):
+    def _handleUpdateResults(self, event):
+        value = event.get('message', '')
         tb = self.resultsTextBrowser
         tb.moveCursor(QtGui.QTextCursor.End)
         tb.append(value.replace('\n', '<br />') + '<br />')
@@ -589,13 +591,13 @@ class DeckCompileWidget(PyGlassWidget):
             self._handleDeployResult)
 
 #___________________________________________________________________________________________________ _handleDeployResult
-    def _handleDeployResult(self, result):
-        if result['response'] == 0:
+    def _handleDeployResult(self, event):
+        if event.target.success:
 
             # Any new Urls added by uploads during the deployment should be stored in the build
             # snapshot to save the information for future reference
             self._buildSnapshot['platformUploads'] = DictUtils.merge(
-                self._buildSnapshot['platformUploads'], result['output']['urls'])
+                self._buildSnapshot['platformUploads'], event.target.output['urls'])
             self._storeBuildSnapshot()
 
             settings = SettingsConfig(CompilerDeckEnvironment.projectSettingsPath, pretty=True)
@@ -605,7 +607,7 @@ class DeckCompileWidget(PyGlassWidget):
             settings.set(['DEPLOY', 'LAST', 'REMOVALS'], self.removalsText.toPlainText())
             settings.set(['DEPLOY', 'LAST', 'INFO'], self.releaseInfoText.toPlainText())
 
-        self._handleRemoteThreadComplete(result)
+        self._handleRemoteThreadComplete(event)
 
 #___________________________________________________________________________________________________ _handleResetDeployInfo
     def _handleResetDeployInfo(self):
@@ -684,15 +686,15 @@ class DeckCompileWidget(PyGlassWidget):
 
 #___________________________________________________________________________________________________ _handleCompileEvent
     def _handleCompileEvent(self, event):
-        if event['id'] == ANECompileThread.STAGE_COMPLETE:
+        if event.id == ANECompileThread.STAGE_COMPLETE:
             response = PyGlassBasicDialogManager.openYesNo(
                 self,
-                event['data']['type'] + ' Notification (Paused)',
-                event['data']['message'] + '\nContinue to next step?')
+                event.get('type') + ' Notification (Paused)',
+                event.get('message') + '\nContinue to next step?')
             if response:
-                event['target'].resumeQueueProcessing()
+                event.target.resumeQueueProcessing()
             else:
-                event['target'].abortQueueProcessing()
+                event.target.abortQueueProcessing()
 
 #___________________________________________________________________________________________________ _handleUploadPackages
     def _handleUploadPackages(self):
@@ -704,15 +706,16 @@ class DeckCompileWidget(PyGlassWidget):
             self._handleUploadResult)
 
 #___________________________________________________________________________________________________ _handleUploadResult
-    def _handleUploadResult(self, result):
+    def _handleUploadResult(self, event):
         self._toggleInteractivity(True)
 
-        if result['response'] != 0:
+        if not event.target.success:
             return
 
         # Add the upload urls to the build snapshot
-        if 'urls' in result['output']:
+        output = event.target.output
+        if 'urls' in output:
             self._buildSnapshot['platformUploads'] = DictUtils.merge(
-                self._buildSnapshot['platformUploads'], result['output']['urls'])
+                self._buildSnapshot['platformUploads'], output['urls'])
 
         self._storeBuildSnapshot()
